@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import {Container} from "react-bootstrap";
+import Container from "react-bootstrap/Container";
 import BoardList from "./components/BoardList";
 
 function App() {
