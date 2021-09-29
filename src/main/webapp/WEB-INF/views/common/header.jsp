@@ -9,82 +9,89 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SpringFramework</title>
-<!-- 
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
-<script
-	src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
-	 -->
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/bootstrap-4.6.0-dist/css/bootstrap.min.css" />
-<script
-	src="${pageContext.request.contextPath}/resources/jquery/jquery-3.5.1.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/bootstrap-4.6.0-dist/js/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/app.css" />
-</head>
-<body>
-	<div class="d-flex flex-column vh-100">
-		<nav
-			class="navbar navbar-expand-sm bg-dark navbar-dark text-white font-weight-bold justify-content-between">
-			<a class="navbar-brand" href="/"> <img
-				src="${pageContext.request.contextPath}/resources/images/logo-spring.png"
-				width="30" height="30" class="d-inline-block align-top">
-				Spring
-			</a>
-			<div>
-				<div>
-					<%--
-					<c:if test="${sessionMid == null}">
-						<a class="btn btn-success btn-sm"
-							href="${pageContext.request.contextPath}/ch08/login">로그인</a>
-						<a class="btn btn-success btn-sm"
-							href="${pageContext.request.contextPath}/ch15/login">로그인</a>
-					</c:if>
-					<c:if test="${sessionMid != null}">
-						<a class="btn btn-success btn-sm"
-							href="${pageContext.request.contextPath}/ch08/logout">로그아웃</a>
-					</c:if>
-					--%>
-					<sec:authorize access="isAnonymous()">
-						<a href="${pageContext.request.contextPath}/ch17/loginForm"
-							class="btn btn-success btn-sm">로그인</a>
-					</sec:authorize>
-					<sec:authorize access="isAuthenticated()">
-						<%-- 사이트간 요청 위조 방지가 비활성화되어 있을 경우 --%>
-						<%-- <a href="${pageContext.request.contextPath}/logout"
-						class="btn btn-info btn-sm">로그아웃</a> --%>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+  </head>
+  <style>
+    .set_width {
+      width: 1205px;
+      margin: 0px auto;
+    }
 
-						<%-- 사이트간 요청 위조 방지가 활성화되어 있을 경우 --%>
-						<form method="post"
-							action="${pageContext.request.contextPath}/logout">
-							<input type="hidden" name="${_csrf.parameterName }"
-								value="${_csrf.token}" />
-							<button class="btn btn-success btn-sm">로그아웃</button>
-						</form>
-					</sec:authorize>
-				</div>
-			</div>
-		</nav>
+    .header_item {
+      padding: 0px 20px 0px 0px;
+      color: #363636;
+      font-size: 11px;
+      height: 30px;
+      display: table-cell;
+      vertical-align: middle;
+    }
 
-		<div class="flex-grow-1 container-fluid">
-			<div class="row h-100">
-				<div class="col-md-4 p-3 bg-dark">
-					<div class="h-100 d-flex flex-column">
-						<div class="flex-grow-1"
-							style="height: 0px; overflow-y: auto; overflow-x: hidden;">
-							<%@ include file="/WEB-INF/views/common/menu.jsp"%>
-						</div>
-					</div>
-				</div>
+    .nav_item {
+      color: #363636;
+      font-size: 13px;
+      display: table-cell;
+      vertical-align: middle;
+      font-weight: bolder;
+      padding: 16px;
+    }
 
-				<div class="col-md-8 p-3">
-					<div class=" h-100 d-flex flex-column">
-						<div class="flex-grow-1 overflow-auto pr-3" style="height: 0px">
+    .footer_item {
+      width: 150px;
+      font-size: 11px;
+      padding: 5px 40px 5px 0px;
+    }
+
+    .footer_text {
+      font-size: 10px;
+      color: #555555;
+    }
+
+    .footer_text_space {
+      margin: 0px 8px;
+      color: rgba(0, 0, 0, 0.4);
+    }
+  </style>
+
+  <body>
+    <header>
+      <div class="set_width">
+        <a href="home" class="header_item">HOME</a>
+        <a href="loginForm" class="header_item">로그인</a>
+        <a href="myorders" class="header_item">마이페이지</a>
+        <div class="header_item">LANGUAGE</div>
+      </div>
+      <div
+        style="width: 100%; border-bottom: 1px solid rgba(0, 0, 0, 0.1)"
+      ></div>
+      <div class="set_width">
+        <div
+          style="
+            font-weight: bolder;
+            color: #444444;
+            font-size: 20px;
+            width: 260px;
+            height: 60px;
+            display: table-cell;
+            vertical-align: middle;
+          "
+        >
+          | THE | HANDSOME |
+        </div>
+        <div class="nav_item">브랜드</div>
+        <a href="productlist" class="nav_item">여성</a>
+        <div class="nav_item">남성</div>
+        <div class="nav_item">키즈</div>
+        <div class="nav_item">뷰티</div>
+        <div class="nav_item">라이프스타일</div>
+      </div>
+    </header>
+    

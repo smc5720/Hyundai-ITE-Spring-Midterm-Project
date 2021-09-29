@@ -2,33 +2,26 @@
 
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 
-<div class="card m-2">
-	<div class="card-header">로그인 폼</div>
-	<div class="card-body">
-		<c:if test="${SPRING_SECURITY_LAST_EXCEPTION != null}">
-			<div class="alert alert-danger mb-2" role="alert">
-				<c:if
-					test="${fn:contains(SPRING_SECURITY_LAST_EXCEPTION.message, 'Bad credentials')}">
-			아이디 또는 비밀번호가 틀립니다.</c:if>
-				<c:if
-					test="${fn:contains(SPRING_SECURITY_LAST_EXCEPTION.message, 'principal exceeded')}">
-			인증 횟수가 초과되었습니다.</c:if>
-			</div>
-		</c:if>
-		<form method="post" action="${pageContext.request.contextPath}/login">
-			<input type="hidden" name="${_csrf.parameterName }"
-				value="${_csrf.token}" />
-			<div class="form-group">
-				<label for="mid">Member ID</label> <input type="text"
-					class="form-control" id="mid" name="mid">
-			</div>
-			<div class="form-group">
-				<label for="mpassword">Member Password</label> <input
-					type="password" class="form-control" id="mpassword"
-					name="mpassword">
-			</div>
-			<button type="submit" class="btn btn-info btn-sm mt-2">로그인</button>
-		</form>
+<div class="container">
+	<p style="text-align: center; margin-bottom: 1em; font-size: 17px;">로그인</p>
+	<div class="card-header"
+		style="border: 1px solid lightgray; background-color: white;">
+		회원
+		<hr />
+		<div>
+			<p>
+				<input style="width: 100%;" type="text"
+					placeholder="아이디 / 이메일을 입력하세요.">
+			</p>
+			<p>
+				<input style="width: 100%;" type="password"
+					placeholder="비밀번호를 입력하세요.">
+			</p>
+			<a href="" class="btn btn-dark btn-block mb-2">로그인</a>
+			<p style="font-size: 0.7em;">
+				<input type="checkbox"> 아이디 저장
+			</p>
+		</div>
 	</div>
 </div>
 
