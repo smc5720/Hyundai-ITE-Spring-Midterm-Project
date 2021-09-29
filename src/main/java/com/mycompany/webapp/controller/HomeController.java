@@ -52,6 +52,12 @@ public class HomeController {
 		return "product/productdetail";
 	}
 	
+	@RequestMapping("/ordercomplete")
+	public String orderComplete() {
+		logger.info("실행");
+		return "order/ordercomplete";
+	}
+	
 	@RequestMapping("/error/403")
 	public String error403() {
 		logger.info("실행");
