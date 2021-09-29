@@ -21,6 +21,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
   </head>
   <style>
+  
     .set_width {
       width: 1205px;
       margin: 0px auto;
@@ -59,6 +60,79 @@
       margin: 0px 8px;
       color: rgba(0, 0, 0, 0.4);
     }
+    .nav ul,
+      .nav li {
+        margin: 0;
+        padding: 0;
+        border: none;
+        outline: none;
+      }
+      .nav a {
+        text-decoration: none;
+      }
+      .nav li {
+        list-style: none;
+        height: 100%;
+      }
+      .nav {
+        display: inline-block;
+        position: relative;
+        cursor: default;
+        z-index: 500;
+      }
+
+      /* Menu List */
+      .nav > li {
+        display: block;
+        float: left;
+      }
+      .nav > li > a {
+        position: relative;
+        display: block;
+        z-index: 510;
+        padding: 0 15px;
+        line-height: 50px;
+        font-size: 13px;
+        color: black;
+        background: white;
+      }
+      /* Menu Dropdown */
+      .nav > li > div {
+        position: absolute;
+        display: block;
+        width: 100%;
+        top: 50px;
+        left: 0;
+
+        opacity: 0;
+        visibility: hidden;
+        overflow: hidden;
+
+        background: #ffffff;
+        border-radius: 0 0 3px 3px;
+      }
+      .nav > li:hover > div {
+        opacity: 1;
+        visibility: visible;
+        overflow: visible;
+      }
+      /* Menu Content Styles */
+      .nav .nav-column {
+        float: left;
+        width: 20%;
+      }
+
+      .nav .nav-column li a {
+        display: block;
+        font-weight: bold;
+        line-height: 26px;
+        font-size: 13px;
+        color: #888888;
+      }
+
+      .nav .nav-column li a:hover {
+        color: #666666;
+      }
   </style>
 
   <body>
@@ -86,12 +160,476 @@
         >
           | THE | HANDSOME |
         </div>
-        <div class="nav_item">브랜드</div>
-        <a href="productlist" class="nav_item">여성</a>
-        <div class="nav_item">남성</div>
-        <div class="nav_item">키즈</div>
-        <div class="nav_item">뷰티</div>
-        <div class="nav_item">라이프스타일</div>
+        <div
+          id="menu-wrapper"
+          style="width: 860px; height: 60px; display: table-cell; vertical-align: middle"
+        >
+          <ul class="nav">
+            <li>
+              <a href="#">브랜드</a>
+              <div>
+                <div class="nav-column">
+                  <p>여성 브랜드</p>
+                  <ul>
+                    <li><a href="#">TIME</a></li>
+                    <li><a href="#">MINE</a></li>
+                    <li><a href="#">LANVIN COLLECTION</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>남성 브랜드</p>
+                  <ul>
+                    <li><a href="#">TIME HOMME</a></li>
+                    <li><a href="#">SYSTEM HOMME</a></li>
+                    <li><a href="#">the CASHMERE</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>편집 브랜드</p>
+                  <ul>
+                    <li><a href="#">TOM GREYHOUND</a></li>
+                    <li><a href="#">FOURM THE STORE</a></li>
+                    <li><a href="#">FOURM STUDIO</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>해외 브랜드</p>
+                  <ul>
+                    <li><a href="#">ROCHAS</a></li>
+                    <li><a href="#">LANVIN PARIS</a></li>
+                    <li><a href="#">BALLY</a></li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+            <li>
+              <a href="productlist">여성</a>
+              <div>
+                <div class="nav-column">
+                  <ul>
+                    <a href="#">전체보기</a>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>SPECIAL SHOP</p>
+                  <ul>
+                    <li><a href="#">LATT: FW 온라인 단독</a></li>
+                    <li><a href="#">SYSTEM: PARIS PRESENTATION</a></li>
+                    <li><a href="#">MINE: CODE MINE A (ATELIER)</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>아우터</p>
+                  <ul>
+                    <li><a href="#">재킷</a></li>
+                    <li><a href="#">점퍼</a></li>
+                    <li><a href="#">가디건/베스트</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>탑</p>
+                  <ul>
+                    <li><a href="#">티셔츠</a></li>
+                    <li><a href="#">블라우스</a></li>
+                    <li><a href="#">셔츠</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>드레스</p>
+                  <ul>
+                    <li><a href="#">미니 드레스</a></li>
+                    <li><a href="#">미디 드레스</a></li>
+                    <li><a href="#">롱/맥시 드레스</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>팬츠</p>
+                  <ul>
+                    <li><a href="#">미니 드레스</a></li>
+                    <li><a href="#">미디 드레스</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>스커트</p>
+                  <ul>
+                    <li><a href="#">미니 드레스</a></li>
+                    <li><a href="#">미디 드레스</a></li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+            <li>
+              <a href="#">남성</a>
+              <div>
+                <div class="nav-column">
+                  <p>여성 브랜드</p>
+                  <ul>
+                    <li><a href="#">TIME</a></li>
+                    <li><a href="#">MINE</a></li>
+                    <li><a href="#">LANVIN COLLECTION</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>남성 브랜드</p>
+                  <ul>
+                    <li><a href="#">TIME HOMME</a></li>
+                    <li><a href="#">SYSTEM HOMME</a></li>
+                    <li><a href="#">the CASHMERE</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>편집 브랜드</p>
+                  <ul>
+                    <li><a href="#">TOM GREYHOUND</a></li>
+                    <li><a href="#">FOURM THE STORE</a></li>
+                    <li><a href="#">FOURM STUDIO</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>해외 브랜드</p>
+                  <ul>
+                    <li><a href="#">ROCHAS</a></li>
+                    <li><a href="#">LANVIN PARIS</a></li>
+                    <li><a href="#">BALLY</a></li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+            <li>
+              <a href="#">키즈</a>
+              <div>
+                <div class="nav-column">
+                  <p>여성 브랜드</p>
+                  <ul>
+                    <li><a href="#">TIME</a></li>
+                    <li><a href="#">MINE</a></li>
+                    <li><a href="#">LANVIN COLLECTION</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>남성 브랜드</p>
+                  <ul>
+                    <li><a href="#">TIME HOMME</a></li>
+                    <li><a href="#">SYSTEM HOMME</a></li>
+                    <li><a href="#">the CASHMERE</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>편집 브랜드</p>
+                  <ul>
+                    <li><a href="#">TOM GREYHOUND</a></li>
+                    <li><a href="#">FOURM THE STORE</a></li>
+                    <li><a href="#">FOURM STUDIO</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>해외 브랜드</p>
+                  <ul>
+                    <li><a href="#">ROCHAS</a></li>
+                    <li><a href="#">LANVIN PARIS</a></li>
+                    <li><a href="#">BALLY</a></li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+            <li>
+              <a href="#">뷰티</a>
+              <div>
+                <div class="nav-column">
+                  <p>여성 브랜드</p>
+                  <ul>
+                    <li><a href="#">TIME</a></li>
+                    <li><a href="#">MINE</a></li>
+                    <li><a href="#">LANVIN COLLECTION</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>남성 브랜드</p>
+                  <ul>
+                    <li><a href="#">TIME HOMME</a></li>
+                    <li><a href="#">SYSTEM HOMME</a></li>
+                    <li><a href="#">the CASHMERE</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>편집 브랜드</p>
+                  <ul>
+                    <li><a href="#">TOM GREYHOUND</a></li>
+                    <li><a href="#">FOURM THE STORE</a></li>
+                    <li><a href="#">FOURM STUDIO</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>해외 브랜드</p>
+                  <ul>
+                    <li><a href="#">ROCHAS</a></li>
+                    <li><a href="#">LANVIN PARIS</a></li>
+                    <li><a href="#">BALLY</a></li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+            <li>
+              <a href="#">라이프스타일</a>
+              <div>
+                <div class="nav-column">
+                  <p>여성 브랜드</p>
+                  <ul>
+                    <li><a href="#">TIME</a></li>
+                    <li><a href="#">MINE</a></li>
+                    <li><a href="#">LANVIN COLLECTION</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>남성 브랜드</p>
+                  <ul>
+                    <li><a href="#">TIME HOMME</a></li>
+                    <li><a href="#">SYSTEM HOMME</a></li>
+                    <li><a href="#">the CASHMERE</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>편집 브랜드</p>
+                  <ul>
+                    <li><a href="#">TOM GREYHOUND</a></li>
+                    <li><a href="#">FOURM THE STORE</a></li>
+                    <li><a href="#">FOURM STUDIO</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>해외 브랜드</p>
+                  <ul>
+                    <li><a href="#">ROCHAS</a></li>
+                    <li><a href="#">LANVIN PARIS</a></li>
+                    <li><a href="#">BALLY</a></li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+            <li>
+              <a href="#">기획전</a>
+              <div>
+                <div class="nav-column">
+                  <p>여성 브랜드</p>
+                  <ul>
+                    <li><a href="#">TIME</a></li>
+                    <li><a href="#">MINE</a></li>
+                    <li><a href="#">LANVIN COLLECTION</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>남성 브랜드</p>
+                  <ul>
+                    <li><a href="#">TIME HOMME</a></li>
+                    <li><a href="#">SYSTEM HOMME</a></li>
+                    <li><a href="#">the CASHMERE</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>편집 브랜드</p>
+                  <ul>
+                    <li><a href="#">TOM GREYHOUND</a></li>
+                    <li><a href="#">FOURM THE STORE</a></li>
+                    <li><a href="#">FOURM STUDIO</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>해외 브랜드</p>
+                  <ul>
+                    <li><a href="#">ROCHAS</a></li>
+                    <li><a href="#">LANVIN PARIS</a></li>
+                    <li><a href="#">BALLY</a></li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+            <li>
+              <a href="#">이벤트</a>
+              <div>
+                <div class="nav-column">
+                  <p>여성 브랜드</p>
+                  <ul>
+                    <li><a href="#">TIME</a></li>
+                    <li><a href="#">MINE</a></li>
+                    <li><a href="#">LANVIN COLLECTION</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>남성 브랜드</p>
+                  <ul>
+                    <li><a href="#">TIME HOMME</a></li>
+                    <li><a href="#">SYSTEM HOMME</a></li>
+                    <li><a href="#">the CASHMERE</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>편집 브랜드</p>
+                  <ul>
+                    <li><a href="#">TOM GREYHOUND</a></li>
+                    <li><a href="#">FOURM THE STORE</a></li>
+                    <li><a href="#">FOURM STUDIO</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>해외 브랜드</p>
+                  <ul>
+                    <li><a href="#">ROCHAS</a></li>
+                    <li><a href="#">LANVIN PARIS</a></li>
+                    <li><a href="#">BALLY</a></li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+            <li>
+              <a href="#">THE 매거진</a>
+              <div>
+                <div class="nav-column">
+                  <p>여성 브랜드</p>
+                  <ul>
+                    <li><a href="#">TIME</a></li>
+                    <li><a href="#">MINE</a></li>
+                    <li><a href="#">LANVIN COLLECTION</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>남성 브랜드</p>
+                  <ul>
+                    <li><a href="#">TIME HOMME</a></li>
+                    <li><a href="#">SYSTEM HOMME</a></li>
+                    <li><a href="#">the CASHMERE</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>편집 브랜드</p>
+                  <ul>
+                    <li><a href="#">TOM GREYHOUND</a></li>
+                    <li><a href="#">FOURM THE STORE</a></li>
+                    <li><a href="#">FOURM STUDIO</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>해외 브랜드</p>
+                  <ul>
+                    <li><a href="#">ROCHAS</a></li>
+                    <li><a href="#">LANVIN PARIS</a></li>
+                    <li><a href="#">BALLY</a></li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+            <li>
+              <a href="#">편집샵</a>
+              <div>
+                <div class="nav-column">
+                  <p>여성 브랜드</p>
+                  <ul>
+                    <li><a href="#">TIME</a></li>
+                    <li><a href="#">MINE</a></li>
+                    <li><a href="#">LANVIN COLLECTION</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>남성 브랜드</p>
+                  <ul>
+                    <li><a href="#">TIME HOMME</a></li>
+                    <li><a href="#">SYSTEM HOMME</a></li>
+                    <li><a href="#">the CASHMERE</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>편집 브랜드</p>
+                  <ul>
+                    <li><a href="#">TOM GREYHOUND</a></li>
+                    <li><a href="#">FOURM THE STORE</a></li>
+                    <li><a href="#">FOURM STUDIO</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>해외 브랜드</p>
+                  <ul>
+                    <li><a href="#">ROCHAS</a></li>
+                    <li><a href="#">LANVIN PARIS</a></li>
+                    <li><a href="#">BALLY</a></li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+            <li>
+              <a href="#">룩북</a>
+              <div>
+                <div class="nav-column">
+                  <p>여성 브랜드</p>
+                  <ul>
+                    <li><a href="#">TIME</a></li>
+                    <li><a href="#">MINE</a></li>
+                    <li><a href="#">LANVIN COLLECTION</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>남성 브랜드</p>
+                  <ul>
+                    <li><a href="#">TIME HOMME</a></li>
+                    <li><a href="#">SYSTEM HOMME</a></li>
+                    <li><a href="#">the CASHMERE</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>편집 브랜드</p>
+                  <ul>
+                    <li><a href="#">TOM GREYHOUND</a></li>
+                    <li><a href="#">FOURM THE STORE</a></li>
+                    <li><a href="#">FOURM STUDIO</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>해외 브랜드</p>
+                  <ul>
+                    <li><a href="#">ROCHAS</a></li>
+                    <li><a href="#">LANVIN PARIS</a></li>
+                    <li><a href="#">BALLY</a></li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+            <li>
+              <a href="#">아울렛</a>
+              <div>
+                <div class="nav-column">
+                  <p>여성 브랜드</p>
+                  <ul>
+                    <li><a href="#">TIME</a></li>
+                    <li><a href="#">MINE</a></li>
+                    <li><a href="#">LANVIN COLLECTION</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>남성 브랜드</p>
+                  <ul>
+                    <li><a href="#">TIME HOMME</a></li>
+                    <li><a href="#">SYSTEM HOMME</a></li>
+                    <li><a href="#">the CASHMERE</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>편집 브랜드</p>
+                  <ul>
+                    <li><a href="#">TOM GREYHOUND</a></li>
+                    <li><a href="#">FOURM THE STORE</a></li>
+                    <li><a href="#">FOURM STUDIO</a></li>
+                  </ul>
+                </div>
+                <div class="nav-column">
+                  <p>해외 브랜드</p>
+                  <ul>
+                    <li><a href="#">ROCHAS</a></li>
+                    <li><a href="#">LANVIN PARIS</a></li>
+                    <li><a href="#">BALLY</a></li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </header>
     
