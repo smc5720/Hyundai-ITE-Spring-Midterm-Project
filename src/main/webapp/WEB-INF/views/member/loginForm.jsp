@@ -1,8 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
-
+    <style>
+      @media (min-width: 560px) {
+        .container {
+          max-width: 560px;
+        }
+      }
+    </style>
+    
 <div class="container">
+	<div id="login" class="mb-4">
 	<p style="text-align: center; margin-bottom: 1em; font-size: 17px;">로그인</p>
 	<div class="card-header"
 		style="border: 1px solid lightgray; background-color: white;">
@@ -22,6 +30,7 @@
 				<input type="checkbox"> 아이디 저장
 			</p>
 		</div>
+	</div>
 	</div>
 </div>
 
