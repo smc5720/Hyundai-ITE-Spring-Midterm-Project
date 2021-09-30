@@ -82,7 +82,7 @@
 							<button class="btn btn-white btn-lg col-2">♡</button>
 							<button onclick="location.href='shoppingbag'"class="btn btn-outline-secondary btn-lg col-5">쇼핑백
 								담기</button>
-							<button class="btn btn-secondary btn-lg col-5">바로주문</button>
+							<a href="order" class="btn btn-secondary btn-lg col-5">바로주문</a>
 						</div>
 					</td>
 				</tr>

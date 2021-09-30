@@ -21,6 +21,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
   </head>
   <style>
+  * {
+        font-size: 12px;
+        color: #444444;
+      }
   
     .set_width {
       width: 1205px;

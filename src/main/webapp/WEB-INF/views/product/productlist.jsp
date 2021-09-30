@@ -182,7 +182,7 @@
     <div class="list">
         <ul class="row">
             <li class="cell" >
-                <a href="">
+                <a href="productdetail">
                 <div class="img-box imgswap">
                     <img src="http://newmedia.thehandsome.com/CM/2B/SS/CM2B0KCD230W_PK_W01.jpg/dims/resize/684x1032/" alt="">
                     <img src="http://newmedia.thehandsome.com/CM/2B/SS/CM2B0KCD230W_PK_W02.jpg/dims/resize/684x1032/" alt="">
