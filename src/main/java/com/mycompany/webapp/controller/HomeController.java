@@ -21,6 +21,11 @@ public class HomeController {
 		logger.info("실행");
 		return "home";
 	}
+	@RequestMapping("/event")
+	public String event() {
+		logger.info("실행");
+		return "common/event";
+	}
 	
 	@RequestMapping("/loginForm")
 	public String login() {
