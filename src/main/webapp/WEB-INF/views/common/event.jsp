@@ -2,125 +2,17 @@
 
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 <style>
-      #memberBenefit .section {
-        padding: 80px 0 100px;
-        border-bottom: 1px solid #eaeaea;
-        text-align:center
-      }
-      
-      #memberBenefit .section .section_tit {
-        text-align: center;
-        font-family: "ProximaNova-Regular", "yg740";
-        font-size: 26px;
-        line-height: 32px;
-        color: #000;
-        margin-bottom:30px
-      }
-
-      #memberBenefit .section .coupon_list {
-        padding: 0 5px;
-        display:inline-block
-      }
-
-      #memberBenefit .section .coupon_list li {
-        float: left;
-        padding: 0 15px;
-        margin-top: 40px;
-        text-align:left
-      }
-
-      #memberBenefit .section .coupon_list li:first-child {
-        margin-top:0
-      }
-
-      #memberBenefit .section .coupon_list li .coupon_box {
-        display: table;
-        width: 100%;
-        height: 150px;
-        background: whitesmoke;
-        background-size:contain
-      }
-
-      #memberBenefit .section .coupon_list li .coupon_box > div {
-        display: table-cell;
-        vertical-align:middle
-      }
-
-      #memberBenefit .section .coupon_list li .coupon_box .text {
-        padding: 0 0 ;
-        width:100%
-      }
-
-      #memberBenefit .section .coupon_list li .coupon_box .text h4 {
-        font-family: "ProximaNova-Semibold", "yg750";
-        font-size: 28px;
-        line-height: 44px;
-        margin-bottom: 10px;
-        color:#fa5500
-      }
-
-      #memberBenefit .section .coupon_list li .coupon_box .text .desc {
-        font-family: "ProximaNova-Regular", "yg740";
-        font-size: 14px;
-        line-height: 18px;
-        color: #777;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        width:150px
-      }
-
-      #memberBenefit .section .coupon_download_all {
-        text-align: center;
-        margin-top:60px
-      }
-
-      #memberBenefit .section .coupon_download_all button {
-        width: 250px;
-        font-family: "ProximaNova-Regular", "yg740";
-        font-size:16px
-      }
-
-      #memberBenefit .brand_coupon_section .coupon_list li .coupon_box .brand_img {
-        width: 20%;
-        height: 5%;
-        position:relative
-      }
-
-
-      #memberBenefit .brand_coupon_section .coupon_list li .coupon_box .brand_img img {
-        width: 100%;
-        margin:0 auto
-      }
-
-      #memberBenefit .brand_coupon_section .coupon_list li .coupon_box .text {
-        width: 55%;
-        padding:0 22px 0 23px
-      }
-
-     #container .sub_title_wrap .sub_title {
-        color:#000
-      }
-      article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
-        display:block
-      }
-      a.btn, button.btn {
-        display: inline-block;
-        min-width: 180px;
-        height: 50px;
-        text-align: center;
-        line-height: 48px;
-        border: 1px solid #333;
-        background-color: #fff;
-        color: #333;
-        font-family: "yg750";
-        font-size:14px
-      }
-      a.btn.black, button.btn.black, input.btn.black, span.btn.black {
-        border-color: #000;
-        background-color: #000;
-        color:#fff
-      }
+	a.btn, button.btn {
+	  display: inline-block;
+	  min-width: 180px;
+	  height: 50px;
+	  text-align: center;
+	  line-height: 48px;
+	  background-color: #fff;
+	  color: #333;
+	  font-family: "yg750";
+	  font-size:14px
+	}
 </style>
 <section id="container">
       <div id="memberBenefit">
