@@ -198,7 +198,7 @@
                 </a>
             </li>
             <li class="cell">
-                <a href="">
+                <a href="productdetail">
                 <div class="img-box imgswap" onclick="location.href='';">
                     <img src="http://bnx.oa.gg/img/bnx_16fw_visual_03_list.jpg" alt="">
                     <img src="http://bnx.oa.gg/img/bnx_16fw_visual_04_list.jpg" alt="">
@@ -210,7 +210,7 @@
             </li>
             <li class="cell">
                 <a href="">
-                <div class="img-box imgswap" onclick="location.href='';">
+                <div class="img-box imgswap">
                     <img src="http://bnx.oa.gg/img/bnx_16fw_visual_05_list.jpg" alt="">
                     <img src="http://bnx.oa.gg/img/bnx_16fw_visual_06_list.jpg" alt="">
                 </div>
@@ -221,7 +221,7 @@
             </li>
             <li class="cell">
                 <a href="">
-                <div class="img-box imgswap" onclick="location.href='';">
+                <div class="img-box imgswap">
                     <img src="http://bnx.oa.gg/img/bnx_16fw_visual_07_list.jpg" alt="">
                     <img src="http://bnx.oa.gg/img/bnx_16fw_visual_08_list.jpg" alt="">
                 </div>
