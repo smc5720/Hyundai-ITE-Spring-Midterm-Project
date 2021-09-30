@@ -175,7 +175,6 @@
             <input type='submit' value='적용' style="border: none; background-color: white;">
             <text style="font-size: 12px; text-align: center; align-self: center;">전체 100건</text>
         </div>
-        
     </form>
 </div>
 <div class="container produc-list">
