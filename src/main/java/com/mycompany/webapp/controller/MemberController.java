@@ -16,10 +16,4 @@ public class MemberController {
 		logger.info("실행");
 		return "member/loginForm";
 	}
-	
-	@RequestMapping("/joinForm")
-	public String joinForm() {
-		logger.info("실행");
-		return "member/joinForm";
-	}
 }

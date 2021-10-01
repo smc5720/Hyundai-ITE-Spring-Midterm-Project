@@ -6,8 +6,9 @@
 		<div style="margin-top: 20px">
 			<div class="d-flex">
 				<div
-					style="font-weight: bolder; color: #444444; font-size: 20px; width: 260px;">
-					| THE | HANDSOME |</div>
+				style="font-weight: bolder; color: #444444; font-size: 20px; width: 260px; height: 60px; display: table-cell; vertical-align: middle; cursor: pointer;"
+				onclick="location.href='/home'">
+				| THE | HANDSOME |</div>
 				<div>
 					<div class="footer_item">온라인 멤버십</div>
 					<div class="footer_item">한섬 VVIP 혜택</div>
@@ -21,7 +22,6 @@
 					<div class="footer_item">수선진행조회</div>
 				</div>
 				<div>
-					<div class="footer_item">로그인</div>
 					<div class="footer_item">주문배송조회</div>
 					<div class="footer_item">취소/반품</div>
 					<div class="footer_item">위시리스트</div>

@@ -146,55 +146,70 @@
 </style>
 
 <body>
-	<header style="position: fixed; width: 100%; background-color: white; z-index: 1;">
+	<header
+		style="position: fixed; width: 100%; background-color: white; z-index: 1;">
 		<div class="set_width">
-			<a href="home" class="header_item">HOME</a> <a href="loginForm"
-				class="header_item">로그인</a> <a href="myorders" class="header_item">마이페이지</a>
+			<a href="home" class="header_item">HOME</a>
+			<sec:authorize access="isAnonymous()">
+				<a href="${pageContext.request.contextPath}/loginForm"
+					class="header_item">로그인</a>
+			</sec:authorize>
+			<sec:authorize access="isAuthenticated()">
+				<form name="logoutForm" method="post"
+					action="${pageContext.request.contextPath}/logout"
+					style="display: table-cell;">
+					<input type="hidden" name="${_csrf.parameterName}"
+						value="${_csrf.token}" /> <a class="header_item"
+						href="javascript:logoutForm.submit();">로그아웃</a>
+				</form>
+				<a href="myorders" class="header_item">마이페이지</a>
+			</sec:authorize>
 			<div class="header_item">LANGUAGE</div>
 		</div>
 		<div style="width: 100%; border-bottom: 1px solid rgba(0, 0, 0, 0.1)"></div>
 		<div class="set_width">
 			<div
-				style="font-weight: bolder; color: #444444; font-size: 20px; width: 260px; height: 60px; display: table-cell; vertical-align: middle;">
-				| THE | HANDSOME |</div>
+				style="font-weight: bolder; color: #444444; font-size: 20px; width: 260px; height: 60px; display: table-cell; vertical-align: middle; cursor: pointer;"
+				onclick="location.href='/home'">| THE | HANDSOME |</div>
 			<div id="menu-wrapper"
 				style="width: 860px; height: 60px; display: table-cell; vertical-align: middle">
 				<ul class="nav">
 					<li><a href="#">브랜드</a>
-						<div>
-							<div class="nav-column">
-								<p>여성 브랜드</p>
-								<ul>
-									<li><a href="#">TIME</a></li>
-									<li><a href="#">MINE</a></li>
-									<li><a href="#">LANVIN COLLECTION</a></li>
-								</ul>
-							</div>
-							<div class="nav-column">
-								<p>남성 브랜드</p>
-								<ul>
-									<li><a href="#">TIME HOMME</a></li>
-									<li><a href="#">SYSTEM HOMME</a></li>
-									<li><a href="#">the CASHMERE</a></li>
-								</ul>
-							</div>
-							<div class="nav-column">
-								<p>편집 브랜드</p>
-								<ul>
-									<li><a href="#">TOM GREYHOUND</a></li>
-									<li><a href="#">FOURM THE STORE</a></li>
-									<li><a href="#">FOURM STUDIO</a></li>
-								</ul>
-							</div>
-							<div class="nav-column">
-								<p>해외 브랜드</p>
-								<ul>
-									<li><a href="#">ROCHAS</a></li>
-									<li><a href="#">LANVIN PARIS</a></li>
-									<li><a href="#">BALLY</a></li>
-								</ul>
-							</div>
+						<div id="brand_nav">
+							
 						</div></li>
+						<script>
+							$(window).ready(function () {
+								$.ajax({
+									url: "getBrandList"
+								}).done((data) => {
+									if (data.result === "loadFail") {
+										window.alert("브랜드를 찾을 수 없습니다.");
+									} else {
+										let brand_array = data.brands;
+										let html_tmp = "";
+										
+										for (let i = 0; i < brand_array.length / 5; i++) {
+											let tmp = "";
+												tmp += "<div class='nav-column'>";
+												tmp += "<ul>";
+												
+											for (let j = 0; j < 5; j++) {
+												let idx = i * 5 + j;
+												tmp += "<li><a href=''>" + brand_array.at(idx).bname + "</a></li>";
+											}
+											
+											tmp += "</ul>";
+											tmp += "</div>";
+											
+											html_tmp += tmp;
+										}
+										
+										$("#brand_nav").html(html_tmp);
+									}
+								});
+							});
+						</script>
 					<li><a href="productlist">여성</a>
 						<div>
 							<div class="nav-column">

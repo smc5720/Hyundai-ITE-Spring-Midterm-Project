@@ -1,9 +1,19 @@
 package com.mycompany.webapp.controller;
 
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.mycompany.webapp.dto.Brand;
+import com.mycompany.webapp.service.BrandService;
 
 @Controller
 public class HomeController {
@@ -21,6 +31,26 @@ public class HomeController {
 		logger.info("실행");
 		return "home";
 	}
+	
+	@Resource
+	BrandService brandService;
+	
+	@GetMapping(value = "/getBrandList", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String getBrandList() {
+		logger.info("실행");
+		
+		List<Brand> brands = brandService.getBrandList();
+		
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("result", "success");	
+		jsonObject.put("brands", brands);
+		String json = jsonObject.toString();
+		
+		logger.info(json);
+		
+		return json;
+	}
 
 	@RequestMapping("/event")
 	public String event() {
@@ -31,7 +61,7 @@ public class HomeController {
 	@RequestMapping("/loginForm")
 	public String login() {
 		logger.info("실행");
-		return "member/loginForm";
+		return "redirect:/member/loginForm";
 	}
 
 	@RequestMapping("/myorders")

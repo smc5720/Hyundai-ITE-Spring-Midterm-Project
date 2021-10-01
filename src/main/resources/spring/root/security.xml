@@ -55,6 +55,7 @@
 		</security:session-management>
 	</security:http>
 
+
 	<!-- 권한 계층 설정 -->
 	<bean id="roleHierarchyAuthoritiesMapper"
 		class="org.springframework.security.access.hierarchicalroles.RoleHierarchyAuthoritiesMapper">
