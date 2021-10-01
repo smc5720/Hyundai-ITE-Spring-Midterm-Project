@@ -6,5 +6,7 @@
 	<typeAliases>
 	<typeAlias alias="brand"
 			type="com.mycompany.webapp.dto.Brand" />
+	<typeAlias alias="category"
+			type="com.mycompany.webapp.dto.Category" />
 	</typeAliases>
 </configuration>

@@ -175,13 +175,11 @@
 				style="width: 860px; height: 60px; display: table-cell; vertical-align: middle">
 				<ul class="nav">
 					<li><a href="#">브랜드</a>
-						<div id="brand_nav">
-							
-						</div></li>
-						<script>
+						<div id="brand_nav"></div></li>
+					<script>
 							$(window).ready(function () {
 								$.ajax({
-									url: "getBrandList"
+									url: "${pageContext.request.contextPath}/getBrandList"
 								}).done((data) => {
 									if (data.result === "loadFail") {
 										window.alert("브랜드를 찾을 수 없습니다.");
@@ -211,199 +209,113 @@
 							});
 						</script>
 					<li><a href="productlist">여성</a>
-						<div>
-							<div class="nav-column">
-								<ul>
-									<a href="#">전체보기</a>
-								</ul>
-							</div>
-							<div class="nav-column">
-								<p>SPECIAL SHOP</p>
-								<ul>
-									<li><a href="#">LATT: FW 온라인 단독</a></li>
-									<li><a href="#">SYSTEM: PARIS PRESENTATION</a></li>
-									<li><a href="#">MINE: CODE MINE A (ATELIER)</a></li>
-								</ul>
-							</div>
-							<div class="nav-column">
-								<p>아우터</p>
-								<ul>
-									<li><a href="#">재킷</a></li>
-									<li><a href="#">점퍼</a></li>
-									<li><a href="#">가디건/베스트</a></li>
-								</ul>
-							</div>
-							<div class="nav-column">
-								<p>탑</p>
-								<ul>
-									<li><a href="#">티셔츠</a></li>
-									<li><a href="#">블라우스</a></li>
-									<li><a href="#">셔츠</a></li>
-								</ul>
-							</div>
-							<div class="nav-column">
-								<p>드레스</p>
-								<ul>
-									<li><a href="#">미니 드레스</a></li>
-									<li><a href="#">미디 드레스</a></li>
-									<li><a href="#">롱/맥시 드레스</a></li>
-								</ul>
-							</div>
-							<div class="nav-column">
-								<p>팬츠</p>
-								<ul>
-									<li><a href="#">미니 드레스</a></li>
-									<li><a href="#">미디 드레스</a></li>
-								</ul>
-							</div>
-							<div class="nav-column">
-								<p>스커트</p>
-								<ul>
-									<li><a href="#">미니 드레스</a></li>
-									<li><a href="#">미디 드레스</a></li>
-								</ul>
-							</div>
-						</div></li>
+						<div id="women_category"></div> <script>
+							$(window).ready(function () {
+								$.ajax({
+									url: "${pageContext.request.contextPath}/getCategoryList?cLarge=WOMEN"
+								}).done((data) => {
+									let tmp_html = "";
+									let data_array = data.WOMEN;
+									
+									for (let i = 0; i < data_array.length; i++) {
+										let data_medium = data_array.at(i);
+										let medium_array = Object.getOwnPropertyNames(data_medium);
+										let tmp = "<div class='nav-column'>";
+										tmp += "	<p>" + medium_array[0] + "</p>";
+										tmp += "	<ul>";
+										for (let j = 0; j < data_medium[medium_array[0]].length; j++) {
+											tmp += "		<li><a href='#'>" + data_medium[medium_array[0]].at(j)["CSmall"] + "</a></li>";
+										}
+										tmp += "	</ul>";
+										tmp += "</div>";
+										tmp_html += tmp;
+									}
+									
+									$("#women_category").html(tmp_html);
+								});
+							});
+						</script></li>
 					<li><a href="#">남성</a>
-						<div>
-							<div class="nav-column">
-								<p>여성 브랜드</p>
-								<ul>
-									<li><a href="#">TIME</a></li>
-									<li><a href="#">MINE</a></li>
-									<li><a href="#">LANVIN COLLECTION</a></li>
-								</ul>
-							</div>
-							<div class="nav-column">
-								<p>남성 브랜드</p>
-								<ul>
-									<li><a href="#">TIME HOMME</a></li>
-									<li><a href="#">SYSTEM HOMME</a></li>
-									<li><a href="#">the CASHMERE</a></li>
-								</ul>
-							</div>
-							<div class="nav-column">
-								<p>편집 브랜드</p>
-								<ul>
-									<li><a href="#">TOM GREYHOUND</a></li>
-									<li><a href="#">FOURM THE STORE</a></li>
-									<li><a href="#">FOURM STUDIO</a></li>
-								</ul>
-							</div>
-							<div class="nav-column">
-								<p>해외 브랜드</p>
-								<ul>
-									<li><a href="#">ROCHAS</a></li>
-									<li><a href="#">LANVIN PARIS</a></li>
-									<li><a href="#">BALLY</a></li>
-								</ul>
-							</div>
-						</div></li>
+						<div id="men_category"></div> <script>
+							$(window).ready(function () {
+								$.ajax({
+									url: "${pageContext.request.contextPath}/getCategoryList?cLarge=MEN"
+								}).done((data) => {
+									let tmp_html = "";
+									let data_array = data.MEN;
+									
+									for (let i = 0; i < data_array.length; i++) {
+										let data_medium = data_array.at(i);
+										let medium_array = Object.getOwnPropertyNames(data_medium);
+										let tmp = "<div class='nav-column'>";
+										tmp += "	<p>" + medium_array[0] + "</p>";
+										tmp += "	<ul>";
+										for (let j = 0; j < data_medium[medium_array[0]].length; j++) {
+											tmp += "		<li><a href='#'>" + data_medium[medium_array[0]].at(j)["CSmall"] + "</a></li>";
+										}
+										tmp += "	</ul>";
+										tmp += "</div>";
+										tmp_html += tmp;
+									}
+									
+									$("#men_category").html(tmp_html);
+								});
+							});
+						</script></li>
 					<li><a href="#">키즈</a>
-						<div>
-							<div class="nav-column">
-								<p>여성 브랜드</p>
-								<ul>
-									<li><a href="#">TIME</a></li>
-									<li><a href="#">MINE</a></li>
-									<li><a href="#">LANVIN COLLECTION</a></li>
-								</ul>
-							</div>
-							<div class="nav-column">
-								<p>남성 브랜드</p>
-								<ul>
-									<li><a href="#">TIME HOMME</a></li>
-									<li><a href="#">SYSTEM HOMME</a></li>
-									<li><a href="#">the CASHMERE</a></li>
-								</ul>
-							</div>
-							<div class="nav-column">
-								<p>편집 브랜드</p>
-								<ul>
-									<li><a href="#">TOM GREYHOUND</a></li>
-									<li><a href="#">FOURM THE STORE</a></li>
-									<li><a href="#">FOURM STUDIO</a></li>
-								</ul>
-							</div>
-							<div class="nav-column">
-								<p>해외 브랜드</p>
-								<ul>
-									<li><a href="#">ROCHAS</a></li>
-									<li><a href="#">LANVIN PARIS</a></li>
-									<li><a href="#">BALLY</a></li>
-								</ul>
-							</div>
-						</div></li>
-					<li><a href="#">뷰티</a>
-						<div>
-							<div class="nav-column">
-								<p>여성 브랜드</p>
-								<ul>
-									<li><a href="#">TIME</a></li>
-									<li><a href="#">MINE</a></li>
-									<li><a href="#">LANVIN COLLECTION</a></li>
-								</ul>
-							</div>
-							<div class="nav-column">
-								<p>남성 브랜드</p>
-								<ul>
-									<li><a href="#">TIME HOMME</a></li>
-									<li><a href="#">SYSTEM HOMME</a></li>
-									<li><a href="#">the CASHMERE</a></li>
-								</ul>
-							</div>
-							<div class="nav-column">
-								<p>편집 브랜드</p>
-								<ul>
-									<li><a href="#">TOM GREYHOUND</a></li>
-									<li><a href="#">FOURM THE STORE</a></li>
-									<li><a href="#">FOURM STUDIO</a></li>
-								</ul>
-							</div>
-							<div class="nav-column">
-								<p>해외 브랜드</p>
-								<ul>
-									<li><a href="#">ROCHAS</a></li>
-									<li><a href="#">LANVIN PARIS</a></li>
-									<li><a href="#">BALLY</a></li>
-								</ul>
-							</div>
-						</div></li>
+						<div id="kids_category"></div> <script>
+							$(window).ready(function () {
+								$.ajax({
+									url: "${pageContext.request.contextPath}/getCategoryList?cLarge=KIDS"
+								}).done((data) => {
+									let tmp_html = "";
+									let data_array = data.KIDS;
+									
+									for (let i = 0; i < data_array.length; i++) {
+										let data_medium = data_array.at(i);
+										let medium_array = Object.getOwnPropertyNames(data_medium);
+										let tmp = "<div class='nav-column'>";
+										tmp += "	<p>" + medium_array[0] + "</p>";
+										tmp += "	<ul>";
+										for (let j = 0; j < data_medium[medium_array[0]].length; j++) {
+											tmp += "		<li><a href='#'>" + data_medium[medium_array[0]].at(j)["CSmall"] + "</a></li>";
+										}
+										tmp += "	</ul>";
+										tmp += "</div>";
+										tmp_html += tmp;
+									}
+									
+									$("#kids_category").html(tmp_html);
+								});
+							});
+						</script></li>
 					<li><a href="#">라이프스타일</a>
-						<div>
-							<div class="nav-column">
-								<p>여성 브랜드</p>
-								<ul>
-									<li><a href="#">TIME</a></li>
-									<li><a href="#">MINE</a></li>
-									<li><a href="#">LANVIN COLLECTION</a></li>
-								</ul>
-							</div>
-							<div class="nav-column">
-								<p>남성 브랜드</p>
-								<ul>
-									<li><a href="#">TIME HOMME</a></li>
-									<li><a href="#">SYSTEM HOMME</a></li>
-									<li><a href="#">the CASHMERE</a></li>
-								</ul>
-							</div>
-							<div class="nav-column">
-								<p>편집 브랜드</p>
-								<ul>
-									<li><a href="#">TOM GREYHOUND</a></li>
-									<li><a href="#">FOURM THE STORE</a></li>
-									<li><a href="#">FOURM STUDIO</a></li>
-								</ul>
-							</div>
-							<div class="nav-column">
-								<p>해외 브랜드</p>
-								<ul>
-									<li><a href="#">ROCHAS</a></li>
-									<li><a href="#">LANVIN PARIS</a></li>
-									<li><a href="#">BALLY</a></li>
-								</ul>
-							</div>
-						</div></li>
+						<div id="lifestyle_category"></div> <script>
+							$(window).ready(function () {
+								$.ajax({
+									url: "${pageContext.request.contextPath}/getCategoryList?cLarge=LIFESTYLE"
+								}).done((data) => {
+									let tmp_html = "";
+									let data_array = data.LIFESTYLE;
+									
+									for (let i = 0; i < data_array.length; i++) {
+										let data_medium = data_array.at(i);
+										let medium_array = Object.getOwnPropertyNames(data_medium);
+										let tmp = "<div class='nav-column'>";
+										tmp += "	<p>" + medium_array[0] + "</p>";
+										tmp += "	<ul>";
+										for (let j = 0; j < data_medium[medium_array[0]].length; j++) {
+											tmp += "		<li><a href='#'>" + data_medium[medium_array[0]].at(j)["CSmall"] + "</a></li>";
+										}
+										tmp += "	</ul>";
+										tmp += "</div>";
+										tmp_html += tmp;
+									}
+									
+									$("#lifestyle_category").html(tmp_html);
+								});
+							});
+						</script></li>
 				</ul>
 			</div>
 		</div>

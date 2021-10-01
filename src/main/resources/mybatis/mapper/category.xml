@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mycompany.webapp.dao.CategoryDao">
+	<select id="selectCategoryMedium" resultType="category" parameterType="category">
+		select DISTINCT(cmedium) from category
+    	where clarge = #{cLarge}
+	</select>
+	<select id="selectCategorySmall" resultType="category" parameterType="category">
+		select DISTINCT(csmall) from category
+    	where clarge = #{cLarge}
+    	and cmedium = #{cMedium}
+	</select>
+</mapper>
