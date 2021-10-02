@@ -91,9 +91,10 @@ input[type="text"], input[type="password"], input[type="email"] {
 	line-height: 12px;
 }
 </style>
-<div class="container">
+<div class="container" style="font-size: 12px; color: #444444;">
 	<div>
-		<div style="text-align: center; font-size: 26px; margin: 30px 0px;">배송&결제 정보 입력</div>
+		<div style="text-align: center; font-size: 26px; margin: 30px 0px;">배송&결제
+			정보 입력</div>
 	</div>
 	<div class="d-flex">
 		<div style="margin-right: 10px">
@@ -264,17 +265,19 @@ input[type="text"], input[type="password"], input[type="email"] {
 								</div> <script
 									src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
 								<script>
-                      function execDaumPostcode() {
-                        daum.postcode.load(function () {
-                          new daum.Postcode({
-                            oncomplete: function (data) {
-                              $("#postcode").val(data.zonecode);
-                              $("#address").val(data.roadAddress);
-                            },
-                          }).open();
-                        });
-                      }
-                    </script>
+									function execDaumPostcode() {
+										daum.postcode.load(function() {
+											new daum.Postcode({
+												oncomplete : function(data) {
+													$("#postcode").val(
+															data.zonecode);
+													$("#address").val(
+															data.roadAddress);
+												},
+											}).open();
+										});
+									}
+								</script>
 							</td>
 						</tr>
 						<tr>

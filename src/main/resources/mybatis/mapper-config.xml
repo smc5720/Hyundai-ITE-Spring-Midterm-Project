@@ -4,9 +4,13 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-	<typeAlias alias="brand"
+		<typeAlias alias="brand"
 			type="com.mycompany.webapp.dto.Brand" />
-	<typeAlias alias="category"
+		<typeAlias alias="category"
 			type="com.mycompany.webapp.dto.Category" />
+		<typeAlias alias="product"
+			type="com.mycompany.webapp.dto.Product" />
+		<typeAlias alias="productcolor"
+			type="com.mycompany.webapp.dto.ProductColor" />
 	</typeAliases>
 </configuration>

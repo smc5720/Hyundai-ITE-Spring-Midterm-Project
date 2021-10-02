@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mycompany.webapp.dto.Brand;
 import com.mycompany.webapp.dto.Category;
+import com.mycompany.webapp.dto.Product;
+import com.mycompany.webapp.dto.ProductColor;
 import com.mycompany.webapp.service.BrandService;
 import com.mycompany.webapp.service.CategoryService;
+import com.mycompany.webapp.service.ProductService;
 
 @Controller
 public class HomeController {
@@ -50,8 +53,6 @@ public class HomeController {
 		jsonObject.put("brands", brands);
 		String json = jsonObject.toString();
 
-		logger.info(json);
-
 		return json;
 	}
 
@@ -83,8 +84,6 @@ public class HomeController {
 		jsonObject.put(tmp.getCLarge(), jsonArray);
 		String json = jsonObject.toString();
 
-		logger.info(json);
-
 		return json;
 	}
 
@@ -112,10 +111,46 @@ public class HomeController {
 		return "member/shoppingbag";
 	}
 
-	@RequestMapping("/productlist")
-	public String productList() {
+	@GetMapping("/productlist")
+	public String productList(String cLarge, String cMedium, String cSmall) {
 		logger.info("실행");
 		return "product/productlist";
+	}
+	
+	@Resource
+	ProductService productService;
+
+	@GetMapping(value = "/getProductList", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String getProductList(String cLarge, String cMedium, String cSmall) {
+		logger.info("실행");
+		
+		List<Product> products = productService.getProducts(cLarge, cMedium, cSmall);		
+		
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("result", "success");
+		
+		JSONArray jsonArray = new JSONArray();
+
+		for (Product p : products) {
+			JSONObject tmpObject = new JSONObject();
+			
+			JSONObject pObject = new JSONObject();
+			pObject.put("pcode", p.getPcode());
+			pObject.put("pname", p.getPname());
+			pObject.put("pprice", p.getPprice());
+			pObject.put("bname", p.getBname());
+			
+			tmpObject.put("product", pObject);
+			List<ProductColor> colors = productService.getProductColor(p);
+			tmpObject.put("colors", colors);
+			jsonArray.put(tmpObject);
+		}
+
+		jsonObject.put("products", jsonArray);
+		String json = jsonObject.toString();
+
+		return json;
 	}
 
 	@RequestMapping("/productdetail")

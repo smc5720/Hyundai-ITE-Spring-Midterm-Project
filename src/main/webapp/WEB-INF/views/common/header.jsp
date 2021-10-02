@@ -24,11 +24,6 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <style>
-* {
-	font-size: 12px;
-	color: #444444;
-}
-
 .set_width {
 	width: 1205px;
 	margin: 0px auto;
@@ -81,7 +76,6 @@
 
 .nav li {
 	list-style: none;
-	height: 100%;
 }
 
 .nav {
@@ -90,7 +84,6 @@
 	cursor: default;
 	z-index: 500;
 }
-
 /* Menu List */
 .nav>li {
 	display: block;
@@ -101,8 +94,8 @@
 	position: relative;
 	display: block;
 	z-index: 510;
-	padding: 0 15px;
-	line-height: 50px;
+	padding: 0 50px;
+	line-height: 54px;
 	font-size: 13px;
 	color: black;
 	background: white;
@@ -111,10 +104,10 @@
 .nav>li>div {
 	position: absolute;
 	display: block;
-	width: 100%;
+	width: 120%;
 	top: 50px;
 	left: 0;
-	opacity: 0;
+	background-color: rgba(255, 255, 255, 0.5);
 	visibility: hidden;
 	overflow: hidden;
 	background: #ffffff;
@@ -129,12 +122,12 @@
 /* Menu Content Styles */
 .nav .nav-column {
 	float: left;
-	width: 20%;
+	width: 32%;
+	padding-left: 2.5%;
 }
 
 .nav .nav-column li a {
 	display: block;
-	font-weight: bold;
 	line-height: 26px;
 	font-size: 13px;
 	color: #888888;
@@ -176,7 +169,7 @@
 				<ul class="nav">
 					<li><a href="#">브랜드</a>
 						<div id="brand_nav"></div></li>
-					<script>
+						<script>
 							$(window).ready(function () {
 								$.ajax({
 									url: "${pageContext.request.contextPath}/getBrandList"
@@ -209,7 +202,8 @@
 							});
 						</script>
 					<li><a href="productlist">여성</a>
-						<div id="women_category"></div> <script>
+						<div id="women_category"></div>
+						<script>
 							$(window).ready(function () {
 								$.ajax({
 									url: "${pageContext.request.contextPath}/getCategoryList?cLarge=WOMEN"
@@ -224,7 +218,8 @@
 										tmp += "	<p>" + medium_array[0] + "</p>";
 										tmp += "	<ul>";
 										for (let j = 0; j < data_medium[medium_array[0]].length; j++) {
-											tmp += "		<li><a href='#'>" + data_medium[medium_array[0]].at(j)["CSmall"] + "</a></li>";
+											let csmall = data_medium[medium_array[0]].at(j)["CSmall"];
+											tmp += "		<li><a href='${pageContext.request.contextPath}/productlist?cLarge=WOMEN&cMedium=" + medium_array[0] + "&cSmall=" + csmall + "'>" + csmall + "</a></li>";
 										}
 										tmp += "	</ul>";
 										tmp += "</div>";
@@ -236,7 +231,8 @@
 							});
 						</script></li>
 					<li><a href="#">남성</a>
-						<div id="men_category"></div> <script>
+						<div id="men_category"></div>
+						<script>
 							$(window).ready(function () {
 								$.ajax({
 									url: "${pageContext.request.contextPath}/getCategoryList?cLarge=MEN"
@@ -251,7 +247,8 @@
 										tmp += "	<p>" + medium_array[0] + "</p>";
 										tmp += "	<ul>";
 										for (let j = 0; j < data_medium[medium_array[0]].length; j++) {
-											tmp += "		<li><a href='#'>" + data_medium[medium_array[0]].at(j)["CSmall"] + "</a></li>";
+											let csmall = data_medium[medium_array[0]].at(j)["CSmall"];
+											tmp += "		<li><a href='${pageContext.request.contextPath}/productlist?cLarge=MEN&cMedium=" + medium_array[0] + "&cSmall=" + csmall + "'>" + csmall + "</a></li>";
 										}
 										tmp += "	</ul>";
 										tmp += "</div>";
@@ -263,7 +260,8 @@
 							});
 						</script></li>
 					<li><a href="#">키즈</a>
-						<div id="kids_category"></div> <script>
+						<div id="kids_category"></div>
+						<script>
 							$(window).ready(function () {
 								$.ajax({
 									url: "${pageContext.request.contextPath}/getCategoryList?cLarge=KIDS"
@@ -278,7 +276,8 @@
 										tmp += "	<p>" + medium_array[0] + "</p>";
 										tmp += "	<ul>";
 										for (let j = 0; j < data_medium[medium_array[0]].length; j++) {
-											tmp += "		<li><a href='#'>" + data_medium[medium_array[0]].at(j)["CSmall"] + "</a></li>";
+											let csmall = data_medium[medium_array[0]].at(j)["CSmall"];
+											tmp += "		<li><a href='${pageContext.request.contextPath}/productlist?cLarge=KIDS&cMedium=" + medium_array[0] + "&cSmall=" + csmall + "'>" + csmall + "</a></li>";
 										}
 										tmp += "	</ul>";
 										tmp += "</div>";
@@ -290,7 +289,8 @@
 							});
 						</script></li>
 					<li><a href="#">라이프스타일</a>
-						<div id="lifestyle_category"></div> <script>
+						<div id="lifestyle_category"></div>
+						<script>
 							$(window).ready(function () {
 								$.ajax({
 									url: "${pageContext.request.contextPath}/getCategoryList?cLarge=LIFESTYLE"
@@ -305,7 +305,8 @@
 										tmp += "	<p>" + medium_array[0] + "</p>";
 										tmp += "	<ul>";
 										for (let j = 0; j < data_medium[medium_array[0]].length; j++) {
-											tmp += "		<li><a href='#'>" + data_medium[medium_array[0]].at(j)["CSmall"] + "</a></li>";
+											let csmall = data_medium[medium_array[0]].at(j)["CSmall"];
+											tmp += "		<li><a href='${pageContext.request.contextPath}/productlist?cLarge=LIFESTYLE&cMedium=" + medium_array[0] + "&cSmall=" + csmall + "'>" + csmall + "</a></li>";
 										}
 										tmp += "	</ul>";
 										tmp += "</div>";
