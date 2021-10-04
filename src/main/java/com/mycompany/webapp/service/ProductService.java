@@ -1,5 +1,6 @@
 package com.mycompany.webapp.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.mycompany.webapp.dao.ProductDao;
 import com.mycompany.webapp.dto.Category;
+import com.mycompany.webapp.dto.Pager;
 import com.mycompany.webapp.dto.Product;
 import com.mycompany.webapp.dto.ProductColor;
 
@@ -20,12 +22,11 @@ public class ProductService {
 	@Resource
 	private ProductDao productDao;
 
-	public List<Product> getProducts(String cLarge, String cMedium, String cSmall) {
-		Category category = new Category();
-		category.setCLarge(cLarge);
-		category.setCMedium(cMedium);
-		category.setCSmall(cSmall);
-		return productDao.selectProducts(category);
+	public List<Product> getProducts(Category category, Pager pager) {
+		HashMap<String, Object> categoryPager = new HashMap<String, Object>(); 
+		categoryPager.put("category", category);
+		categoryPager.put("pager", pager);
+		return productDao.selectProducts(categoryPager);
 	}
 	
 	public List<ProductColor> getProductColor(Product pcode) {

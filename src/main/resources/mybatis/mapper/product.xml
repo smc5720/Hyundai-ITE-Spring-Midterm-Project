@@ -4,14 +4,26 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.mycompany.webapp.dao.ProductDao">
-	<select id="selectProducts" resultType="product" parameterType="category">
-		SELECT p.pcode, p.pname, p.pprice, p.pdetail,
-			p.precommanditem, b.bname, p.clarge, p.cmedium, p.csmall
-		FROM product p, brand b
-		WHERE p.clarge = #{cLarge}
-		AND p.cmedium = #{cMedium}
-		AND p.csmall = #{cSmall}
-		AND b.bno = p.bno
+	<select id="selectProducts" resultType="product" parameterType="HashMap">
+		<![CDATA[
+		SELECT rnum, pcode, pname, pprice, pdetail,
+			precommanditem, bname, clarge, cmedium, csmall
+		FROM (
+		        SELECT ROWNUM as rnum, pcode, pname, pprice, pdetail,
+					precommanditem, bname, clarge, cmedium, csmall
+		        FROM (
+		            SELECT p.pcode as pcode, p.pname as pname, p.pprice as pprice, p.pdetail as pdetail,
+		                p.precommanditem as precommanditem, b.bname as bname, p.clarge as clarge, p.cmedium as cmedium, p.csmall as csmall
+		            FROM product p, brand b
+		            WHERE p.clarge = #{category.cLarge}
+		            AND p.cmedium = #{category.cMedium}
+		            AND p.csmall = #{category.cSmall}
+		            AND b.bno = p.bno
+		        )
+		        WHERE ROWNUM <= #{pager.endRowNo}
+		)
+		WHERE rnum >= #{pager.startRowNo}
+		]]>
 	</select>
 	<select id="selectProductColor" resultType="productcolor" parameterType="product">
 		SELECT pcode, cproductcolor, cimageproduct1, cimageproduct2, cimageproduct3, ccolorchipimage

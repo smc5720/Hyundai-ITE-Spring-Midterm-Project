@@ -3,18 +3,22 @@ package com.mycompany.webapp.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mycompany.webapp.dto.Brand;
 import com.mycompany.webapp.dto.Category;
+import com.mycompany.webapp.dto.Pager;
 import com.mycompany.webapp.dto.Product;
 import com.mycompany.webapp.dto.ProductColor;
 import com.mycompany.webapp.service.BrandService;
@@ -43,14 +47,18 @@ public class HomeController {
 
 	@GetMapping(value = "/getBrandList", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public String getBrandList() {
+	public String getBrandList(HttpSession session) {
 		logger.info("실행");
 
-		List<Brand> brands = brandService.getBrandList();
-
 		JSONObject jsonObject = new JSONObject();
+
+		if (session.getAttribute("brands") == null) {
+			List<Brand> brands = brandService.getBrandList();
+			session.setAttribute("brands", brands);
+		}
+
+		jsonObject.put("brands", session.getAttribute("brands"));
 		jsonObject.put("result", "success");
-		jsonObject.put("brands", brands);
 		String json = jsonObject.toString();
 
 		return json;
@@ -61,33 +69,33 @@ public class HomeController {
 
 	@GetMapping(value = "/getCategoryList", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public String getCategoryList(String cLarge) {
-		logger.info("실행");
-
-		Category tmp = new Category();
-		tmp.setCLarge(cLarge);
-		List<Category> categoryMedium = categoryService.getCategoryMedium(tmp);
-
+	public String getCategoryList(String cLarge, HttpSession session) {
+		// logger.info("실행");
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("result", "success");
 
-		JSONArray jsonArray = new JSONArray();
+		if (session.getAttribute(cLarge) == null) {
+			Category tmp = new Category();
+			tmp.setCLarge(cLarge);
+			List<Category> categoryMedium = categoryService.getCategoryMedium(tmp);
+			jsonObject.put("result", "success");
 
-		for (Category m : categoryMedium) {
-			m.setCLarge(tmp.getCLarge());
-			JSONObject tmpObject = new JSONObject();
-			List<Category> categorySmall = categoryService.getCategorySmall(m);
-			tmpObject.put(m.getCMedium(), categorySmall);
-			jsonArray.put(tmpObject);
+			JSONArray jsonArray = new JSONArray();
+
+			for (Category m : categoryMedium) {
+				m.setCLarge(tmp.getCLarge());
+				JSONObject tmpObject = new JSONObject();
+				List<Category> categorySmall = categoryService.getCategorySmall(m);
+				tmpObject.put(m.getCMedium(), categorySmall);
+				jsonArray.put(tmpObject);
+			}
+			session.setAttribute(cLarge, jsonArray);
 		}
-
-		jsonObject.put(tmp.getCLarge(), jsonArray);
+		
+		jsonObject.put(cLarge, session.getAttribute(cLarge));
 		String json = jsonObject.toString();
 
 		return json;
 	}
-
-
 
 	@RequestMapping("/loginForm")
 	public String login() {
@@ -112,31 +120,41 @@ public class HomeController {
 		logger.info("실행");
 		return "product/productlist";
 	}
-	
+
 	@Resource
 	ProductService productService;
 
 	@GetMapping(value = "/getProductList", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public String getProductList(String cLarge, String cMedium, String cSmall) {
+	public String getProductList(@RequestParam(defaultValue = "1") int pageNo, String cLarge, String cMedium, String cSmall, Model model) {
 		logger.info("실행");
 		
-		List<Product> products = productService.getProducts(cLarge, cMedium, cSmall);		
+		int totalRows = productService.getTotalProductNum();
+		logger.info("pageNo: " + pageNo);
+		Pager pager = new Pager(20, 5, totalRows, pageNo);
+		model.addAttribute("pager", pager);
 		
+		Category category = new Category();
+		category.setCLarge(cLarge);
+		category.setCMedium(cMedium);
+		category.setCSmall(cSmall);
+		
+		List<Product> products = productService.getProducts(category, pager);
+
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("result", "success");
-		
+
 		JSONArray jsonArray = new JSONArray();
 
 		for (Product p : products) {
 			JSONObject tmpObject = new JSONObject();
-			
+
 			JSONObject pObject = new JSONObject();
 			pObject.put("pcode", p.getPcode());
 			pObject.put("pname", p.getPname());
 			pObject.put("pprice", p.getPprice());
 			pObject.put("bname", p.getBname());
-			
+
 			tmpObject.put("product", pObject);
 			List<ProductColor> colors = productService.getProductColor(p);
 			tmpObject.put("colors", colors);
