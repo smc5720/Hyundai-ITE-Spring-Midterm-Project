@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mycompany.webapp.dao.EventDao">
+	<select id="selectEvents" resultType="event">
+		SELECT eno, ename, estartdate, eenddate, econtent, eimage, eimage, ecouponamount, estate, ecouponremain
+		FROM EVENT
+	</select>
+	
+	<select id="selectEventByEno" resultType="event" parameterType="int">
+		SELECT eno, ename, estartdate, eenddate, econtent, eimage, eimage, ecouponamount, estate, ecouponremain
+		FROM EVENT
+		WHERE eno=#{eno}
+	</select>
+</mapper>

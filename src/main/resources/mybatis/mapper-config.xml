@@ -12,5 +12,7 @@
 			type="com.mycompany.webapp.dto.Product" />
 		<typeAlias alias="productcolor"
 			type="com.mycompany.webapp.dto.ProductColor" />
+		<typeAlias alias="event"
+			type="com.mycompany.webapp.dto.Event" />
 	</typeAliases>
 </configuration>

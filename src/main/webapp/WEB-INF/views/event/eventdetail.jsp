@@ -2,20 +2,34 @@
 
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 <style>
-	a.btn, button.btn {
-	  display: inline-block;
-	  min-width: 180px;
-	  height: 50px;
-	  text-align: center;
-	  line-height: 48px;
-	  background-color: #fff;
-	  color: #333;
-	  font-family: "yg750";
-	  font-size:14px
-	}
+/* a.btn, button.btn {
+	display: inline-block;
+	min-width: 180px;
+	height: 50px;
+	text-align: center;
+	line-height: 48px;
+	background-color: #fff;
+	color: #333;
+	font-family: "yg750";
+	font-size: 14px
+} */
 </style>
-<section id="container">
-      <div id="memberBenefit">
+<section class="container">
+	<div class="card mb-3">
+		<img src="${pageContext.request.contextPath}/resources/images/${event.eimage}" class="card-img-top" alt="eventimage">
+		<div class="card-body">
+			<h5 class="card-title">${event.ename}</h5>
+			<p class="card-text">${event.econtent}</p>
+			<p class="card-text">
+				<small class="text-muted">이벤트 기간: ${event.estartdate} ~ ${event.eenddate}</small>
+			</p>
+			<p class="card-text">
+				<small class="text-muted">남은 쿠폰 개수: ${event.ecouponremain} / ${event.ecouponamount}</small>
+			</p>
+			<p class="card-text"><button type="button" class="btn btn-light btn-lg btn-block">참여하기</button></p>
+		</div>
+	</div>
+	<!--  <div id="memberBenefit">
         <input type="hidden" id="focusarea" value="" />
         <div id="pajx_container">
           <div class="content1 tab_content active">
@@ -54,7 +68,7 @@
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </div> -->
+</section>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

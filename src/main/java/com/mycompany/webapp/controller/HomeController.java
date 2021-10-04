@@ -87,11 +87,7 @@ public class HomeController {
 		return json;
 	}
 
-	@RequestMapping("/event")
-	public String event() {
-		logger.info("실행");
-		return "common/event";
-	}
+
 
 	@RequestMapping("/loginForm")
 	public String login() {
