@@ -244,6 +244,7 @@ input[id="cb3"]+label {
 				url: "${pageContext.request.contextPath}/getProductList?cLarge=" + urlParams.get("cLarge")
 						+ "&cMedium=" + urlParams.get("cMedium")
 						+ "&cSmall=" + urlParams.get("cSmall")
+						+ "&pageNo=" + urlParams.get("pageNo")
 			}).done((data) => {
 				product_array = data.products;
 				let html_tmp = "";
@@ -290,13 +291,29 @@ input[id="cb3"]+label {
 		}
 	</script>
 
-	<div class="container">
-		<p style="text-align: center;">
-			<a href=""> <span>«</span>
-			</a> <a href="">1 &nbsp</a> <a href="">2 &nbsp</a> <a href="">3 &nbsp</a>
-			<a href="">4 &nbsp</a> <a href="">5 &nbsp</a> <a href=""> <span>»</span>
-			</a>
-		</p>
+	<div class="container text-center">
+		<a class="btn btn-outline-primary btn-sm" href="boardList?pageNo=1">처음</a>
+		<c:if test="${pager.groupNo > 1}">
+			<a class="btn btn-outline-info btn-sm"
+				href="boardList?pageNo=${pager.startPageNo-1}">이전</a>
+		</c:if>
+		<c:forEach var="i" begin="${pager.startPageNo}"
+			end="${pager.endPageNo}">
+			<c:if test="${pager.pageNo != i}">
+				<a class="btn btn-outline-success btn-sm"
+					href="boardList?pageNo=${i}">${i}</a>
+			</c:if>
+			<c:if test="${pager.pageNo == i}">
+				<a class="btn btn-success btn-sm" href="boardList?pageNo=${i}">${i}</a>
+			</c:if>
+		</c:forEach>
+		<c:if test="${pager.groupNo < pager.totalGroupNo}">
+			<a class="btn btn-outline-info btn-sm"
+				href="boardList?pageNo=${pager.endPageNo+1}">다음</a>
+		</c:if>
+
+		<a class="btn btn-outline-primary btn-sm"
+			href="boardList?pageNo=${pager.totalPageNo}">끝</a>
 	</div>
 
 	<%@ include file="/WEB-INF/views/common/footer.jsp"%>

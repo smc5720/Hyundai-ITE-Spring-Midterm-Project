@@ -219,7 +219,7 @@
 										tmp += "	<ul>";
 										for (let j = 0; j < data_medium[medium_array[0]].length; j++) {
 											let csmall = data_medium[medium_array[0]].at(j)["CSmall"];
-											tmp += "		<li><a href='${pageContext.request.contextPath}/productlist?cLarge=WOMEN&cMedium=" + medium_array[0] + "&cSmall=" + csmall + "'>" + csmall + "</a></li>";
+											tmp += "		<li><a href='${pageContext.request.contextPath}/productlist?cLarge=WOMEN&cMedium=" + medium_array[0] + "&cSmall=" + csmall + "&pageNo=1'>" + csmall + "</a></li>";
 										}
 										tmp += "	</ul>";
 										tmp += "</div>";
@@ -248,7 +248,7 @@
 										tmp += "	<ul>";
 										for (let j = 0; j < data_medium[medium_array[0]].length; j++) {
 											let csmall = data_medium[medium_array[0]].at(j)["CSmall"];
-											tmp += "		<li><a href='${pageContext.request.contextPath}/productlist?cLarge=MEN&cMedium=" + medium_array[0] + "&cSmall=" + csmall + "'>" + csmall + "</a></li>";
+											tmp += "		<li><a href='${pageContext.request.contextPath}/productlist?cLarge=MEN&cMedium=" + medium_array[0] + "&cSmall=" + csmall + "&pageNo=1'>" + csmall + "</a></li>";
 										}
 										tmp += "	</ul>";
 										tmp += "</div>";
@@ -277,7 +277,7 @@
 										tmp += "	<ul>";
 										for (let j = 0; j < data_medium[medium_array[0]].length; j++) {
 											let csmall = data_medium[medium_array[0]].at(j)["CSmall"];
-											tmp += "		<li><a href='${pageContext.request.contextPath}/productlist?cLarge=KIDS&cMedium=" + medium_array[0] + "&cSmall=" + csmall + "'>" + csmall + "</a></li>";
+											tmp += "		<li><a href='${pageContext.request.contextPath}/productlist?cLarge=KIDS&cMedium=" + medium_array[0] + "&cSmall=" + csmall + "&pageNo=1'>" + csmall + "</a></li>";
 										}
 										tmp += "	</ul>";
 										tmp += "</div>";
@@ -306,7 +306,7 @@
 										tmp += "	<ul>";
 										for (let j = 0; j < data_medium[medium_array[0]].length; j++) {
 											let csmall = data_medium[medium_array[0]].at(j)["CSmall"];
-											tmp += "		<li><a href='${pageContext.request.contextPath}/productlist?cLarge=LIFESTYLE&cMedium=" + medium_array[0] + "&cSmall=" + csmall + "'>" + csmall + "</a></li>";
+											tmp += "		<li><a href='${pageContext.request.contextPath}/productlist?cLarge=LIFESTYLE&cMedium=" + medium_array[0] + "&cSmall=" + csmall + "&pageNo=1'>" + csmall + "</a></li>";
 										}
 										tmp += "	</ul>";
 										tmp += "</div>";

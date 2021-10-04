@@ -116,7 +116,7 @@ public class HomeController {
 	}
 
 	@GetMapping("/productlist")
-	public String productList(String cLarge, String cMedium, String cSmall) {
+	public String productList() {
 		logger.info("실행");
 		return "product/productlist";
 	}
