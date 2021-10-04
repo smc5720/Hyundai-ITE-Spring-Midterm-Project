@@ -12,4 +12,5 @@ import com.mycompany.webapp.dto.ProductColor;
 public interface ProductDao {
 	public List<Product> selectProducts(Category category);
 	public List<ProductColor> selectProductColor(Product pcode);
+	public int count();
 }

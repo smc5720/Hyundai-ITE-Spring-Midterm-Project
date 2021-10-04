@@ -140,6 +140,7 @@ public class HomeController {
 			tmpObject.put("product", pObject);
 			List<ProductColor> colors = productService.getProductColor(p);
 			tmpObject.put("colors", colors);
+			tmpObject.put("state", 0);
 			jsonArray.put(tmpObject);
 		}
 

@@ -53,8 +53,8 @@ div .product-color {
 	text-align: center;
 }
 
-div .product-color>img {
-	margin: auto;
+div .product-color>a>img {
+	margin: 0px 2px;
 	width: 18px;
 	height: 18px;
 }
@@ -237,46 +237,64 @@ input[id="cb3"]+label {
 		</div>
 	</div>
 	<script>
+		let product_array;
+		
 		$(window).ready(function () {
 			$.ajax({
 				url: "${pageContext.request.contextPath}/getProductList?cLarge=" + urlParams.get("cLarge")
 						+ "&cMedium=" + urlParams.get("cMedium")
 						+ "&cSmall=" + urlParams.get("cSmall")
 			}).done((data) => {
-				let product_array = data.products;
+				product_array = data.products;
 				let html_tmp = "";
 				for (let i = 0; i < product_array.length; i++) {
 					let product = product_array.at(i);
 					let product_color = product.colors;
 					let product_info = product.product;
 					let tmp = "";
-					tmp += "<li class='cell'><a href='productdetail'>";
-					tmp += "	<div class='img-box imgswap'>";
-					tmp += "		<img src='" + product_color.at(0)["cimageproduct1"] + "' alt='' />";
-					tmp += "		<img src='" + product_color.at(0)["cimageproduct2"] + "' alt='' />";
+					tmp += "<li class='cell'><a id='product_link" + i + "' href='productdetail?pcode=" + product_array.at(i).product.pcode + "&cproductcolor=" + product_array.at(i).colors.at(product_array.at(i).state).cproductcolor + "'>";
+					tmp += "	<div id='product_img" + i + "' class='img-box imgswap'>";
+					tmp += "		<img src='" + product_color.at(product_array.at(i)["state"])["cimageproduct1"] + "' alt='' />";
+					tmp += "		<img src='" + product_color.at(product_array.at(i)["state"])["cimageproduct2"] + "' alt='' />";
 					tmp += "	</div>";
 					tmp += "	<div class='brand-name'>" + product_info.bname + "</div>";
 					tmp += "	<div class='product-name'>" + product_info.pname + "</div>";
-					tmp += "	<div class='product-price'>" + product_info.pprice.toLocaleString() + "원</div>";
+					tmp += "	<div class='product-price'>" + product_info.pprice.toLocaleString() + "원</div></a>";
 					tmp += "	<div class='product-color'>";
 					for (let j = 0; j < product_color.length; j++) {
-						tmp += "<img src='" + product_color.at(j)["ccolorchipimage"] + "'>";
+						tmp += "<a href='javascript:changeColor(" + i + ", " + j + ")'><img src='" + product_color.at(j)["ccolorchipimage"] + "'/></a>";
 					}
 					tmp += "	</div>";
-					tmp += "</a></li>";
+					tmp += "</li>";
 					html_tmp += tmp;
 				}
 				$("#product-list-wrapper").html(html_tmp);
 			});
 		});
+		
+		function changeColor(product_idx, color_idx) {
+			product_array.at(product_idx)["state"] = color_idx;
+			console.log(product_array.at(product_idx));
+			console.log(product_array.at(product_idx).colors.at(product_array.at(product_idx).state).cproductcolor);
+			
+			let color_img = product_array.at(product_idx).colors.at(color_idx);
+			let p_color_id = "#product_img" + product_idx;
+			let p_link = "#product_link" + product_idx;
+			
+			let tmp = "";
+				tmp += "<img src='" + color_img["cimageproduct1"] + "' alt='' />";
+				tmp += "<img src='" + color_img["cimageproduct2"] + "' alt='' />";
+			
+			$(p_link).attr("href", "productdetail?pcode=" + product_array.at(product_idx).product.pcode + "&cproductcolor=" + product_array.at(product_idx).colors.at(product_array.at(product_idx).state).cproductcolor);
+			$(p_color_id).html(tmp);
+		}
 	</script>
 
 	<div class="container">
 		<p style="text-align: center;">
 			<a href=""> <span>«</span>
-			</a> <a href="">1 &nbsp</a>
-			<nbsv> <a href="">2 &nbsp</a> <a href="">3 &nbsp</a> <a
-				href="">4 &nbsp</a> <a href="">5 &nbsp</a> <a href=""> <span>»</span>
+			</a> <a href="">1 &nbsp</a> <a href="">2 &nbsp</a> <a href="">3 &nbsp</a>
+			<a href="">4 &nbsp</a> <a href="">5 &nbsp</a> <a href=""> <span>»</span>
 			</a>
 		</p>
 	</div>

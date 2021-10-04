@@ -31,4 +31,9 @@ public class ProductService {
 	public List<ProductColor> getProductColor(Product pcode) {
 		return productDao.selectProductColor(pcode);
 	}
+	
+	// 전체 상품 개수를 반환한다.
+	public int getTotalProductNum() {
+		return productDao.count();
+	}
 }

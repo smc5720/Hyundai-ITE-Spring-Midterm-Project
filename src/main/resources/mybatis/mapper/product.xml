@@ -18,4 +18,8 @@
 		FROM color
 		WHERE pcode = #{pcode}
 	</select>
+	<select id="count" resultType="int">
+		SELECT COUNT(pcode)
+		FROM product
+	</select>
 </mapper>
