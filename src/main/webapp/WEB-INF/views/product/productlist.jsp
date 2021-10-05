@@ -141,14 +141,17 @@ input[id="cb3"]+label {
 	<script>
 		const url = new URL(window.location.href);
 		const urlParams = url.searchParams;
-		let tmp = "<a href='' class='stretched-link'>"
-				+ urlParams.get("cLarge") + "</a>";
-		tmp += " > ";
-		tmp += "<a href='' class='stretched-link'>" + urlParams.get("cMedium")
-				+ "</a>";
-		tmp += " > ";
-		tmp += "<a href='' class='stretched-link'>" + urlParams.get("cSmall")
-				+ "</a>";
+		let tmp = "<a href='${pageContext.request.contextPath}/product/productlist?cLarge=" + urlParams.get("cLarge") + "&cMedium=none&cSmall=none&pageNo=1'>" + urlParams.get("cLarge") + "</a>";
+		if (urlParams.get("cMedium") !== "none") {
+			tmp += " ＞ ";
+			tmp += "<a href='${pageContext.request.contextPath}/product/productlist?cLarge=" + urlParams.get("cLarge") + "&cMedium=" + urlParams.get("cMedium") + "&cSmall=none&pageNo=1'>" + urlParams.get("cMedium")
+					+ "</a>";
+			if (urlParams.get("cSmall") !== "none") {
+				tmp += " ＞ ";
+				tmp += "<a href='${pageContext.request.contextPath}/product/productlist?cLarge=" + urlParams.get("cLarge") + "&cMedium=" + urlParams.get("cMedium") + "&cSmall=" + urlParams.get("cSmall") + "&pageNo=1'>" + urlParams.get("cSmall")
+						+ "</a>";
+			}
+		}
 		$("#product_category_title").html(tmp);
 	</script>
 	<hr />
@@ -266,7 +269,7 @@ input[id="cb3"]+label {
 		
 		$(window).ready(function () {
 			$.ajax({
-				url: "${pageContext.request.contextPath}/getProductList?cLarge=" + urlParams.get("cLarge")
+				url: "${pageContext.request.contextPath}/product/getProductList?cLarge=" + urlParams.get("cLarge")
 						+ "&cMedium=" + urlParams.get("cMedium")
 						+ "&cSmall=" + urlParams.get("cSmall")
 						+ "&pageNo=" + urlParams.get("pageNo")
@@ -300,8 +303,6 @@ input[id="cb3"]+label {
 		
 		function changeColor(product_idx, color_idx) {
 			product_array.at(product_idx)["state"] = color_idx;
-			console.log(product_array.at(product_idx));
-			console.log(product_array.at(product_idx).colors.at(product_array.at(product_idx).state).cproductcolor);
 			
 			let color_img = product_array.at(product_idx).colors.at(color_idx);
 			let p_color_id = "#product_img" + product_idx;

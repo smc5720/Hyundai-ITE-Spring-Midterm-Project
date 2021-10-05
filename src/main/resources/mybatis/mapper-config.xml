@@ -12,6 +12,10 @@
 			type="com.mycompany.webapp.dto.Product" />
 		<typeAlias alias="productcolor"
 			type="com.mycompany.webapp.dto.ProductColor" />
+		<typeAlias alias="productsize"
+			type="com.mycompany.webapp.dto.ProductSize" />
+		<typeAlias alias="stock"
+			type="com.mycompany.webapp.dto.Stock" />
 		<typeAlias alias="event"
 			type="com.mycompany.webapp.dto.Event" />
 	</typeAliases>

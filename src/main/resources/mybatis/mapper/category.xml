@@ -7,6 +7,7 @@
 	<select id="selectCategoryMedium" resultType="category" parameterType="category">
 		select DISTINCT(cmedium) from category
     	where clarge = #{cLarge}
+        AND cmedium NOT IN('SPECIAL SHOP')
 	</select>
 	<select id="selectCategorySmall" resultType="category" parameterType="category">
 		select DISTINCT(csmall) from category

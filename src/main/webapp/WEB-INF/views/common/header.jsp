@@ -201,14 +201,13 @@
 								});
 							});
 						</script>
-					<li><a href="productlist">여성</a>
+					<li><a href="${pageContext.request.contextPath}/product/productlist?cLarge=WOMEN&cMedium=none&cSmall=none&pageNo=1">여성</a>
 						<div id="women_category"></div>
 						<script>
 							$(window).ready(function () {
 								$.ajax({
 									url: "${pageContext.request.contextPath}/getCategoryList?cLarge=WOMEN"
 								}).done((data) => {
-									console.log(data);
 									let tmp_html = "";
 									let data_array = data.WOMEN;
 									
@@ -216,11 +215,11 @@
 										let data_medium = data_array.at(i);
 										let medium_array = Object.getOwnPropertyNames(data_medium);
 										let tmp = "<div class='nav-column'>";
-										tmp += "	<p>" + medium_array[0] + "</p>";
+										tmp += "	<p><a href='${pageContext.request.contextPath}/product/productlist?cLarge=WOMEN&cMedium=" + medium_array[0] + "&cSmall=none&pageNo=1'>" + medium_array[0] + "</a></p>";
 										tmp += "	<ul>";
 										for (let j = 0; j < data_medium[medium_array[0]].length; j++) {
 											let csmall = data_medium[medium_array[0]].at(j);
-											tmp += "		<li><a href='${pageContext.request.contextPath}/productlist?cLarge=WOMEN&cMedium=" + medium_array[0] + "&cSmall=" + csmall + "&pageNo=1'>" + csmall + "</a></li>";
+											tmp += "		<li><a href='${pageContext.request.contextPath}/product/productlist?cLarge=WOMEN&cMedium=" + medium_array[0] + "&cSmall=" + csmall + "&pageNo=1'>" + csmall + "</a></li>";
 										}
 										tmp += "	</ul>";
 										tmp += "</div>";
@@ -231,7 +230,7 @@
 								});
 							});
 						</script></li>
-					<li><a href="#">남성</a>
+					<li><a href="${pageContext.request.contextPath}/product/productlist?cLarge=MEN&cMedium=none&cSmall=none&pageNo=1">남성</a>
 						<div id="men_category"></div>
 						<script>
 							$(window).ready(function () {
@@ -245,11 +244,11 @@
 										let data_medium = data_array.at(i);
 										let medium_array = Object.getOwnPropertyNames(data_medium);
 										let tmp = "<div class='nav-column'>";
-										tmp += "	<p>" + medium_array[0] + "</p>";
+										tmp += "	<p><a href='${pageContext.request.contextPath}/product/productlist?cLarge=MEN&cMedium=" + medium_array[0] + "&cSmall=none&pageNo=1'>" + medium_array[0] + "</a></p>";
 										tmp += "	<ul>";
 										for (let j = 0; j < data_medium[medium_array[0]].length; j++) {
 											let csmall = data_medium[medium_array[0]].at(j);
-											tmp += "		<li><a href='${pageContext.request.contextPath}/productlist?cLarge=MEN&cMedium=" + medium_array[0] + "&cSmall=" + csmall + "&pageNo=1'>" + csmall + "</a></li>";
+											tmp += "		<li><a href='${pageContext.request.contextPath}/product/productlist?cLarge=MEN&cMedium=" + medium_array[0] + "&cSmall=" + csmall + "&pageNo=1'>" + csmall + "</a></li>";
 										}
 										tmp += "	</ul>";
 										tmp += "</div>";
@@ -260,7 +259,7 @@
 								});
 							});
 						</script></li>
-					<li><a href="#">키즈</a>
+					<li><a href="${pageContext.request.contextPath}/product/productlist?cLarge=KIDS&cMedium=none&cSmall=none&pageNo=1">키즈</a>
 						<div id="kids_category"></div>
 						<script>
 							$(window).ready(function () {
@@ -274,11 +273,11 @@
 										let data_medium = data_array.at(i);
 										let medium_array = Object.getOwnPropertyNames(data_medium);
 										let tmp = "<div class='nav-column'>";
-										tmp += "	<p>" + medium_array[0] + "</p>";
+										tmp += "	<p><a href='${pageContext.request.contextPath}/product/productlist?cLarge=KIDS&cMedium=" + medium_array[0] + "&cSmall=none&pageNo=1'>" + medium_array[0] + "</a></p>";
 										tmp += "	<ul>";
 										for (let j = 0; j < data_medium[medium_array[0]].length; j++) {
 											let csmall = data_medium[medium_array[0]].at(j);
-											tmp += "		<li><a href='${pageContext.request.contextPath}/productlist?cLarge=KIDS&cMedium=" + medium_array[0] + "&cSmall=" + csmall + "&pageNo=1'>" + csmall + "</a></li>";
+											tmp += "		<li><a href='${pageContext.request.contextPath}/product/productlist?cLarge=KIDS&cMedium=" + medium_array[0] + "&cSmall=" + csmall + "&pageNo=1'>" + csmall + "</a></li>";
 										}
 										tmp += "	</ul>";
 										tmp += "</div>";
@@ -289,7 +288,7 @@
 								});
 							});
 						</script></li>
-					<li><a href="#">라이프스타일</a>
+					<li><a href="${pageContext.request.contextPath}/product/productlist?cLarge=LIFESTYLE&cMedium=none&cSmall=none&pageNo=1">라이프스타일</a>
 						<div id="lifestyle_category"></div>
 						<script>
 							$(window).ready(function () {
@@ -303,11 +302,11 @@
 										let data_medium = data_array.at(i);
 										let medium_array = Object.getOwnPropertyNames(data_medium);
 										let tmp = "<div class='nav-column'>";
-										tmp += "	<p>" + medium_array[0] + "</p>";
+										tmp += "	<p><a href='${pageContext.request.contextPath}/product/productlist?cLarge=LIFESTYLE&cMedium=" + medium_array[0] + "&cSmall=none&pageNo=1'>" + medium_array[0] + "</a></p>";
 										tmp += "	<ul>";
 										for (let j = 0; j < data_medium[medium_array[0]].length; j++) {
 											let csmall = data_medium[medium_array[0]].at(j);
-											tmp += "		<li><a href='${pageContext.request.contextPath}/productlist?cLarge=LIFESTYLE&cMedium=" + medium_array[0] + "&cSmall=" + csmall + "&pageNo=1'>" + csmall + "</a></li>";
+											tmp += "		<li><a href='${pageContext.request.contextPath}/product/productlist?cLarge=LIFESTYLE&cMedium=" + medium_array[0] + "&cSmall=" + csmall + "&pageNo=1'>" + csmall + "</a></li>";
 										}
 										tmp += "	</ul>";
 										tmp += "</div>";

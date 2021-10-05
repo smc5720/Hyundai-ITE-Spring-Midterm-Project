@@ -4,6 +4,14 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.mycompany.webapp.dao.ProductDao">
+	<select id="selectProduct" resultType="product"
+		parameterType="String">
+		SELECT p.pcode, p.pname, p.pprice, p.pdetail, p.precommanditem, b.bname, p.clarge, p.cmedium, p.csmall
+		FROM product p, brand b
+		WHERE p.pcode = #{pcode}
+		AND p.bno = b.bno
+		</select>
+
 	<select id="selectProducts" resultType="product"
 		parameterType="HashMap">
 		<![CDATA[
@@ -26,6 +34,60 @@
 		WHERE rnum >= #{pager.startRowNo}
 		]]>
 	</select>
+	
+	<select id="selectProductStock" resultType="stock"
+		parameterType="String">
+		SELECT scode, sproductcolor, sproductsize, sproductamount, pcode
+		FROM stock
+		WHERE scode = #{scode}
+	</select>
+
+	<select id="selectProductsNoSmall" resultType="product"
+		parameterType="HashMap">
+		<![CDATA[
+		SELECT rnum, pcode, pname, pprice, pdetail,
+			precommanditem, bname, clarge, cmedium, csmall
+		FROM (
+		        SELECT ROWNUM as rnum, pcode, pname, pprice, pdetail,
+					precommanditem, bname, clarge, cmedium, csmall
+		        FROM (
+		            SELECT p.pcode as pcode, p.pname as pname, p.pprice as pprice, p.pdetail as pdetail,
+		                p.precommanditem as precommanditem, b.bname as bname, p.clarge as clarge, p.cmedium as cmedium, p.csmall as csmall
+		            FROM product p, brand b
+		            WHERE p.clarge = #{category.cLarge}
+		            AND p.cmedium = #{category.cMedium}
+					AND p.csmall LIKE '%'
+		            AND b.bno = p.bno
+		        )
+		        WHERE ROWNUM <= #{pager.endRowNo}
+		)
+		WHERE rnum >= #{pager.startRowNo}
+		]]>
+	</select>
+
+	<select id="selectProductsNoMedium" resultType="product"
+		parameterType="HashMap">
+		<![CDATA[
+		SELECT rnum, pcode, pname, pprice, pdetail,
+			precommanditem, bname, clarge, cmedium, csmall
+		FROM (
+		        SELECT ROWNUM as rnum, pcode, pname, pprice, pdetail,
+					precommanditem, bname, clarge, cmedium, csmall
+		        FROM (
+		            SELECT p.pcode as pcode, p.pname as pname, p.pprice as pprice, p.pdetail as pdetail,
+		                p.precommanditem as precommanditem, b.bname as bname, p.clarge as clarge, p.cmedium as cmedium, p.csmall as csmall
+		            FROM product p, brand b
+		            WHERE p.clarge = #{category.cLarge}
+					AND p.cmedium LIKE '%'
+					AND p.csmall LIKE '%'
+		            AND b.bno = p.bno
+		        )
+		        WHERE ROWNUM <= #{pager.endRowNo}
+		)
+		WHERE rnum >= #{pager.startRowNo}
+		]]>
+	</select>
+
 	<select id="selectProductColor" resultType="productcolor"
 		parameterType="product">
 		SELECT pcode, cproductcolor, cimageproduct1,
@@ -34,12 +96,42 @@
 		WHERE pcode =
 		#{pcode}
 	</select>
+	
+	<select id="selectProductSize" resultType="productsize"
+		parameterType="product">
+		SELECT pcode, sproductsize
+		FROM productsize
+		WHERE pcode =
+		#{pcode}
+	</select>
+
 	<select id="count" resultType="int" parameterType="category">
 		SELECT
 		COUNT(pcode)
 		FROM product
 		WHERE clarge = #{cLarge}
-		AND cmedium = #{cMedium}
+		AND cmedium =
+		#{cMedium}
 		AND csmall = #{cSmall}
+	</select>
+
+	<select id="countNoSmall" resultType="int"
+		parameterType="category">
+		SELECT
+		COUNT(pcode)
+		FROM product
+		WHERE clarge = #{cLarge}
+		AND cmedium = #{cMedium}
+		AND csmall LIKE '%'
+	</select>
+
+	<select id="countNoMedium" resultType="int"
+		parameterType="category">
+		SELECT
+		COUNT(pcode)
+		FROM product
+		WHERE clarge = #{cLarge}
+		AND cmedium LIKE '%'
+		AND csmall LIKE '%'
 	</select>
 </mapper>

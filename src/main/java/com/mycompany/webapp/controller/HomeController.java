@@ -10,20 +10,14 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mycompany.webapp.dto.Brand;
 import com.mycompany.webapp.dto.Category;
-import com.mycompany.webapp.dto.Pager;
-import com.mycompany.webapp.dto.Product;
-import com.mycompany.webapp.dto.ProductColor;
 import com.mycompany.webapp.service.BrandService;
 import com.mycompany.webapp.service.CategoryService;
-import com.mycompany.webapp.service.ProductService;
 
 @Controller
 public class HomeController {
@@ -121,72 +115,6 @@ public class HomeController {
 	public String shoppingBag() {
 		logger.info("실행");
 		return "member/shoppingbag";
-	}
-	
-	@Resource
-	ProductService productService;
-
-	@GetMapping("/productlist")
-	public String productList(@RequestParam(defaultValue = "1") int pageNo, String cLarge, String cMedium,
-			String cSmall, Model model, HttpSession session) {
-		logger.info("실행");
-
-		Category category = new Category(cLarge, cMedium, cSmall);
-		model.addAttribute("category", category);
-
-		int totalRows = productService.getTotalProductNum(category);
-		session.setAttribute("totalRows", totalRows);
-		
-		Pager pager = new Pager(12, 5, totalRows, pageNo);
-		model.addAttribute("pager", pager);
-
-		return "product/productlist";
-	}
-
-	@GetMapping(value = "/getProductList", produces = "application/json; charset=UTF-8")
-	@ResponseBody
-	public String getProductList(@RequestParam(defaultValue = "1") int pageNo, String cLarge, String cMedium,
-			String cSmall, Model model, HttpSession session) {
-		Category category = new Category(cLarge, cMedium, cSmall);
-		model.addAttribute("category", category);
-
-		int totalRows = Integer.parseInt(session.getAttribute("totalRows").toString());
-		Pager pager = new Pager(12, 5, totalRows, pageNo);
-		model.addAttribute("pager", pager);
-
-		List<Product> products = productService.getProducts(category, pager);
-
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("result", "success");
-
-		JSONArray jsonArray = new JSONArray();
-
-		for (Product p : products) {
-			JSONObject tmpObject = new JSONObject();
-
-			JSONObject pObject = new JSONObject();
-			pObject.put("pcode", p.getPcode());
-			pObject.put("pname", p.getPname());
-			pObject.put("pprice", p.getPprice());
-			pObject.put("bname", p.getBname());
-
-			tmpObject.put("product", pObject);
-			List<ProductColor> colors = productService.getProductColor(p);
-			tmpObject.put("colors", colors);
-			tmpObject.put("state", 0);
-			jsonArray.put(tmpObject);
-		}
-
-		jsonObject.put("products", jsonArray);
-		String json = jsonObject.toString();
-
-		return json;
-	}
-
-	@RequestMapping("/productdetail")
-	public String productDetail() {
-		logger.info("실행");
-		return "product/productdetail";
 	}
 
 	@RequestMapping("/order")
