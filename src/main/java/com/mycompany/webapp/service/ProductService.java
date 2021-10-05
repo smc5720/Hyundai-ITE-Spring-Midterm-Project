@@ -34,7 +34,7 @@ public class ProductService {
 	}
 	
 	// 전체 상품 개수를 반환한다.
-	public int getTotalProductNum() {
-		return productDao.count();
+	public int getTotalProductNum(Category category) {
+		return productDao.count(category);
 	}
 }

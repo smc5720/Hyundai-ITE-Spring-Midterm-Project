@@ -4,7 +4,8 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.mycompany.webapp.dao.ProductDao">
-	<select id="selectProducts" resultType="product" parameterType="HashMap">
+	<select id="selectProducts" resultType="product"
+		parameterType="HashMap">
 		<![CDATA[
 		SELECT rnum, pcode, pname, pprice, pdetail,
 			precommanditem, bname, clarge, cmedium, csmall
@@ -25,13 +26,20 @@
 		WHERE rnum >= #{pager.startRowNo}
 		]]>
 	</select>
-	<select id="selectProductColor" resultType="productcolor" parameterType="product">
-		SELECT pcode, cproductcolor, cimageproduct1, cimageproduct2, cimageproduct3, ccolorchipimage
+	<select id="selectProductColor" resultType="productcolor"
+		parameterType="product">
+		SELECT pcode, cproductcolor, cimageproduct1,
+		cimageproduct2, cimageproduct3, ccolorchipimage
 		FROM color
-		WHERE pcode = #{pcode}
+		WHERE pcode =
+		#{pcode}
 	</select>
-	<select id="count" resultType="int">
-		SELECT COUNT(pcode)
+	<select id="count" resultType="int" parameterType="category">
+		SELECT
+		COUNT(pcode)
 		FROM product
+		WHERE clarge = #{cLarge}
+		AND cmedium = #{cMedium}
+		AND csmall = #{cSmall}
 	</select>
 </mapper>

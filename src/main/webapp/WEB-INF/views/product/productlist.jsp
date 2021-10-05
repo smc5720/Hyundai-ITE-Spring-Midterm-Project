@@ -59,9 +59,9 @@ div .product-color>a>img {
 	height: 18px;
 }
 
-@media ( max-width :1440px) {
+@media {
 	.product-list .row .cell {
-		width: calc(100%/ 4);
+		width: calc(100%/ 3);
 	}
 }
 
@@ -222,10 +222,9 @@ input[id="cb3"]+label {
 			<div class="btn-group" style="float: right;">
 				<input type='reset' style="border: none; background-color: white;">
 				<input type='submit' value='적용'
-					style="border: none; background-color: white;">
-				<text
+					style="border: none; background-color: white;"> <span
 					style="font-size: 12px; text-align: center; align-self: center;">전체
-				100건</text>
+					${totalRows}건</span>
 			</div>
 		</form>
 	</div>
@@ -235,6 +234,32 @@ input[id="cb3"]+label {
 
 			</ul>
 		</div>
+	</div>
+	<div id="pager-container" class="container text-center">
+		<a class="btn btn-outline-primary btn-sm"
+			href="productlist?cLarge=${category.cLarge}&cMedium=${category.cMedium}&cSmall=${category.cSmall}&pageNo=1">처음</a>
+		<c:if test="${pager.groupNo > 1}">
+			<a class="btn btn-outline-info btn-sm"
+				href="productlist?cLarge=${category.cLarge}&cMedium=${category.cMedium}&cSmall=${category.cSmall}&pageNo=${pager.startPageNo-1}">이전</a>
+		</c:if>
+		<c:forEach var="i" begin="${pager.startPageNo}"
+			end="${pager.endPageNo}">
+			<c:if test="${pager.pageNo != i}">
+				<a class="btn btn-outline-success btn-sm"
+					href="productlist?cLarge=${category.cLarge}&cMedium=${category.cMedium}&cSmall=${category.cSmall}&pageNo=${i}">${i}</a>
+			</c:if>
+			<c:if test="${pager.pageNo == i}">
+				<a class="btn btn-success btn-sm"
+					href="productlist?cLarge=${category.cLarge}&cMedium=${category.cMedium}&cSmall=${category.cSmall}&pageNo=${i}">${i}</a>
+			</c:if>
+		</c:forEach>
+		<c:if test="${pager.groupNo < pager.totalGroupNo}">
+			<a class="btn btn-outline-info btn-sm"
+				href="productlist?cLarge=${category.cLarge}&cMedium=${category.cMedium}&cSmall=${category.cSmall}&pageNo=${pager.endPageNo+1}">다음</a>
+		</c:if>
+
+		<a class="btn btn-outline-primary btn-sm"
+			href="productlist?cLarge=${category.cLarge}&cMedium=${category.cMedium}&cSmall=${category.cSmall}&pageNo=${pager.totalPageNo}">끝</a>
 	</div>
 	<script>
 		let product_array;
@@ -290,30 +315,5 @@ input[id="cb3"]+label {
 			$(p_color_id).html(tmp);
 		}
 	</script>
-
-	<div class="container text-center">
-		<a class="btn btn-outline-primary btn-sm" href="boardList?pageNo=1">처음</a>
-		<c:if test="${pager.groupNo > 1}">
-			<a class="btn btn-outline-info btn-sm"
-				href="boardList?pageNo=${pager.startPageNo-1}">이전</a>
-		</c:if>
-		<c:forEach var="i" begin="${pager.startPageNo}"
-			end="${pager.endPageNo}">
-			<c:if test="${pager.pageNo != i}">
-				<a class="btn btn-outline-success btn-sm"
-					href="boardList?pageNo=${i}">${i}</a>
-			</c:if>
-			<c:if test="${pager.pageNo == i}">
-				<a class="btn btn-success btn-sm" href="boardList?pageNo=${i}">${i}</a>
-			</c:if>
-		</c:forEach>
-		<c:if test="${pager.groupNo < pager.totalGroupNo}">
-			<a class="btn btn-outline-info btn-sm"
-				href="boardList?pageNo=${pager.endPageNo+1}">다음</a>
-		</c:if>
-
-		<a class="btn btn-outline-primary btn-sm"
-			href="boardList?pageNo=${pager.totalPageNo}">끝</a>
-	</div>
 
 	<%@ include file="/WEB-INF/views/common/footer.jsp"%>

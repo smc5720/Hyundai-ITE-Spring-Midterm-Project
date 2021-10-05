@@ -13,5 +13,5 @@ import com.mycompany.webapp.dto.ProductColor;
 public interface ProductDao {
 	public List<Product> selectProducts(HashMap<String, Object> categoryPager);
 	public List<ProductColor> selectProductColor(Product pcode);
-	public int count();
+	public int count(Category category);
 }

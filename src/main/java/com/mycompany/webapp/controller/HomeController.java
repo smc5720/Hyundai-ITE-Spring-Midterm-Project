@@ -70,27 +70,35 @@ public class HomeController {
 	@GetMapping(value = "/getCategoryList", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String getCategoryList(String cLarge, HttpSession session) {
-		// logger.info("실행");
 		JSONObject jsonObject = new JSONObject();
 
 		if (session.getAttribute(cLarge) == null) {
 			Category tmp = new Category();
-			tmp.setCLarge(cLarge);
+			tmp.setcLarge(cLarge);
 			List<Category> categoryMedium = categoryService.getCategoryMedium(tmp);
 			jsonObject.put("result", "success");
 
 			JSONArray jsonArray = new JSONArray();
 
 			for (Category m : categoryMedium) {
-				m.setCLarge(tmp.getCLarge());
+				m.setcLarge(tmp.getcLarge());
 				JSONObject tmpObject = new JSONObject();
 				List<Category> categorySmall = categoryService.getCategorySmall(m);
-				tmpObject.put(m.getCMedium(), categorySmall);
+
+				JSONArray tmpArray = new JSONArray();
+				int idx = 0;
+
+				for (Category s : categorySmall) {
+					tmpArray.put(idx, s.getcSmall());
+					idx += 1;
+				}
+
+				tmpObject.put(m.getcMedium(), tmpArray);
 				jsonArray.put(tmpObject);
 			}
 			session.setAttribute(cLarge, jsonArray);
 		}
-		
+
 		jsonObject.put(cLarge, session.getAttribute(cLarge));
 		String json = jsonObject.toString();
 
@@ -114,31 +122,38 @@ public class HomeController {
 		logger.info("실행");
 		return "member/shoppingbag";
 	}
-
-	@GetMapping("/productlist")
-	public String productList() {
-		logger.info("실행");
-		return "product/productlist";
-	}
-
+	
 	@Resource
 	ProductService productService;
 
+	@GetMapping("/productlist")
+	public String productList(@RequestParam(defaultValue = "1") int pageNo, String cLarge, String cMedium,
+			String cSmall, Model model, HttpSession session) {
+		logger.info("실행");
+
+		Category category = new Category(cLarge, cMedium, cSmall);
+		model.addAttribute("category", category);
+
+		int totalRows = productService.getTotalProductNum(category);
+		session.setAttribute("totalRows", totalRows);
+		
+		Pager pager = new Pager(12, 5, totalRows, pageNo);
+		model.addAttribute("pager", pager);
+
+		return "product/productlist";
+	}
+
 	@GetMapping(value = "/getProductList", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public String getProductList(@RequestParam(defaultValue = "1") int pageNo, String cLarge, String cMedium, String cSmall, Model model) {
-		logger.info("실행");
-		
-		int totalRows = productService.getTotalProductNum();
-		logger.info("pageNo: " + pageNo);
-		Pager pager = new Pager(20, 5, totalRows, pageNo);
+	public String getProductList(@RequestParam(defaultValue = "1") int pageNo, String cLarge, String cMedium,
+			String cSmall, Model model, HttpSession session) {
+		Category category = new Category(cLarge, cMedium, cSmall);
+		model.addAttribute("category", category);
+
+		int totalRows = Integer.parseInt(session.getAttribute("totalRows").toString());
+		Pager pager = new Pager(12, 5, totalRows, pageNo);
 		model.addAttribute("pager", pager);
-		
-		Category category = new Category();
-		category.setCLarge(cLarge);
-		category.setCMedium(cMedium);
-		category.setCSmall(cSmall);
-		
+
 		List<Product> products = productService.getProducts(category, pager);
 
 		JSONObject jsonObject = new JSONObject();
