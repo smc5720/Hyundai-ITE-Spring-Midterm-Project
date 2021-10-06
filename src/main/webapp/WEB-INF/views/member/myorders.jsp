@@ -18,7 +18,7 @@
                     </dl>
                     <dl>
                         <dt>나의 상품관리</dt>
-                        <dd><a class="text-secondary ml-2" href="shoppingbag">쇼핑백</a></dd>
+                        <dd><a class="text-secondary ml-2" href="member/shoppingbag">쇼핑백</a></dd>
                     </dl>
                 </div>
             </nav>

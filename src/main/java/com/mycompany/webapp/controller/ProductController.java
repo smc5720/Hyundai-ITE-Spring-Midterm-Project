@@ -107,6 +107,7 @@ public class ProductController {
 				model.addAttribute("productimage1", colors.get(i).getCimageproduct1());
 				model.addAttribute("productimage2", colors.get(i).getCimageproduct2());
 				model.addAttribute("productimage3", colors.get(i).getCimageproduct3());
+				break;
 			}
 		}
 
@@ -135,16 +136,18 @@ public class ProductController {
 
 		return json;
 	}
-
-	@Resource
-	MemberService memberService;
 	
 	@Resource
 	ShoppingbagService shoppingbagService;
 
 	@RequestMapping("/insertToShoppingbag")
-	public String insertToShoppingbag(Authentication authentication, ShoppingBag shoppingBag) {
-		shoppingBag.setMno(memberService.getMno(authentication.getName()));
+	public String insertToShoppingbag(Authentication authentication, ShoppingBag shoppingBag, HttpSession session) {
+		
+		if(session.getAttribute("mno") == null) {
+			return "redirect:/member/loginForm";
+		}
+		
+		shoppingBag.setMno(Integer.parseInt(session.getAttribute("mno").toString()));
 		shoppingbagService.insertToShoppingbag(shoppingBag);
 
 		return "redirect:/member/shoppingbag";

@@ -8,4 +8,9 @@
 		INSERT INTO shoppingbag(SBNO, SBPRODUCTCOLOR, SBPRODUCTSIZE, SBPRODUCTAMOUNT, MNO, PCODE)
     	VALUES(sbno_seq.nextval, #{sbproductcolor}, #{sbproductsize}, #{sbproductamount}, #{mno}, #{pcode})
 	</insert>
+	<select id="selectShoppingProducts" parameterType="int" resultType="shoppingbag">
+		SELECT SBNO, SBPRODUCTCOLOR, SBPRODUCTSIZE, SBPRODUCTAMOUNT, MNO, PCODE
+		FROM shoppingbag
+		WHERE mno = #{mno}
+	</select>
 </mapper>

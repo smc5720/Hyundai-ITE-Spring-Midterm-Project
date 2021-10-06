@@ -26,7 +26,7 @@ a:hover {
 					<td class="border-bottom">
 						<h5>${product.bname}</h5>
 						<h3>${product.pname}</h3>
-						<h5>${product.pprice}원</h5>
+						<h5><fmt:formatNumber value="${product.pprice}"/>원</h5>
 						<p>상품번호 : ${product.pcode}</p>
 						<div class="bg-light rounded p-3">"${product.pdetail}"</div>
 					</td>
@@ -40,11 +40,11 @@ a:hover {
 					<td class="border-bottom">
 						<div>
 							<span class="detail-title"><small>한섬마일리지</small></span><span><small>
-									${mileage} M (5%)</small></span>
+									<fmt:formatNumber value="${mileage}"/> M (5%)</small></span>
 						</div>
 						<div>
 							<span class="detail-title"><small>H.Point</small></span><span><small>
-									${hpoint}P (0.1%)</small></span>
+									<fmt:formatNumber value="${hpoint}"/>P (0.1%)</small></span>
 						</div>
 						<div>
 							<span class="detail-title"><small>배송비</small></span><span><small>
@@ -75,8 +75,8 @@ a:hover {
 						<p>
 							<small class="detail-title">수량</small> <input
 								id="product-amount-input" class="mb-2 text-center" type="number"
-								size="1" style="width: 50px" value="0"
-								onchange="changeAmount(this, ${product.pprice})" max="0" min="0" />
+								size="1" style="width: 50px" value="1"
+								onchange="changeAmount(this, ${product.pprice})" max="1" min="0" />
 						</p>
 						<p id="product-stock-amount"></p> <script>
 							const url = new URL(window.location.href);
@@ -88,8 +88,10 @@ a:hover {
 									amount = amount.value;
 								}
 								let tmp = product_price * amount;
-								tmp += "원";
-								$("#product-total-price").html(tmp);
+								console.log(tmp);
+								tmp = tmp.toLocaleString();
+								console.log(tmp);
+								$("#product-total-price").html(tmp + "원");
 							}
 							
 							function checkStock(obj, product_price) {
@@ -112,7 +114,7 @@ a:hover {
 					<td>
 						<div class="d-flex justify-content-between mb-4">
 							<h6>총 합계</h6>
-							<h5 id="product-total-price">${product.pprice}원</h5>
+							<h5 id="product-total-price"><fmt:formatNumber value="${product.pprice}"/>원</h5>
 						</div>
 
 						<div class="d-flex justify-content-between">

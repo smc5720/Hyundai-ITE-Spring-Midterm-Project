@@ -1,5 +1,7 @@
 package com.mycompany.webapp.service;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -18,5 +20,9 @@ public class ShoppingbagService {
 
 	public int insertToShoppingbag(ShoppingBag shoppingBag) {
 		return shoppingbagDao.insertProduct(shoppingBag);
+	}
+	
+	public List<ShoppingBag> getShoppingProducts(int mno){
+		return shoppingbagDao.selectShoppingProducts(mno);
 	}
 }
