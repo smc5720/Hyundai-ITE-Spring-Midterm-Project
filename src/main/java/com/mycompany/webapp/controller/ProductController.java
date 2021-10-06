@@ -146,6 +146,8 @@ public class ProductController {
 		if (session.getAttribute("mno") == null) {
 			return "redirect:/member/loginForm";
 		}
+		
+		logger.info("insertToShoppingbag: "+shoppingBag.toString());
 
 		shoppingBag.setMno(Integer.parseInt(session.getAttribute("mno").toString()));
 

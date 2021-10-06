@@ -29,28 +29,21 @@
 
 	<select id="selectProductNo" parameterType="shoppingbag"
 		resultType="int">
-		select sbno
-		from shoppingbag
+		SELECT sbno
+		FROM shoppingbag
 		WHERE mno = #{mno}
-		AND pcode =
-		#{pcode}
-		AND sbproductcolor =
-		#{sbproductcolor}
-		AND sbproductsize =
-		#{sbproductsize}
-		union all
-		select -1 as sbno
-		from dual
-		where not
-		exists(select sbno
-		from shoppingbag
-		WHERE mno = #{mno}
-		AND pcode =
-		#{pcode}
+		AND pcode = #{pcode}
 		AND sbproductcolor = #{sbproductcolor}
-		AND
-		sbproductsize =
-		#{sbproductsize})
+		AND sbproductsize = #{sbproductsize}
+		UNION ALL
+		SELECT -1 as sbno
+		FROM dual
+		WHERE NOT EXISTS( SELECT sbno
+		                  FROM shoppingbag
+		                  WHERE mno = #{mno}
+		                  AND pcode = #{pcode}
+		                  AND sbproductcolor = #{sbproductcolor}
+		                  AND sbproductsize = #{sbproductsize} )
 	</select>
 
 	<select id="selectShoppingProducts" parameterType="int"

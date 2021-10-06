@@ -88,6 +88,21 @@ public class MemberController {
 		sbObject.setSbno(sbnoSelected);
 		sbObject.setSbproductcolor(colorSelected);
 		sbObject.setSbproductsize(sizeSelected);
+		sbObject.setPcode(pcodeSelected);
+		sbObject.setMno(Integer.parseInt(session.getAttribute("mno").toString()));
+
+		// 변경하려는 값이 이미 존재하는지 확인한다.
+		int sbno = shoppingbagService.selectSbno(sbObject);
+
+		if (sbno == -1) {
+			// 쇼핑백에 이미 같은 종류의 상품이 담겨있으면 값을 갱신한다.
+			shoppingbagService.updateShoppingbag(sbObject);
+		} else {
+			// 이미 존재한다면 변경하려는 행을 삭제하고, 이전에 존재하는 행을 갱신한다.
+			shoppingbagService.deleteShoppingbag(sbnoSelected);
+			sbObject.setSbno(sbno);
+			shoppingbagService.updateShoppingbag(sbObject);
+		}
 
 		String scode = pcodeSelected + "_" + colorSelected + "_" + sizeSelected;
 		int remainStock = productService.getProductStock(scode).getSproductamount();
