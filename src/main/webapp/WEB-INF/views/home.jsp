@@ -54,40 +54,6 @@ li {
 	float: right;
 }
 
-.eventMidBanner .banner .cont {
-	display: block;
-	position: relative;
-	padding: 37px 0 0 40px;
-	font-size: 22px;
-	line-height: 1.3;
-	color: #222;
-}
-
-.eventMidBanner .banner .cate {
-	display: inline-block;
-	padding: 4px 15px;
-	border: 1px solid #222;
-	font-size: 14px;
-	border-radius: 20px;
-}
-
-.eventMidBanner .banner .name {
-	display: block;
-	margin: 16px 0 0;
-	font-family: "notoM";
-	font-size: 16px;
-}
-
-.eventMidBanner .banner .txt {
-	display: block;
-}
-
-.eventMidBanner .banner .hash {
-	display: block;
-	margin: 5px 0 0;
-	font: 16px/1.2 "notoL";
-	color: #777;
-}
 </style>
 <hr />
 <div>

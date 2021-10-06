@@ -64,7 +64,7 @@ a:hover {
 								</a>
 							</c:forEach>
 						</p>
-						<p class="d-inline">
+						<p >
 							<small class="detail-title">사이즈</small>
 							<c:forEach var="size" items="${sizes}">
 								<input type="button" class="btn btn-light btn-sm border"
@@ -75,7 +75,7 @@ a:hover {
 						<p>
 							<small class="detail-title">수량</small> <input
 								id="product-amount-input" class="mb-2 text-center" type="number"
-								size="1" style="width: 50px" value="1"
+								size="1" style="width: 50px;;" value="1"
 								onchange="changeAmount(this, ${product.pprice})" max="1" min="0" />
 						</p>
 						<p id="product-stock-amount"></p> <script>
@@ -122,7 +122,7 @@ a:hover {
 							<button
 								onclick="addShoppingBag()"
 								class="btn btn-outline-secondary btn-lg col-5">쇼핑백 담기</button>
-							<a href="order" class="btn btn-secondary btn-lg col-5">바로주문</a>
+							<a href="" class="btn btn-secondary btn-lg col-5">바로주문</a>
 						</div>
 						<script>
 							function addShoppingBag() {

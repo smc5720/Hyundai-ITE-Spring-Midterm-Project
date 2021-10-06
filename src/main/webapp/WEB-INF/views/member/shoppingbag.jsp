@@ -2,6 +2,7 @@
 
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 
+
 <h3 class="text-center m-4 border-top p-4">
 	<span>쇼핑백</span>
 </h3>
@@ -10,7 +11,7 @@
 		<thead>
 			<tr class="row bg-light">
 				<th class="col-1 text-center"><input type="checkbox" name=""
-					id=""></th>
+					id="allchecked"></th>
 				<th class="col text-center">상품정보</th>
 				<th class="col-1 text-center">수량</th>
 				<th class="col-1 text-center">판매가</th>
@@ -95,6 +96,15 @@
 					</form>
 				</tr>
 			</c:forEach>
+			<script>
+			$("#allchecked").click(function(){
+				if($("input:checkbox[id='allchecked']").prop("checked")){
+					$("input[type=checkbox]").prop("checked", true);
+				}else{
+					$("input[type=checkbox]").prop("checked", false);		
+				}
+				});
+			</script>
 			<tr>
 				<td>
 					<div class="float-right">

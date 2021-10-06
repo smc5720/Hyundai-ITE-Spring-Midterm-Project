@@ -92,43 +92,20 @@ div .product-color>a>img {
 }
 
 .dropdown-menu {
-	min-width: 10rem;
+	height: auto;
+	max-height: 200px;
+	width: 250px;
+	overflow-x: hidden;
+	
 }
 
 input[id="cb1"] {
-	display: none;
-}
-
-input[id="cb1"]+label {
 	width: 22px;
 	height: 22px;
 	margin: 2px 2px;
 	cursor: pointer;
 	border-radius: 5px;
-	background: lightblue;
-}
-
-input[id="cb2"] {
-	display: none;
-}
-
-input[id="cb2"]+label {
-	width: 40px;
-	margin: 2px 2px;
-	cursor: pointer;
-	border: 1px solid black;
-	text-align: center;
-}
-
-input[id="cb3"] {
-	display: none;
-}
-
-input[id="cb3"]+label {
-	width: 80px;
-	margin: 2px 2px;
-	cursor: pointer;
-	text-align: center;
+	border-color: white;
 }
 </style>
 </head>
@@ -162,9 +139,9 @@ input[id="cb3"]+label {
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					브랜드</button>
 				<div class="dropdown-menu" id="test">
-					<input type="checkbox" value='Brand1' /> Brand1<br /> <input
-						type="checkbox" value='Brand2' /> Brand2<br /> <input
-						type="checkbox" value='Brand3' /> Brand3<br />
+					<c:forEach var="brandname" items="${brands}" varStatus="i">
+						<input type="checkbox" value="${brandname.bname}"/>${brandname.bname}<br/>
+					</c:forEach>
 				</div>
 			</div>
 			<div class="btn-group">
@@ -172,12 +149,14 @@ input[id="cb3"]+label {
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					색상</button>
 				<div class="dropdown-menu">
-					<input type="checkbox" id="cb1" value="red"><label
-						for="cb1"></label> <input type="checkbox" id="cb1" value="black"><label
-						for="cb1"></label> <input type="checkbox" id="cb1" value="blue"><label
-						for="cb1"></label> <input type="checkbox" id="cb1" value="yellow"><label
-						for="cb1"></label> <input type="checkbox" id="cb1" value="green"><label
-						for="cb1"></label>
+					<input type="text" id="cb1" style="background-color: black;" name="BK">
+					<input type="text" id="cb1" style="background-color: white;" name="WT">
+					<input type="text" id="cb1" style="background-color: #000080;" name="DN">
+					<input type="text" id="cb1" style="background-color: #fffff0;" name="IV">
+					<input type="text" id="cb1" style="background-color: #CFB997;" name="BG">
+					<input type="text" id="cb1" style="background-color: #FFFDD0;" name="CR">
+					<input type="text" id="cb1" style="background-color: #DBE7E5;" name="OW">
+					<input type="text" id="cb1" style="background-color: brown;" name="BL">
 				</div>
 			</div>
 			<div class="btn-group">
@@ -185,11 +164,9 @@ input[id="cb3"]+label {
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					사이즈</button>
 				<div class="dropdown-menu">
-					<input type="checkbox" value='XS' id="cb2" /><label for="cb2">XS</label>
-					<input type="checkbox" value='S' id="cb2" /><label for="cb2">S</label>
-					<input type="checkbox" value='M' id="cb2" /><label for="cb2">M</label>
-					<input type="checkbox" value='L' id="cb2" /><label for="cb2">L</label>
-					<input type="checkbox" value='XL' id="cb2" /><label for="cb2">XL</label>
+					<c:forEach var="size" items="${sizes}" varStatus="i">
+					<input type="checkbox" value="${size.sproductsize}"/>${size.sproductsize}<br/>
+					</c:forEach>
 				</div>
 			</div>
 			<div class="btn-group">
@@ -209,11 +186,11 @@ input[id="cb3"]+label {
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					정렬순</button>
 				<div class="dropdown-menu">
-					<input type="checkbox" value='NEW' id="cb3" /><label>신상품</label> <input
-						type="checkbox" value='MANY' id="cb3" /><label>판매순</label> <input
-						type="checkbox" value='HIGH' id="cb3" /><label>고가순</label> <input
-						type="checkbox" value='LOW' id="cb3" /><label>저가순</label> <input
-						type="checkbox" value='LIKE' id="cb3" /><label>평점순</label>
+					<input type="checkbox" value='NEW'/><label>신상품</label> <input
+						type="checkbox" value='MANY'/><label>판매순</label> <input
+						type="checkbox" value='HIGH'/><label>고가순</label> <input
+						type="checkbox" value='LOW' /><label>저가순</label> <input
+						type="checkbox" value='LIKE'/><label>평점순</label>
 				</div>
 			</div>
 			<div class="btn-group">
@@ -239,16 +216,16 @@ input[id="cb3"]+label {
 		</div>
 	</div>
 	<div id="pager-container" class="container text-center">
-		<a class="btn btn-outline-primary btn-sm"
+		<a 
 			href="productlist?cLarge=${category.cLarge}&cMedium=${category.cMedium}&cSmall=${category.cSmall}&pageNo=1">처음</a>
 		<c:if test="${pager.groupNo > 1}">
-			<a class="btn btn-outline-info btn-sm"
+			<a class="btn btn-light btn-sm"
 				href="productlist?cLarge=${category.cLarge}&cMedium=${category.cMedium}&cSmall=${category.cSmall}&pageNo=${pager.startPageNo-1}">이전</a>
 		</c:if>
 		<c:forEach var="i" begin="${pager.startPageNo}"
 			end="${pager.endPageNo}">
 			<c:if test="${pager.pageNo != i}">
-				<a class="btn btn-outline-success btn-sm"
+				<a class="btn btn-light btn-sm"
 					href="productlist?cLarge=${category.cLarge}&cMedium=${category.cMedium}&cSmall=${category.cSmall}&pageNo=${i}">${i}</a>
 			</c:if>
 			<c:if test="${pager.pageNo == i}">
@@ -257,11 +234,11 @@ input[id="cb3"]+label {
 			</c:if>
 		</c:forEach>
 		<c:if test="${pager.groupNo < pager.totalGroupNo}">
-			<a class="btn btn-outline-info btn-sm"
+			<a class=""
 				href="productlist?cLarge=${category.cLarge}&cMedium=${category.cMedium}&cSmall=${category.cSmall}&pageNo=${pager.endPageNo+1}">다음</a>
 		</c:if>
 
-		<a class="btn btn-outline-primary btn-sm"
+		<a class=""
 			href="productlist?cLarge=${category.cLarge}&cMedium=${category.cMedium}&cSmall=${category.cSmall}&pageNo=${pager.totalPageNo}">끝</a>
 	</div>
 	<script>

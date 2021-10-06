@@ -72,6 +72,8 @@
 
 .nav a {
 	text-decoration: none;
+	color: black;
+	font-size: 14px;
 }
 
 .nav li {
@@ -82,7 +84,6 @@
 	display: inline-block;
 	position: relative;
 	cursor: default;
-	z-index: 500;
 }
 /* Menu List */
 .nav>li {
@@ -93,7 +94,6 @@
 .nav>li>a {
 	position: relative;
 	display: block;
-	z-index: 510;
 	padding: 0 50px;
 	line-height: 54px;
 	font-size: 13px;
@@ -105,6 +105,7 @@
 	position: absolute;
 	display: block;
 	width: 120%;
+	height: 360px;
 	top: 50px;
 	left: 0;
 	background-color: rgba(255, 255, 255, 0.5);
@@ -122,6 +123,7 @@
 /* Menu Content Styles */
 .nav .nav-column {
 	float: left;
+	height: 150px;
 	width: 32%;
 	padding-left: 2.5%;
 }
