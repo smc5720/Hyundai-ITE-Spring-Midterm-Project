@@ -103,12 +103,6 @@ public class HomeController {
 		return "redirect:/member/loginForm";
 	}
 
-	@RequestMapping("/myorders")
-	public String myOrders() {
-		logger.info("실행");
-		return "member/myorders";
-	}
-
 	@RequestMapping("/order")
 	public String order() {
 		logger.info("실행");

@@ -142,7 +142,7 @@
 	<header
 		style="position: fixed; width: 100%; background-color: white; z-index: 1;">
 		<div class="set_width">
-			<a href="home" class="header_item">HOME</a>
+			<a href="${pageContext.request.contextPath}/home" class="header_item">HOME</a>
 			<sec:authorize access="isAnonymous()">
 				<a href="${pageContext.request.contextPath}/loginForm"
 					class="header_item">로그인</a>
@@ -155,7 +155,7 @@
 						value="${_csrf.token}" /> <a class="header_item"
 						href="javascript:logoutForm.submit();">로그아웃</a>
 				</form>
-				<a href="myorders" class="header_item">마이페이지</a>
+				<a href="${pageContext.request.contextPath}/member/myorders" class="header_item">마이페이지</a>
 			</sec:authorize>
 			<div class="header_item">LANGUAGE</div>
 		</div>
@@ -163,7 +163,7 @@
 		<div class="set_width">
 			<div
 				style="font-weight: bolder; color: #444444; font-size: 20px; width: 260px; height: 60px; display: table-cell; vertical-align: middle; cursor: pointer;"
-				onclick="location.href='/home'">| THE | HANDSOME |</div>
+				onclick="location.href='${pageContext.request.contextPath}/home'">| THE | HANDSOME |</div>
 			<div id="menu-wrapper"
 				style="width: 860px; height: 60px; display: table-cell; vertical-align: middle">
 				<ul class="nav">

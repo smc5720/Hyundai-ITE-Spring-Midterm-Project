@@ -5,12 +5,61 @@
 
 <mapper namespace="com.mycompany.webapp.dao.ShoppingbagDao">
 	<insert id="insertProduct" parameterType="shoppingbag">
-		INSERT INTO shoppingbag(SBNO, SBPRODUCTCOLOR, SBPRODUCTSIZE, SBPRODUCTAMOUNT, MNO, PCODE)
-    	VALUES(sbno_seq.nextval, #{sbproductcolor}, #{sbproductsize}, #{sbproductamount}, #{mno}, #{pcode})
+		INSERT INTO
+		shoppingbag(SBNO, SBPRODUCTCOLOR, SBPRODUCTSIZE, SBPRODUCTAMOUNT, MNO,
+		PCODE)
+		VALUES(sbno_seq.nextval, #{sbproductcolor}, #{sbproductsize},
+		#{sbproductamount}, #{mno},
+		#{pcode})
 	</insert>
-	<select id="selectShoppingProducts" parameterType="int" resultType="shoppingbag">
-		SELECT SBNO, SBPRODUCTCOLOR, SBPRODUCTSIZE, SBPRODUCTAMOUNT, MNO, PCODE
+
+	<update id="updateProduct" parameterType="shoppingbag">
+		UPDATE shoppingbag
+		SET
+		sbproductcolor = #{sbproductcolor},
+		sbproductamount = #{sbproductamount},
+		sbproductsize = #{sbproductsize}
+		WHERE sbno = #{sbno}
+	</update>
+
+	<delete id="deleteProduct" parameterType="int">
+		DELETE FROM shoppingbag
+		WHERE sbno = #{sbno}
+	</delete>
+
+	<select id="selectProductNo" parameterType="shoppingbag"
+		resultType="int">
+		select sbno
+		from shoppingbag
+		WHERE mno = #{mno}
+		AND pcode =
+		#{pcode}
+		AND sbproductcolor =
+		#{sbproductcolor}
+		AND sbproductsize =
+		#{sbproductsize}
+		union all
+		select -1 as sbno
+		from dual
+		where not
+		exists(select sbno
+		from shoppingbag
+		WHERE mno = #{mno}
+		AND pcode =
+		#{pcode}
+		AND sbproductcolor = #{sbproductcolor}
+		AND
+		sbproductsize =
+		#{sbproductsize})
+	</select>
+
+	<select id="selectShoppingProducts" parameterType="int"
+		resultType="shoppingbag">
+		SELECT SBNO, SBPRODUCTCOLOR, SBPRODUCTSIZE,
+		SBPRODUCTAMOUNT, MNO, PCODE
 		FROM shoppingbag
 		WHERE mno = #{mno}
+		ORDER BY
+		sbno DESC
 	</select>
 </mapper>

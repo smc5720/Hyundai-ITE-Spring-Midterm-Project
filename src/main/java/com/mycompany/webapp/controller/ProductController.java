@@ -136,19 +136,29 @@ public class ProductController {
 
 		return json;
 	}
-	
+
 	@Resource
 	ShoppingbagService shoppingbagService;
 
 	@RequestMapping("/insertToShoppingbag")
-	public String insertToShoppingbag(Authentication authentication, ShoppingBag shoppingBag, HttpSession session) {
-		
-		if(session.getAttribute("mno") == null) {
+	public String insertToShoppingbag(ShoppingBag shoppingBag, HttpSession session) {
+
+		if (session.getAttribute("mno") == null) {
 			return "redirect:/member/loginForm";
 		}
-		
+
 		shoppingBag.setMno(Integer.parseInt(session.getAttribute("mno").toString()));
-		shoppingbagService.insertToShoppingbag(shoppingBag);
+
+		int sbno = shoppingbagService.selectSbno(shoppingBag);
+
+		if (sbno == -1) {
+			// 쇼핑백에 같은 종류의 상품이 담겨있지 않으면 값을 삽입한다.
+			shoppingbagService.insertShoppingbag(shoppingBag);
+		} else {
+			shoppingBag.setSbno(sbno);
+			// 쇼핑백에 이미 같은 종류의 상품이 담겨있으면 값을 갱신한다.
+			shoppingbagService.updateShoppingbag(shoppingBag);
+		}
 
 		return "redirect:/member/shoppingbag";
 	}

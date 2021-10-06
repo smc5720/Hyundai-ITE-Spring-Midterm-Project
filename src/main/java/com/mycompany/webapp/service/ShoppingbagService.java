@@ -18,11 +18,23 @@ public class ShoppingbagService {
 	@Resource
 	private ShoppingbagDao shoppingbagDao;
 
-	public int insertToShoppingbag(ShoppingBag shoppingBag) {
+	public int insertShoppingbag(ShoppingBag shoppingBag) {
 		return shoppingbagDao.insertProduct(shoppingBag);
 	}
-	
-	public List<ShoppingBag> getShoppingProducts(int mno){
+
+	public int updateShoppingbag(ShoppingBag shoppingBag) {
+		return shoppingbagDao.updateProduct(shoppingBag);
+	}
+
+	public int selectSbno(ShoppingBag shoppingBag) {
+		return shoppingbagDao.selectProductNo(shoppingBag);
+	}
+
+	public int deleteShoppingbag(int sbno) {
+		return shoppingbagDao.deleteProduct(sbno);
+	}
+
+	public List<ShoppingBag> getShoppingProducts(int mno) {
 		return shoppingbagDao.selectShoppingProducts(mno);
 	}
 }

@@ -21,6 +21,7 @@
 		<tbody>
 			<c:forEach var="sb_product" items="${shoppingBags}">
 				<tr class="row">
+					<form method="post" action="changeProductOption">
 					<td class="col-1 text-center"><input type="checkbox"
 						name="${sb_product.sbno}" id="${sb_product.sbno}"></td>
 					<td class="col">
@@ -32,54 +33,66 @@
 										alt="product-img">
 								</div>
 								<div class="col-md-8">
-									<form action="changeOption">
-										<div class="card-body">
-											<p class="card-text">${sb_product.bname}</p>
-											<h6 class="card-title">${sb_product.pname}</h6>
+									<input type="hidden" value="${sb_product.sbno}"
+										name="sbnoSelected" /> <input type="hidden"
+										value="${sb_product.pcode}" name="pcodeSelected" />
+									<div class="card-body">
+										<p class="card-text">${sb_product.bname}</p>
+										<h6 class="card-title">${sb_product.pname}</h6>
 
+										<p class="card-text">
+											<small class="text-muted">color : <select
+												class="custom-select col-4" name="colorSelected"
+												id="colorSelected">
+													<c:forEach var="color" items="${sb_product.colors}">
+														<option
+															<c:if test="${color.cproductcolor eq sb_product.sbproductcolor}">
+															selected</c:if>
+															value="${color.cproductcolor}">${color.cproductcolor}</option>
+													</c:forEach>
+											</select>
+											</small> <small class="text-muted">/ size : <select
+												class="custom-select col-4" name="sizeSelected"
+												id="sizeSelected">
+													<c:forEach var="size" items="${sb_product.sizes}">
+														<option
+															<c:if test="${size.sproductsize eq sb_product.sbproductsize}">
+															selected</c:if>
+															value="${size.sproductsize}">${size.sproductsize}</option>
+													</c:forEach>
+											</select>
+											</small>
+										</p>
+										<c:if test="${sb_product.sbno eq remainSbno}">
 											<p class="card-text">
-												<small class="text-muted">color : <select
-													class="custom-select col-4" name="color-select-dropdown"
-													id="color-select-dropdown">
-														<c:forEach var="color" items="${sb_product.colors}">
-															<option
-																<c:if test="${color.cproductcolor eq sb_product.sbproductcolor}">
-															selected</c:if>
-																value="${color.cproductcolor}">${color.cproductcolor}</option>
-														</c:forEach>
-												</select>
-												</small> <small class="text-muted">/ size : <select
-													class="custom-select col-4" name="size-select-dropdown"
-													id="size-select-dropdown">
-														<c:forEach var="size" items="${sb_product.sizes}">
-															<option
-																<c:if test="${size.sproductsize eq sb_product.sbproductsize}">
-															selected</c:if>
-																value="${size.sproductsize}">${size.sproductsize}</option>
-														</c:forEach>
-												</select>
+												<small class="text-muted"> <span class="text-danger">남은
+														수량: ${remainStock}</span>
 												</small>
 											</p>
-											<p class="card-text text-right">
-												<small class="text-muted"> <a href=""
-													class="text-secondary">옵션변경</a>
-												</small>
-											</p>
-										</div>
-									</form>
+										</c:if>
+										<p class="card-text">
+											<small class="text-muted text-right">
+												<button class="btn btn-light btn-sm">옵션변경</button>
+											</small>
+										</p>
+									</div>
 								</div>
 							</div>
 						</div>
 					</td>
 					<td class="col-1 text-center align-middle border-left"><input
 						class="mb-2 text-center" type="number" size="1"
-						style="width: inherit;" value="${sb_product.sbproductamount}" />
+						style="width: inherit;" name="amountSelected"
+						value="${sb_product.sbproductamount}" min="0" />
 						<button class="btn btn-outline-secondary btn-sm"
 							style="width: inherit;">변경</button></td>
-					<td class="col-1 text-center align-middle border-left"><fmt:formatNumber value="${sb_product.sbproductamount * sb_product.pprice}"/></td>
+					<td class="col-1 text-center align-middle border-left"><fmt:formatNumber
+							value="${sb_product.sbproductamount * sb_product.pprice}" /></td>
 					<td class="col-1 text-center align-middle border-left">5%</td>
 					<td class="col-1 text-center align-middle border-left"><a
-						class="btn btn-outline-secondary btn-sm" name="" id="">삭제</a></td>
+						class="btn btn-outline-secondary btn-sm"
+						href="deleteshoppingbag?sbnoSelected=${sb_product.sbno}">삭제</a></td>
+					</form>
 				</tr>
 			</c:forEach>
 			<tr>

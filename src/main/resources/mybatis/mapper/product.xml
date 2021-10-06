@@ -6,11 +6,12 @@
 <mapper namespace="com.mycompany.webapp.dao.ProductDao">
 	<select id="selectProduct" resultType="product"
 		parameterType="String">
-		SELECT p.pcode, p.pname, p.pprice, p.pdetail, p.precommanditem, b.bname, p.clarge, p.cmedium, p.csmall
+		SELECT p.pcode, p.pname, p.pprice, p.pdetail,
+		p.precommanditem, b.bname, p.clarge, p.cmedium, p.csmall
 		FROM product p, brand b
 		WHERE p.pcode = #{pcode}
 		AND p.bno = b.bno
-		</select>
+	</select>
 
 	<select id="selectProducts" resultType="product"
 		parameterType="HashMap">
@@ -34,10 +35,11 @@
 		WHERE rnum >= #{pager.startRowNo}
 		]]>
 	</select>
-	
+
 	<select id="selectProductStock" resultType="stock"
 		parameterType="String">
-		SELECT scode, sproductcolor, sproductsize, sproductamount, pcode
+		SELECT scode, sproductcolor, sproductsize,
+		sproductamount, pcode
 		FROM stock
 		WHERE scode = #{scode}
 	</select>
@@ -96,7 +98,7 @@
 		WHERE pcode =
 		#{pcode}
 	</select>
-	
+
 	<select id="selectProductSize" resultType="productsize"
 		parameterType="product">
 		SELECT pcode, sproductsize
