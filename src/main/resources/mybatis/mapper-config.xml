@@ -18,5 +18,9 @@
 			type="com.mycompany.webapp.dto.Stock" />
 		<typeAlias alias="event"
 			type="com.mycompany.webapp.dto.Event" />
+		<typeAlias alias="member"
+			type="com.mycompany.webapp.dto.Member" />
+		<typeAlias alias="shoppingbag"
+			type="com.mycompany.webapp.dto.ShoppingBag" />
 	</typeAliases>
 </configuration>

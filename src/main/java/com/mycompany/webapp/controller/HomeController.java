@@ -42,8 +42,6 @@ public class HomeController {
 	@GetMapping(value = "/getBrandList", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String getBrandList(HttpSession session) {
-		logger.info("실행");
-
 		JSONObject jsonObject = new JSONObject();
 
 		if (session.getAttribute("brands") == null) {
@@ -109,12 +107,6 @@ public class HomeController {
 	public String myOrders() {
 		logger.info("실행");
 		return "member/myorders";
-	}
-
-	@RequestMapping("/shoppingbag")
-	public String shoppingBag() {
-		logger.info("실행");
-		return "member/shoppingbag";
 	}
 
 	@RequestMapping("/order")

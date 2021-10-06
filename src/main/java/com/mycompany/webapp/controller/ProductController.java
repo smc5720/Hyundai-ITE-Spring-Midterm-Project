@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,8 +22,11 @@ import com.mycompany.webapp.dto.Pager;
 import com.mycompany.webapp.dto.Product;
 import com.mycompany.webapp.dto.ProductColor;
 import com.mycompany.webapp.dto.ProductSize;
+import com.mycompany.webapp.dto.ShoppingBag;
 import com.mycompany.webapp.dto.Stock;
+import com.mycompany.webapp.service.MemberService;
 import com.mycompany.webapp.service.ProductService;
+import com.mycompany.webapp.service.ShoppingbagService;
 
 @Controller
 @RequestMapping("/product")
@@ -97,9 +101,9 @@ public class ProductController {
 		Product product = productService.getProduct(pcode);
 		List<ProductColor> colors = productService.getProductColor(product);
 		List<ProductSize> sizes = productService.getProductSize(product);
-		
-		for(int i=0; i<colors.size(); i++) {
-			if(cproductcolor.equals(colors.get(i).getCproductcolor())) {
+
+		for (int i = 0; i < colors.size(); i++) {
+			if (cproductcolor.equals(colors.get(i).getCproductcolor())) {
 				model.addAttribute("productimage1", colors.get(i).getCimageproduct1());
 				model.addAttribute("productimage2", colors.get(i).getCimageproduct2());
 				model.addAttribute("productimage3", colors.get(i).getCimageproduct3());
@@ -112,23 +116,37 @@ public class ProductController {
 
 		int mileage = (int) (product.getPprice() * 0.05);
 		int hpoint = (int) (product.getPprice() * 0.001);
-		
+
 		model.addAttribute("mileage", mileage);
 		model.addAttribute("hpoint", hpoint);
 
 		return "product/productdetail";
 	}
-	
-	@RequestMapping(value="/getProductStock", produces = "application/json; charset=UTF-8")
+
+	@RequestMapping(value = "/getProductStock", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public String getProductStock(String pcode, String color, String size) {
+	public String getProductStock(String pcode, String color, String size, Model model) {
 		String scode = pcode + "_" + color + "_" + size;
 		Stock stock = productService.getProductStock(scode);
-		
+
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("amount", stock.getSproductamount());
 		String json = jsonObject.toString();
 
 		return json;
+	}
+
+	@Resource
+	MemberService memberService;
+	
+	@Resource
+	ShoppingbagService shoppingbagService;
+
+	@RequestMapping("/insertToShoppingbag")
+	public String insertToShoppingbag(Authentication authentication, ShoppingBag shoppingBag) {
+		shoppingBag.setMno(memberService.getMno(authentication.getName()));
+		shoppingbagService.insertToShoppingbag(shoppingBag);
+
+		return "redirect:/member/shoppingbag";
 	}
 }

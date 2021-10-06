@@ -68,33 +68,39 @@ a:hover {
 							<small class="detail-title">사이즈</small>
 							<c:forEach var="size" items="${sizes}">
 								<input type="button" class="btn btn-light btn-sm border"
-									onclick="checkStock(this)" value="${size.sproductsize}"></input>
+									onclick="checkStock(this, ${product.pprice})"
+									value="${size.sproductsize}"/>
 							</c:forEach>
 						</p>
 						<p>
-							<small class="detail-title">수량</small> <input id="product-amount-input"
-								class="mb-2 text-center" type="number" size="1"
-								style="width: 50px" value="0"
-								onchange="changeAmount(this, ${product.pprice})"
-								max="0"  min="0"/>
+							<small class="detail-title">수량</small> <input
+								id="product-amount-input" class="mb-2 text-center" type="number"
+								size="1" style="width: 50px" value="0"
+								onchange="changeAmount(this, ${product.pprice})" max="0" min="0" />
 						</p>
-						<p id="product-stock-amount">
-							
-						</p> <script>
+						<p id="product-stock-amount"></p> <script>
 							const url = new URL(window.location.href);
 							const urlParams = url.searchParams;
+							let current_size = '0';
 							
 							function changeAmount(amount, product_price) {
-								let tmp = product_price * amount.value;
+								if (typeof(amount) !== 'number') {
+									amount = amount.value;
+								}
+								let tmp = product_price * amount;
 								tmp += "원";
 								$("#product-total-price").html(tmp);
 							}
 							
-							function checkStock(amount) {
+							function checkStock(obj, product_price) {
+								current_size = obj.value;
+								
 								$.ajax({
-									url: "/product/getProductStock?pcode=${product.pcode}&color=" + urlParams.get("cproductcolor") + "&size=" + amount.value
+									url: "/product/getProductStock?pcode=${product.pcode}&color=" + urlParams.get("cproductcolor") + "&size=" + obj.value
 								}).done((data) => {
-									$("#product-amount-input").val(Math.min($("#product-amount-input").val(), data.amount));
+									let p_amount = Math.min($("#product-amount-input").val(), data.amount);
+									$("#product-amount-input").val(p_amount);
+									changeAmount(p_amount, product_price);
 									$("#product-amount-input").attr("max", data.amount);
 									$("#product-stock-amount").html("<small class='detail-title' style='color: red;'>남은 수량 <span>" + data.amount + "개</span></small>");
 								});
@@ -111,10 +117,20 @@ a:hover {
 
 						<div class="d-flex justify-content-between">
 							<button class="btn btn-white btn-lg col-2">♡</button>
-							<button onclick="location.href='shoppingbag'"
+							<button
+								onclick="addShoppingBag()"
 								class="btn btn-outline-secondary btn-lg col-5">쇼핑백 담기</button>
 							<a href="order" class="btn btn-secondary btn-lg col-5">바로주문</a>
 						</div>
+						<script>
+							function addShoppingBag() {
+								location.href = "insertToShoppingbag?sbproductcolor="
+										+ urlParams.get("cproductcolor")
+										+ "&sbproductsize=" + current_size
+										+ "&sbproductamount=" + $("#product-amount-input").val()
+										+ "&pcode=" + urlParams.get("pcode");
+							}
+						</script>
 					</td>
 				</tr>
 				<tr>

@@ -16,6 +16,7 @@ public class ControllerExceptionHandler {
 	@ExceptionHandler
 	public String handleOtherException(Exception e) {
 		logger.info("실행");
+		e.printStackTrace();
 		return "error/500";
 	}
 }

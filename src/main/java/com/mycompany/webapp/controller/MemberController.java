@@ -16,4 +16,10 @@ public class MemberController {
 		logger.info("실행");
 		return "member/loginForm";
 	}
+	
+	@RequestMapping("/shoppingbag")
+	public String shoppingBag() {
+		logger.info("실행");
+		return "member/shoppingbag";
+	}
 }

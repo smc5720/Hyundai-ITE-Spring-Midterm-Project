@@ -4,9 +4,10 @@ import lombok.Data;
 
 @Data
 public class ShoppingBag {
-	private int sbnum;
+	private int sbno;
+	private String sbproductcolor;
+	private String sbproductsize;
+	private int sbproductamount;
+	private int mno;
 	private String pcode;
-	private int mnum;
-	private String pcolor;
-	private String psize;
 }

@@ -109,7 +109,6 @@ li {
 						$('#eventMidBanner').html('<div class="spinner-border"></div>');
 					} else {
 						const events= data.events;
-						console.log(events);
 						let events_html ="";
 						for(let i=0; i< events.length; i++){
 							let event = events.at(i);
