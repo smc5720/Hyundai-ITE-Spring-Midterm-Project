@@ -88,9 +88,7 @@ a:hover {
 									amount = amount.value;
 								}
 								let tmp = product_price * amount;
-								console.log(tmp);
 								tmp = tmp.toLocaleString();
-								console.log(tmp);
 								$("#product-total-price").html(tmp + "원");
 							}
 							
@@ -100,7 +98,7 @@ a:hover {
 								$.ajax({
 									url: "/product/getProductStock",
 									data: {
-										"pcode" : ${product.pcode},
+										"pcode" : "${product.pcode}",
 										"color" : urlParams.get("cproductcolor"),
 										"size" : obj.value
 									}

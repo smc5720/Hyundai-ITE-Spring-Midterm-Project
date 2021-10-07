@@ -103,14 +103,36 @@
 					} else {
 						$("input[type=checkbox]").prop("checked", false);
 					}
+					
+					handleSbnoCheckbox();
 				});
 				
 				function handleSbnoCheckbox() {
 					let checkboxes = $('input:checkbox[name="sbno-checkbox"]:checked');
-					for(let i=0; i<checkboxes.length; i++) {
-						console.log("sbno-price-" + checkboxes[i].id);
-						console.log($("sbno-price-" + checkboxes[i].id).val);
+					
+					let sum = 0;
+					// 배송비
+					let post = 3000;
+					let total = 0;
+					
+					for (let i = 0; i < checkboxes.length; i++) {
+						let id = "#sbno-price-" + checkboxes[i].id;
+						// 숫자 내부의 쉼표를 제거한다.
+						sum += parseInt($(id).html().replace(/\D/g,''));
 					}
+					
+					if (sum >= 30000) {
+						post = 0;
+					} else {
+						post = 2500;
+					}
+					
+					total = (sum + post).toLocaleString();
+					sum = sum.toLocaleString();
+					$("#product-price-total").html(sum);
+					$("#product-price-all").html(total);
+					$("#product-count").html(checkboxes.length);
+					$("#post-fee").html(post);
 				}
 			</script>
 			<tr>
@@ -118,19 +140,19 @@
 					<div class="float-right">
 						<dl class="row">
 							<dt class="col-sm-6">상품합계</dt>
-							<dd class="col-sm-6">￦0</dd>
+							<dd class="col-sm-6">￦<span id="product-price-total">0</span></dd>
 
 							<dt class="col-sm-6">배송비</dt>
-							<dd class="col-sm-6">￦0</dd>
+							<dd class="col-sm-6">￦<span id="post-fee">2500</span></dd>
 						</dl>
 						<div class="row">
 							<dt class="col-sm-6">합계</dt>
-							<dd class="col-sm-6">￦0</dd>
+							<dd class="col-sm-6">￦<span id="product-price-all">2500</span></dd>
 						</div>
 					</div>
 					<div class="float-right mr-5">
 						<div>
-							<dd>총 ${shoppingBags.size()}개 상품</dd>
+							<dd>총 상품 <span id="product-count">0</span>종</dd>
 						</div>
 					</div>
 				</td>
@@ -138,7 +160,7 @@
 			<tr>
 				<td>
 					<div class="text-center">
-						<button class="btn btn-light">선택상품 삭제</button>
+						<a href="deleteallshoppingbag" class="btn btn-light">전체 삭제</a>
 						<button class="btn btn-secondary">선택상품 주문하기</button>
 					</div>
 				</td>

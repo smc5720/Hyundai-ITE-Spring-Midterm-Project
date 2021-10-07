@@ -130,4 +130,17 @@ public class MemberController {
 
 		return "redirect:/member/shoppingbag";
 	}
+
+	@RequestMapping("/deleteallshoppingbag")
+	public String deleteAllShoppingbag(HttpSession session) {
+		logger.info("실행");
+		int mno = Integer.parseInt(session.getAttribute("mno").toString());
+		List<ShoppingBag> shoppingBags = shoppingbagService.getShoppingProducts(mno);
+
+		for (ShoppingBag sb : shoppingBags) {
+			shoppingbagService.deleteShoppingbag(sb.getSbno());
+		}
+
+		return "redirect:/member/shoppingbag";
+	}
 }
