@@ -98,7 +98,12 @@ a:hover {
 								current_size = obj.value;
 								
 								$.ajax({
-									url: "/product/getProductStock?pcode=${product.pcode}&color=" + urlParams.get("cproductcolor") + "&size=" + obj.value
+									url: "/product/getProductStock",
+									data: {
+										"pcode" : ${product.pcode},
+										"color" : urlParams.get("cproductcolor"),
+										"size" : obj.value
+									}
 								}).done((data) => {
 									let p_amount = Math.min($("#product-amount-input").val(), data.amount);
 									$("#product-amount-input").val(p_amount);

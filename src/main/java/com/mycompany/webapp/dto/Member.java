@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 public class Member {
-	private int mnum;
+	private int mno;
 	private String mid;
 	private String mname;
 	private char mgender;

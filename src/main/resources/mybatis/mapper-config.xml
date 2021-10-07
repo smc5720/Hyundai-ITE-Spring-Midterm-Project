@@ -22,5 +22,7 @@
 			type="com.mycompany.webapp.dto.Member" />
 		<typeAlias alias="shoppingbag"
 			type="com.mycompany.webapp.dto.ShoppingBag" />
+		<typeAlias alias="couponmember"
+			type="com.mycompany.webapp.dto.CouponMember" />
 	</typeAliases>
 </configuration>

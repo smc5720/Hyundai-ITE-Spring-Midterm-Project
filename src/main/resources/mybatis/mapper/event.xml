@@ -5,13 +5,38 @@
 
 <mapper namespace="com.mycompany.webapp.dao.EventDao">
 	<select id="selectEvents" resultType="event">
-		SELECT eno, ename, estartdate, eenddate, econtent, eimage, eimage, ecouponamount, estate, ecouponremain
+		SELECT eno, ename,
+		estartdate, eenddate, econtent, eimage, eimage, ecouponamount, estate,
+		ecouponremain
 		FROM EVENT
 	</select>
+
+	<select id="selectEventByEno" resultType="event"
+		parameterType="int">
+		SELECT eno, ename, estartdate, eenddate, econtent,
+		eimage, eimage, ecouponamount, estate, ecouponremain
+		FROM EVENT
+		WHERE
+		eno=#{eno}
+	</select>
+
+	<update id="updateRemainCoupons" parameterType="HashMap">
+		UPDATE
+		event
+		SET ecouponremain = #{remainCoupons}
+		WHERE eno = #{eno}
+	</update>
 	
-	<select id="selectEventByEno" resultType="event" parameterType="int">
-		SELECT eno, ename, estartdate, eenddate, econtent, eimage, eimage, ecouponamount, estate, ecouponremain
-		FROM EVENT
-		WHERE eno=#{eno}
-	</select>
+	<insert id="insertCouponMember" parameterType="couponmember">
+		INSERT INTO couponmember
+		VALUES(#{mno}, #{cno}, #{eno})
+	</insert>
+	
+	<update id="updateCouponState" parameterType="HashMap">
+		UPDATE
+		eventcoupon
+		SET cstate = #{state}
+		WHERE eno = #{eno}
+		AND cno = #{cno}
+	</update>
 </mapper>
