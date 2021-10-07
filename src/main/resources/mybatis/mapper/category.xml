@@ -5,13 +5,17 @@
 
 <mapper namespace="com.mycompany.webapp.dao.CategoryDao">
 	<select id="selectCategoryMedium" resultType="category" parameterType="category">
-		select DISTINCT(cmedium) from category
-    	where clarge = #{cLarge}
-        AND cmedium NOT IN('SPECIAL SHOP')
+        SELECT cmedium from category
+	    WHERE clarge = #{cLarge}
+	    AND cmedium NOT IN('SPECIAL SHOP')
+	    GROUP BY clarge, cmedium
 	</select>
+	
 	<select id="selectCategorySmall" resultType="category" parameterType="category">
-		select DISTINCT(csmall) from category
-    	where clarge = #{cLarge}
-    	and cmedium = #{cMedium}
+    	SELECT csmall from category
+    	WHERE clarge = #{cLarge}
+    	AND cmedium = #{cMedium}
+    	GROUP BY clarge, cmedium, csmall
+    	
 	</select>
 </mapper>

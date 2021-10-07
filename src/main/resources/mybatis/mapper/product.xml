@@ -101,10 +101,16 @@
 
 	<select id="selectProductSize" resultType="productsize"
 		parameterType="product">
-		SELECT pcode, sproductsize
+		SELECT *
 		FROM productsize
-		WHERE pcode =
-		#{pcode}
+		WHERE pcode = #{pcode}
+		ORDER BY
+		CASE sproductsize WHEN 'S' THEN 1
+		WHEN 'M' THEN 2
+		WHEN 'L' THEN 3
+		END ASC,
+		sproductsize ASC
+		
 	</select>
 
 	<select id="count" resultType="int" parameterType="category">
