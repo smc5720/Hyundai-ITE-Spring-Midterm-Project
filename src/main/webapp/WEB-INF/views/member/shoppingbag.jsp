@@ -21,10 +21,10 @@
 		</thead>
 		<tbody>
 			<c:forEach var="sb_product" items="${shoppingBags}">
+				<form method="post" action="changeProductOption">
 				<tr class="row">
-					<form method="post" action="changeProductOption">
 					<td class="col-1 text-center"><input type="checkbox"
-						name="${sb_product.sbno}" id="${sb_product.sbno}"></td>
+						name="sbno-checkbox" id="${sb_product.sbno}" onchange="handleSbnoCheckbox(this)"></td>
 					<td class="col">
 						<div class="card border-white" style="max-width: 540px;">
 							<div class="row no-gutters">
@@ -87,23 +87,31 @@
 						value="${sb_product.sbproductamount}" min="0" />
 						<button class="btn btn-outline-secondary btn-sm"
 							style="width: inherit;">변경</button></td>
-					<td class="col-1 text-center align-middle border-left"><fmt:formatNumber
+					<td class="col-1 text-center align-middle border-left" id="sbno-price-${sb_product.sbno}"><fmt:formatNumber
 							value="${sb_product.sbproductamount * sb_product.pprice}" /></td>
 					<td class="col-1 text-center align-middle border-left">5%</td>
 					<td class="col-1 text-center align-middle border-left"><a
 						class="btn btn-outline-secondary btn-sm"
 						href="deleteshoppingbag?sbnoSelected=${sb_product.sbno}">삭제</a></td>
-					</form>
 				</tr>
+				</form>
 			</c:forEach>
 			<script>
-			$("#allchecked").click(function(){
-				if($("input:checkbox[id='allchecked']").prop("checked")){
-					$("input[type=checkbox]").prop("checked", true);
-				}else{
-					$("input[type=checkbox]").prop("checked", false);		
-				}
+				$("#allchecked").click(function() {
+					if ($("input:checkbox[id='allchecked']").prop("checked")) {
+						$("input[type=checkbox]").prop("checked", true);
+					} else {
+						$("input[type=checkbox]").prop("checked", false);
+					}
 				});
+				
+				function handleSbnoCheckbox() {
+					let checkboxes = $('input:checkbox[name="sbno-checkbox"]:checked');
+					for(let i=0; i<checkboxes.length; i++) {
+						console.log("sbno-price-" + checkboxes[i].id);
+						console.log($("sbno-price-" + checkboxes[i].id).val);
+					}
+				}
 			</script>
 			<tr>
 				<td>
@@ -118,13 +126,11 @@
 						<div class="row">
 							<dt class="col-sm-6">합계</dt>
 							<dd class="col-sm-6">￦0</dd>
-							</dl>
 						</div>
 					</div>
 					<div class="float-right mr-5">
 						<div>
 							<dd>총 ${shoppingBags.size()}개 상품</dd>
-							</dl>
 						</div>
 					</div>
 				</td>
