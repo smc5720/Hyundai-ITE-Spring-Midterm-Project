@@ -229,7 +229,7 @@ input[id="cb1"] {
 					href="productlist?cLarge=${category.cLarge}&cMedium=${category.cMedium}&cSmall=${category.cSmall}&pageNo=${i}">${i}</a>
 			</c:if>
 			<c:if test="${pager.pageNo == i}">
-				<a class="btn btn-success btn-sm"
+				<a class="btn btn-outline-dark btn-sm"
 					href="productlist?cLarge=${category.cLarge}&cMedium=${category.cMedium}&cSmall=${category.cSmall}&pageNo=${i}">${i}</a>
 			</c:if>
 		</c:forEach>

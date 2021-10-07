@@ -6,14 +6,14 @@
 <mapper namespace="com.mycompany.webapp.dao.EventDao">
 	<select id="selectEvents" resultType="event">
 		SELECT eno, ename,
-		estartdate, eenddate, econtent, eimage, eimage, ecouponamount, estate,
+		TO_CHAR(estartdate,'YYYY-MM-DD HH24:MI') as estartdate, TO_CHAR(eenddate,'YYYY-MM-DD HH24:MI') as eenddate, econtent, eimage, eimage, ecouponamount, estate,
 		ecouponremain
 		FROM EVENT
 	</select>
 
 	<select id="selectEventByEno" resultType="event"
 		parameterType="int">
-		SELECT eno, ename, estartdate, eenddate, econtent,
+		SELECT eno, ename, TO_CHAR(estartdate,'YYYY-MM-DD HH24:MI') as estartdate, TO_CHAR(eenddate,'YYYY-MM-DD HH24:MI') as eenddate, econtent,
 		eimage, eimage, ecouponamount, estate, ecouponremain
 		FROM EVENT
 		WHERE
