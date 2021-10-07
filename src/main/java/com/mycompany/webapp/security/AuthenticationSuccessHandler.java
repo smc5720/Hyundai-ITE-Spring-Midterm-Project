@@ -30,7 +30,9 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 		logger.info("실행");
+		// 로그인에 성공하면 mid로 DB에서 mno 값을 가져와 세션에 저장한다.
 		request.getSession().setAttribute("mno", memberService.getMno(authentication.getName()));
+		// 브라우저를 종료하거나, 로그아웃(핸들러)을 하면 mno 값은 날아간다.
 		super.onAuthenticationSuccess(request, response, authentication);
 	}
 }

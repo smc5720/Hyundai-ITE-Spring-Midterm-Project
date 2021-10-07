@@ -26,13 +26,11 @@ public class HomeController {
 
 	@RequestMapping("/")
 	public String content() {
-		logger.info("실행");
-		return "home";
+		return "redirect:/home";
 	}
 
 	@RequestMapping("/home")
 	public String home() {
-		logger.info("실행");
 		return "home";
 	}
 
@@ -44,8 +42,13 @@ public class HomeController {
 	public String getBrandList(HttpSession session) {
 		JSONObject jsonObject = new JSONObject();
 
+		// 처음 접속(세션에 아무런 값이 없을 때)했을 때
 		if (session.getAttribute("brands") == null) {
+			// Brand 테이블에 접근해서 DB에 저장된 모든 브랜드 리스트를 가져온다.
 			List<Brand> brands = brandService.getBrandList();
+			// 가져온 브랜드 리스트를 세션에 저장한다.
+			// 브라우저를 끄기 전까지 더 이상 브랜드 테이블에 접근하지 않아도 된다.
+			// 왜냐하면 세션에서 꺼내쓰면 되기 때문이다.
 			session.setAttribute("brands", brands);
 		}
 
@@ -64,17 +67,25 @@ public class HomeController {
 	public String getCategoryList(String cLarge, HttpSession session) {
 		JSONObject jsonObject = new JSONObject();
 
+		// 대분류 값 cLarge만 가지고 있는 상태
+		// 처음 접속(세션에 아무런 값이 없을 때)했을 때
 		if (session.getAttribute(cLarge) == null) {
 			Category tmp = new Category();
+			// tmp는 대분류 값만 가지고 있는 상태
 			tmp.setcLarge(cLarge);
+			
+			// tmp를 이용해서 중분류 리스트를 가져온다.
 			List<Category> categoryMedium = categoryService.getCategoryMedium(tmp);
-			jsonObject.put("result", "success");
 
 			JSONArray jsonArray = new JSONArray();
 
 			for (Category m : categoryMedium) {
+				// m은 대분류와 중분류 값을 가지고 있는 상태
 				m.setcLarge(tmp.getcLarge());
+				
 				JSONObject tmpObject = new JSONObject();
+				
+				// m을 이용해서 소분류 리스트를 가져온다.
 				List<Category> categorySmall = categoryService.getCategorySmall(m);
 
 				JSONArray tmpArray = new JSONArray();
@@ -88,6 +99,9 @@ public class HomeController {
 				tmpObject.put(m.getcMedium(), tmpArray);
 				jsonArray.put(tmpObject);
 			}
+			
+			jsonObject.put("result", "success");
+			// DB에서 값을 받아온 뒤 세션에 넣어준다.
 			session.setAttribute(cLarge, jsonArray);
 		}
 

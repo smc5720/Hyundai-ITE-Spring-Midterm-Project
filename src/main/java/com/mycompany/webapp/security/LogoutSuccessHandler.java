@@ -21,6 +21,8 @@ public class LogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
 	public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
 			throws IOException, ServletException {
 		logger.info("실행");
+		// 로그아웃에 성공하면 세션에 저장한 mno 값을 삭제한다.
+		request.getSession().removeAttribute("mno");
 		super.onLogoutSuccess(request, response, authentication);
 	}
 }

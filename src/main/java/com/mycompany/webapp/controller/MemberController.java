@@ -47,11 +47,14 @@ public class MemberController {
 	public String shoppingBag(HttpSession session, Model model) {
 		logger.info("실행");
 
+		// 로그인 여부 체크
 		if (session.getAttribute("mno") == null) {
 			return "redirect:/member/loginForm";
 		}
 
 		int mno = Integer.parseInt(session.getAttribute("mno").toString());
+
+		// mno라는 사람의 쇼핑백 정보를 DB 쇼핑백 테이블에서 가져온다.
 		List<ShoppingBag> shoppingBags = shoppingbagService.getShoppingProducts(mno);
 
 		for (ShoppingBag sb : shoppingBags) {
@@ -61,6 +64,7 @@ public class MemberController {
 			sb.setBname(p.getBname());
 			sb.setPprice(p.getPprice());
 
+			// 상품이 가진 컬러 리스트를 가져온다.
 			List<ProductColor> colors = productService.getProductColor(p);
 			sb.setColors(colors);
 
@@ -99,8 +103,10 @@ public class MemberController {
 			shoppingbagService.updateShoppingbag(sbObject);
 		} else {
 			// 이미 존재한다면 변경하려는 행을 삭제하고, 이전에 존재하는 행을 갱신한다.
-			shoppingbagService.deleteShoppingbag(sbnoSelected);
-			sbObject.setSbno(sbno);
+			if (sbnoSelected != sbno) {
+				shoppingbagService.deleteShoppingbag(sbnoSelected);
+				sbObject.setSbno(sbno);
+			}
 			shoppingbagService.updateShoppingbag(sbObject);
 		}
 
@@ -110,6 +116,7 @@ public class MemberController {
 		sbObject.setSbproductamount(Math.min(amountSelected, remainStock));
 		shoppingbagService.updateShoppingbag(sbObject);
 
+		// 너무 많은 디비 접근이 있을 거 같아서 변경하는 곳 한 군데만 재고를 보여준다.
 		session.setAttribute("remainStock", remainStock);
 		session.setAttribute("remainSbno", sbnoSelected);
 
