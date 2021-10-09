@@ -1,6 +1,27 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
+<style>
+a {
+	color: black;
+	text-decoration: none;
+}
+
+a:link {
+	color: black;
+	text-decoration: none;
+}
+
+a:visited {
+	color: black;
+	text-decoration: none;
+}
+
+a:hover {
+	color: black;
+	text-decoration: none;
+}
+</style>
 
 <h3 class="text-center m-4 border-top border-bottom p-4">
 	<span>주문/배송</span>
@@ -45,21 +66,31 @@
 						<li>
 							<p class="d-inline col-2">검색구분</p>
 							<div class="d-inline">
-								<select class="custom-select col-3" name="f" id="f">
-									<option selected value="pname">상품명</option>
-									<option value="onum">주문번호</option>
-								</select> <input type="text" class="d-inline form-control col-7" name="q"
-									value="" />
+								<select class="custom-select col-3">
+									<option selected value="pcode">상품코드</option>
+									<option value="ono">주문번호</option>
+								</select>
+								<input type="text" class="d-inline form-control col-7"/>
 							</div>
 						</li>
 					</ul>
 					<button class="btn btn-sm btn-secondary ml-3 mb-2">조회하기</button>
 				</div>
 			</form>
+			<script>
+			$(document).on('click', '#btnSearch', function(e){
+				//e.preventDefault(); //새창실행 및 리로드를 막는 기능 ->submit 기능은 실행 시킴
+				var url = "${pageContext.request.contextPath}/member/myorders";
+				url = url + "?searchType=" + $('#searchType').val();
+				url = url + "&keyword=" + $('#keyword').val();
+				location.href = url;
+				console.log(url);
+			});	
+			</script>
 			<div>
 				<h6 class="mt-5 mb-3 font-weight-bold">상품 주문 목록</h6>
 			</div>
-			<table class="table">
+			<table class="table" id="ono">
 				<thead>
 					<tr class="row bg-light">
 						<td class="col-1 text-center"><small>주문번호</small></td>
@@ -72,7 +103,7 @@
 				<tbody>
 					<c:forEach var="orders" items="${productOrders}">
 						<tr class="row">
-							<td class="col-1 text-center ono">${orders.ono}</td>
+							<td class="col-1 text-center">${orders.ono}</td>
 							<td class="col border-left">
 								<div class="card border-white" style="max-width: 410px;">
 									<div class="row no-gutters">
@@ -108,13 +139,40 @@
 					</c:forEach>
 
 					<tr class="row">
-						<td class="col text-center"><a class="text-secondary" href="">≪</a>
-							<a class="text-secondary" href="">＜</a> <a class="text-secondary"
-							href="">1</a> <a class="text-secondary" href="">＞</a> <a
-							class="text-secondary" href="">≫</a></td>
+						<td class="col text-center">
+<!-- 							<a class="text-secondary" href="">≪</a>
+							<a class="text-secondary" href="">＜</a>
+							<a class="text-secondary" href="">1</a>
+							<a class="text-secondary" href="">＞</a>
+							<a class="text-secondary" href="">≫</a> -->
+						
+						<div id="pager-container" class="container text-center">
+							<a href="myorders?pageNo=1">처음</a>
+							<c:if test="${pager.groupNo > 1}">
+								<a class="btn btn-light btn-sm"
+									href="myorders?pageNo=${pager.startPageNo-1}">이전</a>
+							</c:if>
+							<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
+								<c:if test="${pager.pageNo != i}">
+									<a class="btn btn-light btn-sm"
+										href="myorders?pageNo=${i}">${i}</a>
+								</c:if>
+								<c:if test="${pager.pageNo == i}">
+									<a class="btn btn-outline-dark btn-sm"
+										href="myorders?pageNo=${i}">${i}</a>
+								</c:if>
+							</c:forEach>
+							<c:if test="${pager.groupNo < pager.totalGroupNo}">
+								<a href="myorders?pageNo=${pager.endPageNo+1}">다음</a>
+							</c:if>
+							<a href="myorders?pageNo=${pager.totalPageNo}">끝</a>
+						</div>
+						</td>
 					</tr>
 				</tbody>
 			</table>
+
+			
 		</article>
 	</div>
 </section>

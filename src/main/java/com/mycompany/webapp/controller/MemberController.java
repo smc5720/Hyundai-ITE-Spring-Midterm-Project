@@ -10,11 +10,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mycompany.webapp.dto.Event;
 import com.mycompany.webapp.dto.MyCoupon;
+import com.mycompany.webapp.dto.Pager;
 import com.mycompany.webapp.dto.Product;
 import com.mycompany.webapp.dto.ProductColor;
 import com.mycompany.webapp.dto.ProductOrder;
@@ -45,13 +48,21 @@ public class MemberController {
 	@Resource
 	MyOrderService myOrderService;
 	
-	@RequestMapping("/myorders")
-	public String myOrdersList(HttpSession session, Model model) { //회원의 주문한 상품 리스트
+	@GetMapping(value = "/myorders", produces = "application/json; charset=UTF-8")
+	public String myOrdersList(HttpSession session, Model model
+				, @RequestParam(defaultValue = "1") int pageNo){ //회원의 주문한 상품 리스트
 		
 		int mno = Integer.parseInt(session.getAttribute("mno").toString());// 어떤 회원 인지
 		
+		// 페이징 처리
+		int totalRows = myOrderService.getProductOrderCount(mno);
+		session.setAttribute("totalRows", totalRows);
+		
+		Pager pager = new Pager(5, 5, totalRows, pageNo);
+		model.addAttribute("pager", pager);
+			
 		//주문 테이블에서 mno에 해당하는 모든 정보를 가지고 옴 
-		List<ProductOrder> productOrders = myOrderService.getProductOrder(mno);
+		List<ProductOrder> productOrders = myOrderService.getProductOrder(mno, pager);
 		
 		for(ProductOrder po : productOrders) {
 			Product p = productService.getProduct(po.getPcode());
@@ -73,6 +84,7 @@ public class MemberController {
 		
 		return "member/myorders";
 	} 
+	
 
 	@RequestMapping("/mycoupons")
 	public String myCoupons(HttpSession session, Model model) {
