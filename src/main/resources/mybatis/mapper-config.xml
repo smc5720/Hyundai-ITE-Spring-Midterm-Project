@@ -30,5 +30,7 @@
 			type="com.mycompany.webapp.dto.ProductOrder" />
 		<typeAlias alias="productorderitem"
 			type="com.mycompany.webapp.dto.ProductOrderItem" />
+		<typeAlias alias="mycoupon"
+		type="com.mycompany.webapp.dto.MyCoupon" />
 	</typeAliases>
 </configuration>

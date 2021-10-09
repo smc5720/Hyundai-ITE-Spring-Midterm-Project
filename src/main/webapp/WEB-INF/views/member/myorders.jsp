@@ -20,6 +20,12 @@
                         <dt>나의 상품관리</dt>
                         <dd><a class="text-secondary ml-2" href="shoppingbag">쇼핑백</a></dd>
                     </dl>
+                    <dl>
+                        <dt>쿠폰</dt>
+                        <dd>
+                            <a class="text-secondary ml-2" href="mycoupons">내 쿠폰</a>
+                        </dd>
+                    </dl>
                 </div>
             </nav>
 

@@ -1,5 +1,6 @@
 package com.mycompany.webapp.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -9,7 +10,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +24,6 @@ import com.mycompany.webapp.dto.ProductColor;
 import com.mycompany.webapp.dto.ProductSize;
 import com.mycompany.webapp.dto.ShoppingBag;
 import com.mycompany.webapp.dto.Stock;
-import com.mycompany.webapp.service.MemberService;
 import com.mycompany.webapp.service.ProductService;
 import com.mycompany.webapp.service.ShoppingbagService;
 
@@ -33,6 +32,7 @@ import com.mycompany.webapp.service.ShoppingbagService;
 public class ProductController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
+	public static HashMap<String, Integer> viewers = new HashMap<String, Integer>();
 
 	@Resource
 	ProductService productService;
@@ -136,7 +136,24 @@ public class ProductController {
 		model.addAttribute("mileage", mileage);
 		model.addAttribute("hpoint", hpoint);
 
+		if(viewers.containsKey(pcode)) {
+			viewers.put(pcode, viewers.get(pcode) + 1);
+		}else {
+			viewers.put(pcode, 1);
+		}	
+		
+		model.addAttribute("viewer", viewers.get(pcode));
+
 		return "product/productdetail";
+	}
+		
+	@RequestMapping("/exitPage")
+	public void exitPage(String pcode) {
+		if(viewers.get(pcode) == 1) {
+			viewers.remove(pcode);
+		}else {			
+			viewers.put(pcode, viewers.get(pcode) - 1);
+		}
 	}
 
 	@RequestMapping(value = "/getProductStock", produces = "application/json; charset=UTF-8")

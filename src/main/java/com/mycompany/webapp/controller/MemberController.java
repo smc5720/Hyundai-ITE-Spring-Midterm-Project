@@ -1,5 +1,6 @@
 package com.mycompany.webapp.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -12,9 +13,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.mycompany.webapp.dto.Event;
+import com.mycompany.webapp.dto.MyCoupon;
 import com.mycompany.webapp.dto.Product;
 import com.mycompany.webapp.dto.ProductColor;
 import com.mycompany.webapp.dto.ShoppingBag;
+import com.mycompany.webapp.service.EventService;
 import com.mycompany.webapp.service.ProductService;
 import com.mycompany.webapp.service.ShoppingbagService;
 
@@ -22,6 +26,13 @@ import com.mycompany.webapp.service.ShoppingbagService;
 @RequestMapping("/member")
 public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
+
+	@Resource
+	ShoppingbagService shoppingbagService;
+	@Resource
+	ProductService productService;
+	@Resource
+	EventService eventService;
 
 	@RequestMapping("/loginForm")
 	public String loginForm() {
@@ -35,11 +46,35 @@ public class MemberController {
 		return "member/myorders";
 	}
 
-	@Resource
-	ShoppingbagService shoppingbagService;
-
-	@Resource
-	ProductService productService;
+	@RequestMapping("/mycoupons")
+	public String myCoupons(HttpSession session, Model model) {
+		logger.info("실행");
+		
+		if(session.getAttribute("mno") == null) {
+			return "member/mycoupons";
+		}
+		
+		//내가 참여 하고 있는 이벤트들을 찾기 위해 세션에서 mno를 꺼내온다.
+		int mno = Integer.parseInt(session.getAttribute("mno").toString());
+		
+		//mno로 내가 참여하고 있는 이벤트를 검색한다.
+		List<MyCoupon> hadCoupons = eventService.getjoinedEvents(mno);
+		List<Event> events = new ArrayList<Event>();
+		for(int i=0; i< hadCoupons.size() ; i++) {
+			//eno, eno로 쿠폰 만료기한과 쿠폰상태 확인
+			MyCoupon temp = eventService.getCouponinfo(hadCoupons.get(i).getEno(), hadCoupons.get(i).getCno());
+			hadCoupons.get(i).setCdate(temp.getCdate());
+			hadCoupons.get(i).setCstate(temp.getCstate());
+			
+			//이벤트 정보 추가
+			events.add(eventService.getEventByEno(hadCoupons.get(i).getEno()));
+		}
+		
+		model.addAttribute("hadCoupons", hadCoupons);
+		model.addAttribute("events", events);
+		
+		return "member/mycoupons";
+	}
 
 	@RequestMapping("/shoppingbag")
 	public String shoppingBag(HttpSession session, Model model) {

@@ -11,6 +11,19 @@
 		FROM EVENT
 	</select>
 
+	<select id="getjoinedEvents" resultType="mycoupon" parameterType="int">		
+	    SELECT cno, eno
+	        FROM couponmember
+	        WHERE mno = #{mno}
+	</select>
+	
+	<select id="getCouponinfo" resultType="mycoupon" parameterType="HashMap">		
+	    SELECT cno, eno, cdate, cstate 
+	    	FROM eventcoupon
+		    WHERE eno = #{eno}
+		    and cno = #{cno}
+	</select>
+
 	<select id="selectEventByEno" resultType="event"
 		parameterType="int">
 		SELECT eno, ename, TO_CHAR(estartdate,'YYYY-MM-DD HH24:MI') as estartdate, TO_CHAR(eenddate,'YYYY-MM-DD HH24:MI') as eenddate, econtent,

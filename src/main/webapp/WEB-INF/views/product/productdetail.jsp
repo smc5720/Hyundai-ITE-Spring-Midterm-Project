@@ -21,6 +21,17 @@ a:hover {
 				src="${productimage3}" alt="" style="width: inherit;">
 		</div>
 		<div class="col-6">
+			<div class="toast" data-autohide="false">
+				<div class="toast-body text-center">
+					<button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+					지금 ${viewer}명의 고객님이<br> 이 제품을 함께 보고 있습니다.
+				</div>
+			</div>
+			<script>
+				$(window).ready(function(){
+				  $('.toast').toast('show');
+				});
+			</script>
 			<table class="table">
 				<tr>
 					<td class="border-bottom">
@@ -155,6 +166,18 @@ a:hover {
 						<span>+</span></td>
 				</tr>
 			</table>
+			<script>			
+				$(window).on("beforeunload", exitPage);
+				
+				function exitPage(){
+					$.ajax({
+						url: "/product/exitPage",
+						data: {
+							"pcode" : "${product.pcode}"
+						}
+					})
+				}
+			</script>
 		</div>
 	</div>
 </div>

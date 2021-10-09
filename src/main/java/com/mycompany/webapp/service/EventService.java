@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mycompany.webapp.dao.EventDao;
 import com.mycompany.webapp.dto.CouponMember;
 import com.mycompany.webapp.dto.Event;
+import com.mycompany.webapp.dto.MyCoupon;
 
 @Service
 public class EventService {
@@ -25,11 +26,18 @@ public class EventService {
 		return eventDao.selectEvents();
 	}
 
-	public Event getEventByEno(int eno) {
-		return eventDao.selectEventByEno(eno);
+	public List<MyCoupon> getjoinedEvents(int mno){
+		return eventDao.getjoinedEvents(mno);
+	}
+	
+	public MyCoupon getCouponinfo(int eno, int cno){
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("eno", eno);
+		map.put("cno", cno);
+		return eventDao.getCouponinfo(map);
 	}
 
-	public Event get(int eno) {
+	public Event getEventByEno(int eno) {
 		return eventDao.selectEventByEno(eno);
 	}
 
