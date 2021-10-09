@@ -17,8 +17,10 @@ import com.mycompany.webapp.dto.Event;
 import com.mycompany.webapp.dto.MyCoupon;
 import com.mycompany.webapp.dto.Product;
 import com.mycompany.webapp.dto.ProductColor;
+import com.mycompany.webapp.dto.ProductOrder;
 import com.mycompany.webapp.dto.ShoppingBag;
 import com.mycompany.webapp.service.EventService;
+import com.mycompany.webapp.service.MyOrderService;
 import com.mycompany.webapp.service.ProductService;
 import com.mycompany.webapp.service.ShoppingbagService;
 
@@ -40,11 +42,37 @@ public class MemberController {
 		return "member/loginForm";
 	}
 
+	@Resource
+	MyOrderService myOrderService;
+	
 	@RequestMapping("/myorders")
-	public String myOrders() {
-		logger.info("실행");
+	public String myOrdersList(HttpSession session, Model model) { //회원의 주문한 상품 리스트
+		
+		int mno = Integer.parseInt(session.getAttribute("mno").toString());// 어떤 회원 인지
+		
+		//주문 테이블에서 mno에 해당하는 모든 정보를 가지고 옴 
+		List<ProductOrder> productOrders = myOrderService.getProductOrder(mno);
+		
+		for(ProductOrder po : productOrders) {
+			Product p = productService.getProduct(po.getPcode());
+			po.setBname(p.getBname());
+			po.setPname(p.getPname());
+			po.setPprice(p.getPprice());
+			
+			// 상품이 가진 컬러 리스트를 가져온다.
+			List<ProductColor> colors = productService.getProductColor(p);
+
+			for (int i = 0; i < colors.size(); i++) {
+				if (po.getPcolor().equals(colors.get(i).getCproductcolor())) {
+					po.setCimageproduct1(colors.get(i).getCimageproduct1());
+				}
+			}
+		}
+		model.addAttribute("productOrders", productOrders);
+		logger.info(productOrders.toString());
+		
 		return "member/myorders";
-	}
+	} 
 
 	@RequestMapping("/mycoupons")
 	public String myCoupons(HttpSession session, Model model) {

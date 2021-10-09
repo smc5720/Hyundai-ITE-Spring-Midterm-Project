@@ -17,4 +17,14 @@ public class ProductOrder {
 	private String ocomment; // nullable
 	private int mno;
 	private int ano;
+	private int oamount;
+	private String pcode;
+	private String pcolor;
+	private String psize;
+	private String pname;
+	private String bname;
+	private int pprice;
+	private String cimageproduct1;
 }
+
+

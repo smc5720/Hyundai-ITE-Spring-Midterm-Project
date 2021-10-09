@@ -20,12 +20,6 @@
                         <dt>나의 상품관리</dt>
                         <dd><a class="text-secondary ml-2" href="shoppingbag">쇼핑백</a></dd>
                     </dl>
-                    <dl>
-                        <dt>쿠폰</dt>
-                        <dd>
-                            <a class="text-secondary ml-2" href="mycoupons">내 쿠폰</a>
-                        </dd>
-                    </dl>
                 </div>
             </nav>
 
@@ -47,11 +41,11 @@
                             <li>
                                 <p class="d-inline col-2">검색구분</p>
                                 <div class="d-inline">
-                                    <select class="custom-select col-3" name="cars" id="cars">
+                                    <select class="custom-select col-3" name="f" id="f">
                                         <option selected value="pname">상품명</option>
                                         <option value="onum">주문번호</option>
                                     </select>
-                                    <input type="text" class="d-inline form-control col-7">
+                                    <input type="text" class="d-inline form-control col-7" name="q" value=""/>
                                 </div>
                             </li>
                         </ul>
@@ -72,32 +66,47 @@
                             <td class="col-1 text-center">구분</td>
                         </tr>
                     </thead>
+                    <c:forEach var="orders" items="${productOrders}">
                     <tbody>
                         <tr class="row">
-                            <td class="col-2 text-center">2109984984</td>
+                            <td class="col-2 text-center ono">${orders.ono}</td>
                             <td class="col border-left">
-                                <div class="card border-white" style="max-width: 540px;">
+                                <div class="card border-white" style="max-width: 410px;">
                                     <div class="row no-gutters">
                                         <div class="col-md-4">
-                                            <img class="img-thumbnail" src="http://newmedia.thehandsome.com/CM/2B/SS/CM2B3ASZ886CS_GN_S01.jpg" alt="...">
+                                            <img class="img-thumbnail" src="${orders.cimageproduct1}" alt="...">
                                         </div>
                                         <div class="col-md-8">
                                             <div class="card-body p-1 ml-2">
-                                                <p class="card-text">the CASHMERE</p>
-                                                <p class="card-title font-weight-bolder">[KONGES SLOJD] 헨리넥 셔츠</p>
-                                                <p class="card-text"><small class="text-muted">color : BROWN / size :
-                                                        130</small></p>
+                                                <p class="card-text">${orders.bname}</p>
+                                                <p class="card-title font-weight-bolder">${orders.pname}</p>
+                                                <p class="card-text"><small class="text-muted">color : ${orders.pcolor} / size :
+                                                        ${orders.psize}</small></p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </td>
-                            <td class="col-1 text-center align-middle border-left">1</td>
-                            <td class="col-1 text-center align-middle border-left"><small>￦70,000</small></td>
-                            <td class="col-1 text-center align-middle border-left">취소</td>
+                            <td class="col-1 text-center align-middle border-left">${orders.oamount}</td>
+                            <td class="col-1 text-center align-middle border-left">
+                            	<small>￦<fmt:formatNumber value="${orders.pprice * orders.oamount}"/></small>
+                           	</td>
+                            <td class="col-1 text-center align-middle border-left">
+                            	<c:if test="${orders.ostate eq '0'}">
+                            		<c:out value="주문완료"/>
+                            	</c:if>
+                            	<c:if test="${orders.ostate eq '1'}">
+                            		<c:out value="배송중"/>
+                            	</c:if>
+                            	<c:if test="${orders.ostate eq '2'}">
+                            		<c:out value="배송완료"/>
+                            	</c:if>
+                           	</td>
                             <td class="col-1 text-center align-middle border-left"></td>
                         </tr>
-                        <tr class="row">
+                     </c:forEach>
+                     
+                     	<tr class="row">
                             <td class="col text-center">
                                 <a class="text-secondary" href="">≪</a>
                                 <a class="text-secondary" href="">＜</a>
