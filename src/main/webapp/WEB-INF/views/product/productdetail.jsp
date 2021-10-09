@@ -21,7 +21,8 @@ a:hover {
 				src="${productimage3}" alt="" style="width: inherit;">
 		</div>
 		<div class="col-6">
-			<div class="toast" data-autohide="false">
+			<div class="toast" data-autohide="false"
+				style="z-index: 1; width: 250px; position: fixed; right: 50px; bottom: 50px">
 				<div class="toast-body text-center">
 					<button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
 					지금 ${viewer}명의 고객님이<br> 이 제품을 함께 보고 있습니다.
@@ -37,7 +38,10 @@ a:hover {
 					<td class="border-bottom">
 						<h5>${product.bname}</h5>
 						<h3>${product.pname}</h3>
-						<h5><fmt:formatNumber value="${product.pprice}"/>원</h5>
+						<h5>
+							<fmt:formatNumber value="${product.pprice}" />
+							원
+						</h5>
 						<p>상품번호 : ${product.pcode}</p>
 						<div class="bg-light rounded p-3">"${product.pdetail}"</div>
 					</td>
@@ -51,11 +55,13 @@ a:hover {
 					<td class="border-bottom">
 						<div>
 							<span class="detail-title"><small>한섬마일리지</small></span><span><small>
-									<fmt:formatNumber value="${mileage}"/> M (5%)</small></span>
+									<fmt:formatNumber value="${mileage}" /> M (5%)
+							</small></span>
 						</div>
 						<div>
 							<span class="detail-title"><small>H.Point</small></span><span><small>
-									<fmt:formatNumber value="${hpoint}"/>P (0.1%)</small></span>
+									<fmt:formatNumber value="${hpoint}" />P (0.1%)
+							</small></span>
 						</div>
 						<div>
 							<span class="detail-title"><small>배송비</small></span><span><small>
@@ -75,18 +81,18 @@ a:hover {
 								</a>
 							</c:forEach>
 						</p>
-						<p >
+						<p>
 							<small class="detail-title">사이즈</small>
 							<c:forEach var="size" items="${sizes}">
 								<input type="button" class="btn btn-light btn-sm border"
 									onclick="checkStock(this, ${product.pprice})"
-									value="${size.sproductsize}"/>
+									value="${size.sproductsize}" />
 							</c:forEach>
 						</p>
 						<p>
 							<small class="detail-title">수량</small> <input
 								id="product-amount-input" class="mb-2 text-center" type="number"
-								size="1" style="width: 50px;;" value="1"
+								size="1" style="width: 50px;" value="1"
 								onchange="changeAmount(this, ${product.pprice})" max="1" min="0" />
 						</p>
 						<p id="product-stock-amount"></p> <script>
@@ -128,17 +134,18 @@ a:hover {
 					<td>
 						<div class="d-flex justify-content-between mb-4">
 							<h6>총 합계</h6>
-							<h5 id="product-total-price"><fmt:formatNumber value="${product.pprice}"/>원</h5>
+							<h5 id="product-total-price">
+								<fmt:formatNumber value="${product.pprice}" />
+								원
+							</h5>
 						</div>
 
 						<div class="d-flex justify-content-between">
 							<button class="btn btn-white btn-lg col-2">♡</button>
-							<button
-								onclick="addShoppingBag()"
+							<button onclick="addShoppingBag()"
 								class="btn btn-outline-secondary btn-lg col-5">쇼핑백 담기</button>
 							<a href="" class="btn btn-secondary btn-lg col-5">바로주문</a>
-						</div>
-						<script>
+						</div> <script>
 							function addShoppingBag() {
 								location.href = "insertToShoppingbag?sbproductcolor="
 										+ urlParams.get("cproductcolor")

@@ -105,7 +105,7 @@
 	position: absolute;
 	display: block;
 	width: 120%;
-	height: 360px;
+	height: 400px;
 	top: 50px;
 	left: 0;
 	background-color: rgba(255, 255, 255, 0.5);
@@ -123,7 +123,7 @@
 /* Menu Content Styles */
 .nav .nav-column {
 	float: left;
-	height: 150px;
+	height: 180px;
 	width: 32%;
 	padding-left: 2.5%;
 }

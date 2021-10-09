@@ -141,7 +141,7 @@ public class OrderController {
 		session.removeAttribute("checkedItems");
 		session.removeAttribute("itemsLength");
 
-		return "redirect:/order/ordercomplete";
+		return "redirect:/member/myorders";
 	}
 
 	@RequestMapping("/ordercomplete")

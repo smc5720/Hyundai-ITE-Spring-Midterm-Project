@@ -13,8 +13,7 @@
 		FROM productorder p, productorderitem i
 		WHERE p.ono = i.ono
 		AND p.mno =  #{mno}
-		ORDER BY p.ono
-		
+		ORDER BY p.ono DESC
 	</select>
 	
 </mapper>
