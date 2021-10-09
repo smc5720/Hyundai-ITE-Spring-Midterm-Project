@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mycompany.webapp.dao.AddressDao">
+	<insert id="insertAddress" parameterType="address">
+		INSERT INTO
+		address(ano, apostcode, aaddress1, aaddress2, mno, abaseaddresscheck)
+		VALUES(DECODE(#{ano}, 0, ANO_SEQ.nextval, #{ano}), #{apostcode}, #{aaddress1}, #{aaddress2}, #{mno}, #{abaseaddresscheck})
+	</insert>
+	
+	<select id="selectBaseAddress" parameterType="int" resultType="address">
+		SELECT ano, apostcode, aaddress1, aaddress2, mno
+		FROM address
+		WHERE mno = #{mno}
+		AND abaseaddresscheck = 1
+	</select>
+	
+	<select id="selectAddresses" parameterType="int" resultType="address">
+		SELECT ano, apostcode, aaddress1, aaddress2, mno
+		FROM address
+		WHERE mno = #{mno}
+		ORDER BY ano DESC
+	</select>
+</mapper>

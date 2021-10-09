@@ -97,6 +97,8 @@
 				</form>
 			</c:forEach>
 			<script>
+				let checkboxes;
+			
 				$("#allchecked").click(function() {
 					if ($("input:checkbox[id='allchecked']").prop("checked")) {
 						$("input[type=checkbox]").prop("checked", true);
@@ -108,7 +110,7 @@
 				});
 				
 				function handleSbnoCheckbox() {
-					let checkboxes = $('input:checkbox[name="sbno-checkbox"]:checked');
+					checkboxes = $('input:checkbox[name="sbno-checkbox"]:checked');
 					
 					let sum = 0;
 					// 배송비
@@ -161,7 +163,20 @@
 				<td>
 					<div class="text-center">
 						<a href="deleteallshoppingbag" class="btn btn-light">전체 삭제</a>
-						<button class="btn btn-secondary">선택상품 주문하기</button>
+						<button onclick="moveOrderPage()" class="btn btn-secondary">선택상품 주문하기</button>
+						<script>
+							function moveOrderPage() {
+								if (checkboxes === undefined) {
+									alert("구매하실 상품을 선택해주세요.");
+								} else {
+									let checkedItems = "";
+									for (let i = 0; i < checkboxes.length; i++) {
+										checkedItems += checkboxes[i].id + ",";
+									}
+									location.href = "insertorder?checkedItems=" + checkedItems + "&itemsLength=" + checkboxes.length;
+								}
+							}
+						</script>
 					</div>
 				</td>
 			</tr>

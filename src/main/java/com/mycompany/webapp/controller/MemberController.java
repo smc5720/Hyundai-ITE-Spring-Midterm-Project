@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.mycompany.webapp.dto.Product;
 import com.mycompany.webapp.dto.ProductColor;
-import com.mycompany.webapp.dto.ProductSize;
 import com.mycompany.webapp.dto.ShoppingBag;
-import com.mycompany.webapp.dto.Stock;
 import com.mycompany.webapp.service.ProductService;
 import com.mycompany.webapp.service.ShoppingbagService;
 
@@ -142,5 +140,15 @@ public class MemberController {
 		}
 
 		return "redirect:/member/shoppingbag";
+	}
+
+	@RequestMapping("/insertorder")
+	public String insertOrder(String checkedItems, int itemsLength, HttpSession session) {
+		logger.info("실행");
+		
+		session.setAttribute("checkedItems", checkedItems);
+		session.setAttribute("itemsLength", itemsLength);
+
+		return "redirect:/order/ordering";
 	}
 }

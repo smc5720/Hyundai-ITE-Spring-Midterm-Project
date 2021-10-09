@@ -55,4 +55,11 @@
 		ORDER BY
 		sbno DESC
 	</select>
+	<select id="selectShoppingProduct" parameterType="int"
+		resultType="shoppingbag">
+		SELECT SBNO, SBPRODUCTCOLOR, SBPRODUCTSIZE,
+		SBPRODUCTAMOUNT, MNO, PCODE
+		FROM shoppingbag
+		WHERE sbno = #{sbno}
+	</select>
 </mapper>

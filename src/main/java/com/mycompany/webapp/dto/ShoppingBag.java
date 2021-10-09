@@ -18,4 +18,5 @@ public class ShoppingBag {
 	private String pname;
 	private String bname;
 	private int pprice;
+	private String scode;
 }

@@ -18,6 +18,9 @@ public class ShoppingbagService {
 	@Resource
 	private ShoppingbagDao shoppingbagDao;
 
+	@Resource
+	private OrderService orderService;
+
 	public int insertShoppingbag(ShoppingBag shoppingBag) {
 		return shoppingbagDao.insertProduct(shoppingBag);
 	}
@@ -36,5 +39,9 @@ public class ShoppingbagService {
 
 	public List<ShoppingBag> getShoppingProducts(int mno) {
 		return shoppingbagDao.selectShoppingProducts(mno);
+	}
+
+	public ShoppingBag getShoppingProduct(int sbno) {
+		return shoppingbagDao.selectShoppingProduct(sbno);
 	}
 }

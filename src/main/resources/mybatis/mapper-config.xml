@@ -4,6 +4,8 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
+		<typeAlias alias="address"
+			type="com.mycompany.webapp.dto.Address" />
 		<typeAlias alias="brand"
 			type="com.mycompany.webapp.dto.Brand" />
 		<typeAlias alias="category"
@@ -24,5 +26,9 @@
 			type="com.mycompany.webapp.dto.ShoppingBag" />
 		<typeAlias alias="couponmember"
 			type="com.mycompany.webapp.dto.CouponMember" />
+		<typeAlias alias="productorder"
+			type="com.mycompany.webapp.dto.ProductOrder" />
+		<typeAlias alias="productorderitem"
+			type="com.mycompany.webapp.dto.ProductOrderItem" />
 	</typeAliases>
 </configuration>

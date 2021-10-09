@@ -117,18 +117,6 @@ public class HomeController {
 		return "redirect:/member/loginForm";
 	}
 
-	@RequestMapping("/order")
-	public String order() {
-		logger.info("실행");
-		return "order/order";
-	}
-
-	@RequestMapping("/ordercomplete")
-	public String orderComplete() {
-		logger.info("실행");
-		return "order/ordercomplete";
-	}
-
 	@RequestMapping("/error/403")
 	public String error403() {
 		logger.info("실행");

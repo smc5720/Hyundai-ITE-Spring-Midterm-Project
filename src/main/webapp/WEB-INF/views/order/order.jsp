@@ -114,26 +114,31 @@ input[type="text"], input[type="password"], input[type="email"] {
 						</tr>
 					</thead>
 					<tbody class="table_body">
-						<tr>
-							<td class="align-middle table_detail"
-								style="width: 441px; padding: 15px">
-								<div class="d-flex">
-									<img style="width: 98px; height: 98px" />
-									<div style="margin-left: 20px">
-										<div style="font-size: 11px">TOM GREYHOUND</div>
-										<div>[DUNST] 더블 재킷</div>
-										<div
-											style="margin-top: 10px; font-size: 11px; color: #999999;">
-											color : BLACK / size : M</div>
+						<c:forEach var="sb_product" items="${shoppingBags}">
+							<tr>
+								<td class="align-middle table_detail"
+									style="width: 441px; padding: 15px">
+									<div class="d-flex">
+										<img style="width: 98px;"
+											src="${sb_product.colors[sb_product.coloridx].cimageproduct1}" />
+										<div style="margin-left: 20px">
+											<div style="font-size: 11px">${sb_product.bname}</div>
+											<div>${sb_product.pname}</div>
+											<div
+												style="margin-top: 10px; font-size: 11px; color: #999999;">
+												color : ${sb_product.sbproductcolor} / size :
+												${sb_product.sbproductsize}</div>
+										</div>
 									</div>
-								</div>
-							</td>
-							<td class="align-middle table_detail"
-								style="width: 66px; text-align: center; border: 1px solid rgba(0, 0, 0, 0.1);">
-								1</td>
-							<td class="align-middle table_detail"
-								style="width: 158px; text-align: center">₩ 228,000</td>
-						</tr>
+								</td>
+								<td class="align-middle table_detail"
+									style="width: 66px; text-align: center; border: 1px solid rgba(0, 0, 0, 0.1);">
+									${sb_product.sbproductamount}</td>
+								<td class="align-middle table_detail"
+									style="width: 158px; text-align: center">₩ <fmt:formatNumber
+										value="${sb_product.pprice * sb_product.sbproductamount}" /></td>
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 			</div>
@@ -145,17 +150,17 @@ input[type="text"], input[type="password"], input[type="email"] {
 							<tr>
 								<th scope="row" class="align-middle table_head"><span
 									class="no_mandatory_sign">* </span>주문자</th>
-								<td class="align-middle table_detail">홍길동</td>
+								<td class="align-middle table_detail">${member.mname}</td>
 							</tr>
 							<tr>
 								<th scope="row" class="align-middle table_head"><span
-									class="mandatory_sign">* </span>휴대폰</th>
-								<td class="align-middle table_detail">010-1234-5678</td>
+									class="no_mandatory_sign">* </span>휴대폰</th>
+								<td class="align-middle table_detail">${member.mtel}</td>
 							</tr>
 							<tr>
 								<th scope="row" class="table_head align-middle"><span
 									class="no_mandatory_sign">* </span>E-mail</th>
-								<td class="align-middle table_detail">gildong@naver.com</td>
+								<td class="align-middle table_detail">${member.memail}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -172,24 +177,28 @@ input[type="text"], input[type="password"], input[type="email"] {
 										<div>
 											<div class="form-check form-check-inline">
 												<input class="form-check-input" type="radio"
-													name="inlineRadioOptions" id="inlineRadio1" value="option1" />
-												<label class="form-check-label mr-2 mb-1" for="inlineRadio1">CLICK
+													name="inlineRadioOptions" id="inlineRadio1"
+													value="click_pay" onclick="selectPaymentType(this)" /> <label
+													class="form-check-label mr-2 mb-1" for="inlineRadio1">CLICK
 													결제</label>
 											</div>
 											<div class="form-check form-check-inline">
 												<input class="form-check-input" type="radio"
-													name="inlineRadioOptions" id="inlineRadio2" value="option2" />
-												<label class="form-check-label mr-2 mb-1" for="inlineRadio2">신용카드</label>
+													name="inlineRadioOptions" id="inlineRadio2"
+													value="credit_card" onclick="selectPaymentType(this)" /> <label
+													class="form-check-label mr-2 mb-1" for="inlineRadio2">신용카드</label>
 											</div>
 											<div class="form-check form-check-inline">
 												<input class="form-check-input" type="radio"
-													name="inlineRadioOptions" id="inlineRadio3" value="option3" />
-												<label class="form-check-label mr-2 mb-1" for="inlineRadio3">실시간
+													name="inlineRadioOptions" id="inlineRadio3"
+													value="transfer" onclick="selectPaymentType(this)" /> <label
+													class="form-check-label mr-2 mb-1" for="inlineRadio3">실시간
 													계좌이체</label>
 											</div>
 											<div class="form-check form-check-inline">
 												<input class="form-check-input" type="radio"
-													name="inlineRadioOptions" id="inlineRadio4" value="option4" />
+													name="inlineRadioOptions" id="inlineRadio4"
+													value="virtual_account" onclick="selectPaymentType(this)" />
 												<label class="form-check-label mr-2 mb-1" for="inlineRadio4">가상
 													계좌</label>
 											</div>
@@ -197,20 +206,23 @@ input[type="text"], input[type="password"], input[type="email"] {
 										<div>
 											<div class="form-check form-check-inline">
 												<input class="form-check-input" type="radio"
-													name="inlineRadioOptions" id="inlineRadio5" value="option5" />
-												<label class="form-check-label mr-2 mb-1" for="inlineRadio5">스마일
+													name="inlineRadioOptions" id="inlineRadio5"
+													value="smile_pay" onclick="selectPaymentType(this)" /> <label
+													class="form-check-label mr-2 mb-1" for="inlineRadio5">스마일
 													페이</label>
 											</div>
 											<div class="form-check form-check-inline">
 												<input class="form-check-input" type="radio"
-													name="inlineRadioOptions" id="inlineRadio6" value="option6" />
+													name="inlineRadioOptions" id="inlineRadio6"
+													value="hyundai_card" onclick="selectPaymentType(this)" />
 												<label class="form-check-label mr-2 mb-1" for="inlineRadio6">현대카드
 													레드 쇼핑바우처</label>
 											</div>
 											<div class="form-check form-check-inline">
 												<input class="form-check-input" type="radio"
-													name="inlineRadioOptions" id="inlineRadio7" value="option7" />
-												<label class="form-check-label mr-2 mb-1" for="inlineRadio7">토스</label>
+													name="inlineRadioOptions" id="inlineRadio7" value="toss"
+													onclick="selectPaymentType(this)" /> <label
+													class="form-check-label mr-2 mb-1" for="inlineRadio7">토스</label>
 											</div>
 										</div>
 									</div>
@@ -227,44 +239,102 @@ input[type="text"], input[type="password"], input[type="email"] {
 			</div>
 			<div>
 				<div class="d-flex m-1">
-					<div class="title_font">배송지 정보</div>
+					<div class="title_font">기본 배송지 정보</div>
 					<div style="margin-top: 40px; margin-left: 20px">
-						<button type="button" class="btn_normal btn_theme_white">
-							주문고객과 동일</button>
-						<button type="button" class="btn_normal btn_theme_white">
-							배송지 선택</button>
-						<button type="button" class="btn_normal btn_theme_white">
-							새로작성하기</button>
+						<button type="button" class="btn_normal btn_theme_white"
+							onclick="getBaseAddress(${mno})">기본 배송지</button>
+						<button type="button" class="btn_normal btn_theme_white"
+							onclick="getAddresses(${mno})">최근 배송지 선택</button>
 					</div>
+					<script>
+						let ano = 0;
+						
+						function getBaseAddress(mno) {
+							$.ajax({
+								url: "/order/getBaseAddress",
+								data: {
+									"mno" : mno
+								}
+							}).done((data) => {
+								if (data.postcode === undefined) {
+									alert("기본으로 설정된 배송지가 없습니다.");
+								} else {
+									$("#postcode").val(data.postcode);
+									$("#address").val(data.address1);
+									$("#detailAddress").val(data.address2);
+									ano = data.ano;
+								}
+							});
+						}
+						
+						function getAddresses(mno) {
+							$.ajax({
+								url: "/order/getAddresses",
+								data: {
+									"mno" : mno
+								}
+							}).done((data) => {
+								tmp = '<div style="border: 1px solid rgba(0, 0, 0, 0.1); padding: 5px">';
+								let addresses = data.addresses;
+								for (let i = 0; i < addresses.length; i++) {
+									let address = "(" + addresses.at(i).postcode + ") " + addresses.at(i).address1 + ", " + addresses.at(i).address2;
+									tmp += '<div>';
+									tmp += "<a id='address" + i + "' href='javascript:selectAddress(" + i + ", " + addresses.at(i).ano + ")'>" + address + "</a>";
+									tmp += '</div>';
+								}
+								tmp += '</div>';
+								$("#address-box").html(tmp);
+							});
+						}
+					</script>
 				</div>
-				<table>
-					<tbody class="table_body">
-						<tr>
-							<th scope="row" class="table_head align-middle"><span
-								class="mandatory_sign">* </span>배송지 주소</th>
-							<td class="align-middle table_detail">
-								<div>
+				<div>
+					<div id="address-box"></div>
+					<script>					
+						function selectAddress(id, adno) {
+							let address = $("#address" + id).text();
+							let tmp = address.split(', ');
+							let address2 = tmp[1];
+							tmp = tmp[0].split(') ');
+							let address1 = tmp[1];
+							tmp = tmp[0].split('(');
+							let postcode = tmp[1];
+
+							$("#postcode").val(postcode);
+							$("#address").val(address1);
+							$("#detailAddress").val(address2);
+							
+							ano = adno;
+						}
+					</script>
+					<table>
+						<tbody class="table_body">
+							<tr>
+								<th scope="row" class="table_head align-middle"><span
+									class="mandatory_sign">* </span>배송지 주소</th>
+								<td class="align-middle table_detail">
 									<div>
-										<div class="d-flex">
-											<input type="text" name="postcode" id="postcode" readonly
-												style="width: 77px; margin-bottom: 5px" />
-											<div>
-												<button type="button" class="btn_normal btn_theme_gray"
-													onclick="execDaumPostcode()">우편번호 조회</button>
+										<div>
+											<div class="d-flex">
+												<input type="text" name="postcode" id="postcode" readonly
+													style="width: 77px; margin-bottom: 5px" />
+												<div>
+													<button type="button" class="btn_normal btn_theme_gray"
+														onclick="execDaumPostcode()">우편번호 조회</button>
+												</div>
 											</div>
 										</div>
-									</div>
-									<div>
-										<input type="text" name="address" id="address" readonly
-											style="width: 507px; margin-bottom: 5px" />
-									</div>
-									<div>
-										<input type="text" name="detailAddress"
-											placeholder="나머지 주소를 입력해주세요." required style="width: 507px" />
-									</div>
-								</div> <script
-									src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
-								<script>
+										<div>
+											<input type="text" name="address" id="address" readonly
+												style="width: 507px; margin-bottom: 5px" />
+										</div>
+										<div>
+											<input type="text" name="detailAddress" id="detailAddress"
+												placeholder="나머지 주소를 입력해주세요." required style="width: 507px" />
+										</div>
+									</div> <script
+										src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
+									<script>
 									function execDaumPostcode() {
 										daum.postcode.load(function() {
 											new daum.Postcode({
@@ -278,101 +348,92 @@ input[type="text"], input[type="password"], input[type="email"] {
 										});
 									}
 								</script>
-							</td>
-						</tr>
-						<tr>
-							<th scope="row" class="table_head align-middle"><span
-								class="mandatory_sign">* </span>수령인</th>
-							<td class="align-middle table_detail"><input type="text" />
-							</td>
-						</tr>
-						<tr>
-							<th scope="row" class="table_head align-middle"><span
-								class="mandatory_sign">* </span>휴대폰 번호</th>
-							<td class="align-middle table_detail">
-								<div class="d-flex align-items-center">
-									<form>
-										<select name="phone_number">
-											<option value="010" selected>010</option>
-											<option value="011">011</option>
-											<option value="012">012</option>
-											<option value="013">013</option>
-											<option value="014">014</option>
-											<option value="015">015</option>
-											<option value="016">016</option>
-											<option value="017">017</option>
-											<option value="018">018</option>
-											<option value="019">019</option>
-										</select>
-									</form>
-									<div class="form_hyphen">-</div>
-									<div>
-										<input type="text" size="4" maxlength="4" />
+								</td>
+							</tr>
+							<tr>
+								<th scope="row" class="table_head align-middle"><span
+									class="mandatory_sign">* </span>수령인</th>
+								<td class="align-middle table_detail"><input type="text"
+									id="oreceivername" /></td>
+							</tr>
+							<tr>
+								<th scope="row" class="table_head align-middle"><span
+									class="mandatory_sign">* </span>휴대폰 번호</th>
+								<td class="align-middle table_detail">
+									<div class="d-flex align-items-center">
+										<form>
+											<select name="phone_number" id="oreceivertel1_1">
+												<option value="010" selected>010</option>
+												<option value="011">011</option>
+												<option value="012">012</option>
+												<option value="013">013</option>
+												<option value="014">014</option>
+												<option value="015">015</option>
+												<option value="016">016</option>
+												<option value="017">017</option>
+												<option value="018">018</option>
+												<option value="019">019</option>
+											</select>
+										</form>
+										<div class="form_hyphen">-</div>
+										<div>
+											<input type="text" size="4" maxlength="4"
+												id="oreceivertel1_2" />
+										</div>
+										<div class="form_hyphen">-</div>
+										<div>
+											<input type="text" size="4" maxlength="4"
+												id="oreceivertel1_3" />
+										</div>
 									</div>
-									<div class="form_hyphen">-</div>
-									<div>
-										<input type="text" size="4" maxlength="4" />
+								</td>
+							</tr>
+							<tr>
+								<th scope="row" class="table_head align-middle"><span
+									class="no_mandatory_sign">* </span>연락처</th>
+								<td class="align-middle table_detail">
+									<div class="d-flex align-items-center">
+										<form>
+											<select name="phone_number" id="oreceivertel2_1">
+												<option value="NaN" selected>---</option>
+												<option value="010">010</option>
+												<option value="011">011</option>
+												<option value="012">012</option>
+												<option value="013">013</option>
+												<option value="014">014</option>
+												<option value="015">015</option>
+												<option value="016">016</option>
+												<option value="017">017</option>
+												<option value="018">018</option>
+												<option value="019">019</option>
+											</select>
+										</form>
+										<div class="form_hyphen">-</div>
+										<div>
+											<input type="text" size="4" maxlength="4"
+												id="oreceivertel2_2" />
+										</div>
+										<div class="form_hyphen">-</div>
+										<div>
+											<input type="text" size="4" maxlength="4"
+												id="oreceivertel2_3" />
+										</div>
 									</div>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<th scope="row" class="table_head align-middle"><span
-								class="no_mandatory_sign">* </span>연락처</th>
-							<td class="align-middle table_detail">
-								<div class="d-flex align-items-center">
-									<form>
-										<select name="phone_number">
-											<option value="none" selected>---</option>
-											<option value="010">010</option>
-											<option value="011">011</option>
-											<option value="012">012</option>
-											<option value="013">013</option>
-											<option value="014">014</option>
-											<option value="015">015</option>
-											<option value="016">016</option>
-											<option value="017">017</option>
-											<option value="018">018</option>
-											<option value="019">019</option>
-										</select>
-									</form>
-									<div class="form_hyphen">-</div>
-									<div>
-										<input type="text" size="4" maxlength="4" />
-									</div>
-									<div class="form_hyphen">-</div>
-									<div>
-										<input type="text" size="4" maxlength="4" />
-									</div>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<th scope="row" class="table_head align-middle"><span
-								class="no_mandatory_sign">* </span>배송요청사항</th>
-							<td class="align-middle table_detail"><input type="text"
-								maxlength="20" style="width: 507px" /></td>
-						</tr>
-						<tr>
-							<th scope="row" class="table_head align-middle"><span
-								class="no_mandatory_sign">* </span>수령인 E-mail</th>
-							<td class="align-middle table_detail">
-								<div class="d-flex align-items-center">
-									<div>
-										<input type="text" size="4" maxlength="4" style="width: 122px" />
-									</div>
-									<div style="margin-right: 5px">@</div>
-									<div>
-										<input type="text" size="4" maxlength="4" style="width: 122px" />
-									</div>
-								</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-				<div>* 선택사항을 미입력하더라도 불이익은 발생하지 않습니다.</div>
-				<div style="margin-bottom: 90px;"></div>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row" class="table_head align-middle"><span
+									class="no_mandatory_sign">* </span>배송요청사항</th>
+								<td class="align-middle table_detail"><input type="text"
+									maxlength="20" style="width: 507px" id="ocomment" /></td>
+							</tr>
+						</tbody>
+					</table>
+					<div>* 선택사항을 미입력하더라도 불이익은 발생하지 않습니다.</div>
+					<div style="margin-bottom: 90px;"></div>
+				</div>
 			</div>
+
 		</div>
 		<div>
 			<div
@@ -386,13 +447,17 @@ input[type="text"], input[type="password"], input[type="email"] {
 						<div style="font-size: 11px; color: #555555">상품 합계</div>
 						<div
 							style="font-size: 11px; color: #555555; margin-left: auto; margin-bottom: 13px;">
-							₩ 228,000</div>
+							₩
+							<fmt:formatNumber value="${total}" />
+						</div>
 					</div>
 					<div class="d-flex">
 						<div style="font-size: 11px; color: #555555">배송비</div>
 						<div
 							style="font-size: 11px; color: #555555; margin-left: auto; margin-bottom: 13px;">
-							₩ 0</div>
+							₩
+							<fmt:formatNumber value="${post}" />
+						</div>
 					</div>
 				</div>
 				<div style="background-color: #f5f5f5; padding: 20px 10px 15px 20px">
@@ -401,18 +466,65 @@ input[type="text"], input[type="password"], input[type="email"] {
 							합계</div>
 						<div
 							style="font-size: 18px; font-weight: bolder; color: #c69c6c; margin-left: auto;">
-							₩ 228,000</div>
+							₩
+							<fmt:formatNumber value="${total + post}" />
+						</div>
 					</div>
 				</div>
 			</div>
 			<div>
 				<div>
 					<button
-						style="min-width: 140px; background: #4a4a4a; border: 1px solid #4a4a4a; color: #fff; font-size: 14px; margin-left: 0; width: 100%; padding: 13px 0 15px;">결제하기</button>
+						style="min-width: 140px; background: #4a4a4a; border: 1px solid #4a4a4a; color: #fff; font-size: 14px; margin-left: 0; width: 100%; padding: 13px 0 15px;"
+						onclick="orderSubmit()">결제하기</button>
+					<script>
+						let ptype;
+					
+						function selectPaymentType(obj) {
+							ptype = obj.value;
+						}
+
+						function orderSubmit() {
+							let params = {
+									"ptype" : ptype,
+									"apostcode" : $("#postcode").val(),
+									"aaddress1" : $("#address").val(),
+									"aaddress2" : $("#detailAddress").val(),
+									"oreceivername" : $("#oreceivername").val(),
+									"oreceivertel1" : $("#oreceivertel1_1").val() + $("#oreceivertel1_2").val() + $("#oreceivertel1_3").val(),
+									"oreceivertel2" : $("#oreceivertel2_1").val() + $("#oreceivertel2_2").val() + $("#oreceivertel2_3").val(),
+									"ocomment" : $("#ocomment").val(),
+									"ano" : ano,
+							}
+							
+							let form = document.createElement('form');
+							form.setAttribute('method', 'post');
+							form.setAttribute('action', 'orderpayment');
+							document.charset = "utf-8";
+							
+							for (let key in params) {
+								let field = document.createElement('input');
+								field.setAttribute('type', 'hidden');
+								field.setAttribute('name', key);
+								if (params[key] === "") {
+									alert("필수 양식을 전부 기입해주세요.");
+									return;
+								}
+								if (key === "oreceivertel1" && params[key].length < 10) {
+									alert("휴대폰 번호가 올바르지 않습니다.");
+									return;
+								}
+								field.setAttribute('value', params[key]);
+								form.appendChild(field);
+							}
+							
+							document.body.appendChild(form);
+							form.submit();
+						}
+					</script>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
-<%@ include file="/WEB-INF/views/common/footer.jsp"%>
+	<%@ include file="/WEB-INF/views/common/footer.jsp"%>

@@ -10,4 +10,11 @@
 		FROM member
 		WHERE mid = #{mid}
 	</select>
+	
+	<select id="selectMember" resultType="member"
+		parameterType="int">
+		SELECT mname, mtel, memail
+		FROM member
+		WHERE mno = #{mno}
+	</select>
 </mapper>

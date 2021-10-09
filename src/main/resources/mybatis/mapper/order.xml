@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mycompany.webapp.dao.OrderDao">	
+	<insert id="insertOrderNewAddress" parameterType="productorder">
+		INSERT INTO
+		productorder(ono, odate, ostate, pmonth, ptype, oreceivername, oreceivertel1,
+					oreceivertel2, ocomment, mno, ano)
+		VALUES(ONO_SEQ.nextval, #{odate}, #{ostate}, #{pmonth}, #{ptype}, #{oreceivername}, #{oreceivertel1},
+					#{oreceivertel2}, #{ocomment}, #{mno}, ANO_SEQ.currval)
+	</insert>
+	
+	<insert id="insertOrderOldAddress" parameterType="productorder">
+		INSERT INTO
+		productorder(ono, odate, ostate, pmonth, ptype, oreceivername, oreceivertel1,
+					oreceivertel2, ocomment, mno, ano)
+		VALUES(ONO_SEQ.nextval, #{odate}, #{ostate}, #{pmonth}, #{ptype}, #{oreceivername}, #{oreceivertel1},
+					#{oreceivertel2}, #{ocomment}, #{mno}, #{ano})
+	</insert>
+	
+	<insert id="insertItemToProductOrderItem" parameterType="productorderitem">
+		INSERT INTO
+		productorderitem(ONO, SCODE, OAMOUNT)
+		VALUES(ONO_SEQ.currval, #{scode}, #{oamount})
+	</insert>
+</mapper>
