@@ -144,15 +144,24 @@ a:hover {
 							<button class="btn btn-white btn-lg col-2">♡</button>
 							<button onclick="addShoppingBag()"
 								class="btn btn-outline-secondary btn-lg col-5">쇼핑백 담기</button>
-							<a href="" class="btn btn-secondary btn-lg col-5">바로주문</a>
+							<button onclick="addShoppingBagForDirectOrder()"
+								class="btn btn-secondary btn-lg col-5">바로주문</button>
 						</div> <script>
-							function addShoppingBag() {
-								location.href = "insertToShoppingbag?sbproductcolor="
-										+ urlParams.get("cproductcolor")
-										+ "&sbproductsize=" + current_size
-										+ "&sbproductamount=" + $("#product-amount-input").val()
-										+ "&pcode=" + urlParams.get("pcode");
-							}
+									function addShoppingBag() {
+										location.href = "insertToShoppingbag?sbproductcolor="
+												+ urlParams.get("cproductcolor")
+												+ "&sbproductsize=" + current_size
+												+ "&sbproductamount=" + $("#product-amount-input").val()
+												+ "&pcode=" + urlParams.get("pcode");
+									}
+									
+									function addShoppingBagForDirectOrder() {
+										location.href = "insertToShoppingbagForDirectOrder?sbproductcolor="
+											+ urlParams.get("cproductcolor")
+											+ "&sbproductsize=" + current_size
+											+ "&sbproductamount=" + $("#product-amount-input").val()
+											+ "&pcode=" + urlParams.get("pcode");
+									}
 						</script>
 					</td>
 				</tr>

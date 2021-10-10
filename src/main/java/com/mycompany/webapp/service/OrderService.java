@@ -54,7 +54,7 @@ public class OrderService {
 			insertOrder(productOrder, address.getAno());
 
 			StringTokenizer st = new StringTokenizer(checkedItems, ",");
-
+			
 			// 주문 아이템들을 테이블에 추가한다.
 			for (int i = 0; i < itemsLength; i++) {
 				int sbno = Integer.parseInt(st.nextToken());

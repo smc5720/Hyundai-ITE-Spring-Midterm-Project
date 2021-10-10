@@ -199,4 +199,19 @@ public class ProductController {
 
 		return "redirect:/member/shoppingbag";
 	}
+	
+	@RequestMapping("/insertToShoppingbagForDirectOrder")
+	public String insertToShoppingbagForDirectOrder(ShoppingBag shoppingBag, HttpSession session) {
+
+		// 만약 세션에 로그인된 유저가 없으면
+		if (session.getAttribute("mno") == null) {
+			// 로그인 폼으로 보내주는데, 이 부분은 추후에 시큐리티 기능을 이용하는 것으로 바꿀 예정
+			return "redirect:/member/loginForm";
+		}
+
+		shoppingBag.setMno(Integer.parseInt(session.getAttribute("mno").toString()));
+		shoppingbagService.insertShoppingbag(shoppingBag);
+
+		return "redirect:/member/shoppingbagForDirectOrder";
+	}
 }

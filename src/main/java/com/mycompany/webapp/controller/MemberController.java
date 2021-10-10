@@ -47,29 +47,31 @@ public class MemberController {
 
 	@Resource
 	MyOrderService myOrderService;
-	
+
 	@GetMapping(value = "/myorders", produces = "application/json; charset=UTF-8")
-	public String myOrdersList(HttpSession session, Model model
-				, @RequestParam(defaultValue = "1") int pageNo){ //회원의 주문한 상품 리스트
-		
+	public String myOrdersList(HttpSession session, Model model, @RequestParam(defaultValue = "1") int pageNo) { // 회원의
+																													// 주문한
+																													// 상품
+																													// 리스트
+
 		int mno = Integer.parseInt(session.getAttribute("mno").toString());// 어떤 회원 인지
-		
+
 		// 페이징 처리
 		int totalRows = myOrderService.getProductOrderCount(mno);
 		session.setAttribute("totalRows", totalRows);
-		
+
 		Pager pager = new Pager(5, 5, totalRows, pageNo);
 		model.addAttribute("pager", pager);
-			
-		//주문 테이블에서 mno에 해당하는 모든 정보를 가지고 옴 
+
+		// 주문 테이블에서 mno에 해당하는 모든 정보를 가지고 옴
 		List<ProductOrder> productOrders = myOrderService.getProductOrder(mno, pager);
-		
-		for(ProductOrder po : productOrders) {
+
+		for (ProductOrder po : productOrders) {
 			Product p = productService.getProduct(po.getPcode());
 			po.setBname(p.getBname());
 			po.setPname(p.getPname());
 			po.setPprice(p.getPprice());
-			
+
 			// 상품이 가진 컬러 리스트를 가져온다.
 			List<ProductColor> colors = productService.getProductColor(p);
 
@@ -81,38 +83,37 @@ public class MemberController {
 		}
 		model.addAttribute("productOrders", productOrders);
 		logger.info(productOrders.toString());
-		
+
 		return "member/myorders";
-	} 
-	
+	}
 
 	@RequestMapping("/mycoupons")
 	public String myCoupons(HttpSession session, Model model) {
 		logger.info("실행");
-		
-		if(session.getAttribute("mno") == null) {
+
+		if (session.getAttribute("mno") == null) {
 			return "member/mycoupons";
 		}
-		
-		//내가 참여 하고 있는 이벤트들을 찾기 위해 세션에서 mno를 꺼내온다.
+
+		// 내가 참여 하고 있는 이벤트들을 찾기 위해 세션에서 mno를 꺼내온다.
 		int mno = Integer.parseInt(session.getAttribute("mno").toString());
-		
-		//mno로 내가 참여하고 있는 이벤트를 검색한다.
+
+		// mno로 내가 참여하고 있는 이벤트를 검색한다.
 		List<MyCoupon> hadCoupons = eventService.getjoinedEvents(mno);
 		List<Event> events = new ArrayList<Event>();
-		for(int i=0; i< hadCoupons.size() ; i++) {
-			//eno, eno로 쿠폰 만료기한과 쿠폰상태 확인
+		for (int i = 0; i < hadCoupons.size(); i++) {
+			// eno, eno로 쿠폰 만료기한과 쿠폰상태 확인
 			MyCoupon temp = eventService.getCouponinfo(hadCoupons.get(i).getEno(), hadCoupons.get(i).getCno());
 			hadCoupons.get(i).setCdate(temp.getCdate());
 			hadCoupons.get(i).setCstate(temp.getCstate());
-			
-			//이벤트 정보 추가
+
+			// 이벤트 정보 추가
 			events.add(eventService.getEventByEno(hadCoupons.get(i).getEno()));
 		}
-		
+
 		model.addAttribute("hadCoupons", hadCoupons);
 		model.addAttribute("events", events);
-		
+
 		return "member/mycoupons";
 	}
 
@@ -154,6 +155,30 @@ public class MemberController {
 		model.addAttribute("shoppingBags", shoppingBags);
 
 		return "member/shoppingbag";
+	}
+
+	@RequestMapping("/shoppingbagForDirectOrder")
+	public String shoppingbagForDirectOrder(HttpSession session, Model model) {
+		logger.info("실행");
+
+		// 로그인 여부 체크
+		if (session.getAttribute("mno") == null) {
+			return "redirect:/member/loginForm";
+		}
+
+		int mno = Integer.parseInt(session.getAttribute("mno").toString());
+
+		// mno라는 사람의 쇼핑백 정보를 DB 쇼핑백 테이블에서 가져온다.
+		List<ShoppingBag> shoppingBags = shoppingbagService.getShoppingProducts(mno);
+
+		// 가장 높은 번호가 최근에 주문한 쇼핑백 번호일 것이다.
+		int maxVal = 0;
+
+		for (ShoppingBag sb : shoppingBags) {
+			maxVal = Math.max(maxVal, sb.getSbno());
+		}
+
+		return "redirect:/member/insertorder?checkedItems=" + String.valueOf(maxVal) + ",&itemsLength=1";
 	}
 
 	@PostMapping("/changeProductOption")
@@ -220,7 +245,7 @@ public class MemberController {
 	@RequestMapping("/insertorder")
 	public String insertOrder(String checkedItems, int itemsLength, HttpSession session) {
 		logger.info("실행");
-		
+
 		session.setAttribute("checkedItems", checkedItems);
 		session.setAttribute("itemsLength", itemsLength);
 
