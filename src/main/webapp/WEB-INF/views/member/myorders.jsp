@@ -66,27 +66,17 @@ a:hover {
 						<li>
 							<p class="d-inline col-2">검색구분</p>
 							<div class="d-inline">
-								<select class="custom-select col-3">
+								<select class="custom-select col-3" name="type" id="type">
 									<option selected value="pcode">상품코드</option>
-									<option value="ono">주문번호</option>
+									<option value="pname">상품이름</option>
 								</select>
-								<input type="text" class="d-inline form-control col-7"/>
+								<input type="text" class="d-inline form-control col-7" name="keyword" id="keyword" value=""/>
 							</div>
 						</li>
 					</ul>
 					<button class="btn btn-sm btn-secondary ml-3 mb-2">조회하기</button>
 				</div>
 			</form>
-			<script>
-			$(document).on('click', '#btnSearch', function(e){
-				//e.preventDefault(); //새창실행 및 리로드를 막는 기능 ->submit 기능은 실행 시킴
-				var url = "${pageContext.request.contextPath}/member/myorders";
-				url = url + "?searchType=" + $('#searchType').val();
-				url = url + "&keyword=" + $('#keyword').val();
-				location.href = url;
-				console.log(url);
-			});	
-			</script>
 			<div>
 				<h6 class="mt-5 mb-3 font-weight-bold">상품 주문 목록</h6>
 			</div>
@@ -113,6 +103,7 @@ a:hover {
 										</div>
 										<div class="col-md-8">
 											<div class="card-body p-1 ml-2">
+												<p class="card-text"><small>${orders.pcode}</small></p>
 												<p class="card-text">${orders.bname}</p>
 												<p class="card-title font-weight-bolder">${orders.pname}</p>
 												<p class="card-text">

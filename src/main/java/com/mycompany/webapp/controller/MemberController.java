@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,24 +48,27 @@ public class MemberController {
 	@Resource
 	MyOrderService myOrderService;
 
-	@GetMapping(value = "/myorders", produces = "application/json; charset=UTF-8")
-	public String myOrdersList(HttpSession session, Model model, @RequestParam(defaultValue = "1") int pageNo) { // 회원의
-																													// 주문한
-																													// 상품
-																													// 리스트
+	@RequestMapping("/myorders")
+	public String myOrdersList(HttpSession session, Model model
+				, @RequestParam(defaultValue = "1") int pageNo
+				, HttpServletRequest httpServletRequest
+				){ //회원의 주문한 상품 리스트
 
 		int mno = Integer.parseInt(session.getAttribute("mno").toString());// 어떤 회원 인지
-
 		// 페이징 처리
 		int totalRows = myOrderService.getProductOrderCount(mno);
 		session.setAttribute("totalRows", totalRows);
 
 		Pager pager = new Pager(5, 5, totalRows, pageNo);
 		model.addAttribute("pager", pager);
-
+		
+		//검색 필터
+		String type = httpServletRequest.getParameter("type");
+		String keyword = httpServletRequest.getParameter("keyword");
+		
 		// 주문 테이블에서 mno에 해당하는 모든 정보를 가지고 옴
-		List<ProductOrder> productOrders = myOrderService.getProductOrder(mno, pager);
-
+		List<ProductOrder> productOrders = myOrderService.getProductOrder(mno, pager, type, keyword);
+		
 		for (ProductOrder po : productOrders) {
 			Product p = productService.getProduct(po.getPcode());
 			po.setBname(p.getBname());
@@ -80,12 +83,22 @@ public class MemberController {
 					po.setCimageproduct1(colors.get(i).getCimageproduct1());
 				}
 			}
+			po.setType(type);
+			po.setKeyword(keyword);
 		}
+		
+		logger.info("type:" +type);
+		logger.info("keyword:" +keyword);
+		
+		model.addAttribute("type", type);
+		model.addAttribute("keyword", keyword);
+		logger.info("model:" +model);
+		
 		model.addAttribute("productOrders", productOrders);
-		logger.info(productOrders.toString());
-
+		logger.info("model:" +model);
+		
 		return "member/myorders";
-	}
+	} 
 
 	@RequestMapping("/mycoupons")
 	public String myCoupons(HttpSession session, Model model) {

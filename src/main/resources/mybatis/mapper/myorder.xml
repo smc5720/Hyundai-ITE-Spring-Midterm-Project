@@ -4,13 +4,13 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.mycompany.webapp.dao.MyOrderDao">
-	<select id="selectProductOrders" parameterType="HashMap"
-		resultType="productorder">
-		<![CDATA[
-		SELECT rnum, mno, ono, ostate, oamount, pcode, pcolor, psize
-			FROM(
-				SELECT ROWNUM as rnum, mno, ono, ostate, oamount, pcode, pcolor, psize
-					FROM (
+	<select id="selectProductOrders" parameterType="HashMap" resultType="productorder">
+		SELECT rnum, mno, ono, ostate, oamount, pcode, pcolor, psize, pname
+			FROM
+            (
+            SELECT ROWNUM as rnum, A.mno, A.ono, A.ostate, A.oamount, A.pcode, A.pcolor, A.psize, B.pname
+					FROM product B,
+                    (
 						SELECT p.mno as mno, p.ono as ono, p.ostate as ostate, i.oamount as oamount,
 					        SUBSTR(scode, 1, INSTR(scode,'_')-1) as pcode,
 					        SUBSTR(scode,INSTR(scode,'_')+1, 2) as pcolor,
@@ -18,12 +18,18 @@
 						FROM productorder p, productorderitem i
 						WHERE p.ono = i.ono
 						AND p.mno = #{mno}
-						ORDER BY p.ono DESC
-						)
-					WHERE rownum <= #{pager.endRowNo}
-				)
-			WHERE rnum >= #{pager.startRowNo}
-			]]>
+                        ORDER BY p.ono DESC) A
+                        WHERE A.pcode = B.pcode)
+                        WHERE rownum &lt;= #{pager.endRowNo}
+                        <choose>
+							<when test="type != null and type.equals('pcode')">
+								AND pcode LIKE '%'||#{keyword}||'%'
+							</when>
+							<when test="type != null and type.equals('pname')">
+								AND pname LIKE '%'||#{keyword}||'%'
+							</when>
+						</choose>
+                        AND  rnum &gt;= #{pager.startRowNo}
 	</select>
 	
 	<select id="selectProductOrderCount" resultType="int" parameterType="productorder">
@@ -31,4 +37,5 @@
 			FROM productorder
 			WHERE mno = #{mno}
 	</select>
+	
 </mapper>

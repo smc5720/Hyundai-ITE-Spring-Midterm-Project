@@ -25,6 +25,10 @@ public class ProductOrder {
 	private String bname;
 	private int pprice;
 	private String cimageproduct1;
+	
+	//검색 필터
+	private String type;
+	private String keyword;
 }
 
 

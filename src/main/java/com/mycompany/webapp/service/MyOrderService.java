@@ -20,16 +20,15 @@ public class MyOrderService {
 	@Resource
 	private MyOrderDao myOrderDao;
 	
-	public List<ProductOrder> getProductOrder(int mno, Pager pager) {
-		logger.info("run");
+	public List<ProductOrder> getProductOrder(int mno, Pager page, String type, String keyword) {
 		HashMap<String, Object> hm = new HashMap<>();
 		hm.put("mno", mno);
-		hm.put("pager", pager);
+		hm.put("pager", page);
+		hm.put("type", type);
+		hm.put("keyword", keyword);
 		return myOrderDao.selectProductOrders(hm);
 	}
 	public int getProductOrderCount(int mno) {
-		logger.info("run");
 		return myOrderDao.selectProductOrderCount(mno);
 	}
-
 }
