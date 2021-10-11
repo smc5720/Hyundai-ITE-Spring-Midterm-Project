@@ -8,7 +8,8 @@
 		parameterType="String">
 		SELECT p.pcode, p.pname, p.pprice, p.pdetail,
 		p.precommanditem, b.bname, p.clarge, p.cmedium, p.csmall
-		FROM product p, brand b
+		FROM product
+		p, brand b
 		WHERE p.pcode = #{pcode}
 		AND p.bno = b.bno
 	</select>
@@ -108,9 +109,10 @@
 		CASE sproductsize WHEN 'S' THEN 1
 		WHEN 'M' THEN 2
 		WHEN 'L' THEN 3
-		END ASC,
+		END
+		ASC,
 		sproductsize ASC
-		
+
 	</select>
 
 	<select id="count" resultType="int" parameterType="category">
@@ -141,5 +143,51 @@
 		WHERE clarge = #{cLarge}
 		AND cmedium LIKE '%'
 		AND csmall LIKE '%'
+	</select>
+
+	<select id="selectProductsBrand" resultType="product"
+		parameterType="HashMap">
+      <![CDATA[
+      SELECT rnum, pcode, pname, pprice, pdetail,
+         precommanditem, bname, clarge, cmedium, csmall
+      FROM (
+              SELECT ROWNUM as rnum, pcode, pname, pprice, pdetail,
+               precommanditem, bname, clarge, cmedium, csmall
+              FROM (
+                  SELECT p.pcode as pcode, p.pname as pname, p.pprice as pprice, p.pdetail as pdetail,
+                      p.precommanditem as precommanditem, b.bname as bname, p.clarge as clarge, p.cmedium as cmedium, p.csmall as csmall
+                  FROM product p, brand b
+                  WHERE p.clarge LIKE '%'
+                  AND p.cmedium LIKE '%'
+                  AND p.csmall LIKE '%'
+                  AND b.bno = p.bno
+                  AND b.bname = #{brand.bName,javaType=String ,jdbcType=VARCHAR}
+              )
+              WHERE ROWNUM <= #{pager.endRowNo}
+      )
+      WHERE rnum >= #{pager.startRowNo}
+      ]]>
+	</select>
+
+	<select id="countNoLarge" resultType="int"
+		parameterType="category">
+		SELECT
+		COUNT(pcode)
+		FROM product
+		WHERE clarge LIKE '%'
+		AND cmedium LIKE '%'
+		AND csmall LIKE '%'
+	</select>
+	
+	<select id="countNoLargeIncludeBrand" resultType="int"
+		parameterType="HashMap">
+		SELECT
+		COUNT(pcode)
+		FROM product p, brand b
+		WHERE clarge LIKE '%'
+		AND cmedium LIKE '%'
+		AND csmall LIKE '%'
+		AND b.bno = p.bno
+		AND b.bname = #{brand.bName,javaType=String ,jdbcType=VARCHAR}
 	</select>
 </mapper>

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mycompany.webapp.dto.Brand;
 import com.mycompany.webapp.dto.Category;
 import com.mycompany.webapp.dto.Pager;
 import com.mycompany.webapp.dto.Product;
@@ -36,6 +37,87 @@ public class ProductController {
 
 	@Resource
 	ProductService productService;
+
+	@GetMapping("/brandproductlist")
+	public String brandproductList(@RequestParam(defaultValue = "1") int pageNo, String bName, Model model,
+			HttpSession session) {
+		logger.info("실행");
+
+		String cLarge = "none";
+		String cMedium = "none";
+		String cSmall = "none";
+		// 상품 리스트 상단 카테고리 정보 보여주기 위해 저장
+		Category category = new Category(cLarge, cMedium, cSmall);
+		// pager에서 사용하기 위해 저장
+		Brand brand = new Brand(bName);
+		// DB에 접근해서 해당 카테고리에 상품의 총 개수를 가져온다.
+		// Pager에 사용하고, 전체 상품 개수를 보여주기 위함
+		model.addAttribute("brand", brand);
+		int totalRows = productService.getTotalProductNumIncludeBrand(brand, category);
+
+		session.setAttribute("totalRows", totalRows);
+
+		// 한 페이지에 12개 상품,
+		// 페이지 목록 5 페이지,
+		// totalRows: 전체 상품 개수 / pageNo: 현재 페이지
+		Pager pager = new Pager(12, 5, totalRows, pageNo);
+		// pager도 request 범위에 저장하는데, 그 이유는 jsp에서 사용하기 위해서
+		model.addAttribute("pager", pager);
+
+		return "product/brandproductlist";
+	}
+
+	@GetMapping(value = "/getBrandProductList", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String getBrandProductList(@RequestParam(defaultValue = "1") int pageNo, String bName, Model model,
+			HttpSession session) {
+		// Pager에 사용하기 위해 선언
+		String cLarge = "none";
+		String cMedium = "none";
+		String cSmall = "none";
+		Category category = new Category(cLarge, cMedium, cSmall);
+		logger.info(bName);
+		Brand brand = new Brand(bName);
+		logger.info(brand.getBname());
+		model.addAttribute("category", category);
+		model.addAttribute("brand", brand);
+
+		// 세션에서 totalRows 가져오기
+		int totalRows = Integer.parseInt(session.getAttribute("totalRows").toString());
+
+		Pager pager = new Pager(12, 5, totalRows, pageNo);
+		model.addAttribute("pager", pager);
+
+		// 12개의 상품 리스트를 가져와야 하는데, 이 때 필요한 정보가 (카테고리, 페이저)이다.
+		List<Product> products = productService.getProducts(brand, category, pager);
+
+		JSONObject jsonObject = new JSONObject();
+		JSONArray jsonArray = new JSONArray();
+
+		for (Product p : products) {
+			JSONObject tmpObject = new JSONObject();
+
+			JSONObject pObject = new JSONObject();
+			pObject.put("pcode", p.getPcode());
+			pObject.put("pname", p.getPname());
+			pObject.put("pprice", p.getPprice());
+			pObject.put("bname", p.getBname());
+
+			tmpObject.put("product", pObject);
+
+			// p의 정보를 이용해서 pcode가 가진 컬러 리스트를 DB에서 가져온다.
+			List<ProductColor> colors = productService.getProductColor(p);
+			tmpObject.put("colors", colors);
+			tmpObject.put("state", 0);
+			jsonArray.put(tmpObject);
+		}
+
+		jsonObject.put("products", jsonArray);
+		jsonObject.put("result", "success");
+		String json = jsonObject.toString();
+
+		return json;
+	}
 
 	@GetMapping("/productlist")
 	public String productList(@RequestParam(defaultValue = "1") int pageNo, String cLarge, String cMedium,
@@ -72,12 +154,12 @@ public class ProductController {
 
 		// 세션에서 totalRows 가져오기
 		int totalRows = Integer.parseInt(session.getAttribute("totalRows").toString());
-		
+
 		Pager pager = new Pager(12, 5, totalRows, pageNo);
 		model.addAttribute("pager", pager);
-
+		Brand brand = new Brand();
 		// 12개의 상품 리스트를 가져와야 하는데, 이 때 필요한 정보가 (카테고리, 페이저)이다.
-		List<Product> products = productService.getProducts(category, pager);
+		List<Product> products = productService.getProducts(brand, category, pager);
 
 		JSONObject jsonObject = new JSONObject();
 		JSONArray jsonArray = new JSONArray();
@@ -92,7 +174,7 @@ public class ProductController {
 			pObject.put("bname", p.getBname());
 
 			tmpObject.put("product", pObject);
-			
+
 			// p의 정보를 이용해서 pcode가 가진 컬러 리스트를 DB에서 가져온다.
 			List<ProductColor> colors = productService.getProductColor(p);
 			tmpObject.put("colors", colors);
@@ -136,22 +218,24 @@ public class ProductController {
 		model.addAttribute("mileage", mileage);
 		model.addAttribute("hpoint", hpoint);
 
-		if(viewers.containsKey(pcode)) {
+		if (viewers.containsKey(pcode)) {
 			viewers.put(pcode, viewers.get(pcode) + 1);
-		}else {
+		} else {
 			viewers.put(pcode, 1);
-		}	
-		
+		}
+
 		model.addAttribute("viewer", viewers.get(pcode));
 
 		return "product/productdetail";
 	}
-		
+
 	@RequestMapping("/exitPage")
+	@ResponseBody
 	public void exitPage(String pcode) {
-		if(viewers.get(pcode) == 1) {
+		logger.info(pcode);
+		if (viewers.get(pcode) == 1) {
 			viewers.remove(pcode);
-		}else {			
+		} else {
 			viewers.put(pcode, viewers.get(pcode) - 1);
 		}
 	}
@@ -161,11 +245,18 @@ public class ProductController {
 	public String getProductStock(String pcode, String color, String size, Model model) {
 		String scode = pcode + "_" + color + "_" + size;
 		// scode를 이용해서 재고 테이블에서 Stock DTO를 가져온다.
-		Stock stock = productService.getProductStock(scode);
 
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("amount", stock.getSproductamount());
-		String json = jsonObject.toString();
+		String json;
+
+		try {
+			Stock stock = productService.getProductStock(scode);
+			jsonObject.put("amount", stock.getSproductamount());
+		} catch (Exception e) {
+			jsonObject.put("amount", 0);
+		} finally {
+			json = jsonObject.toString();
+		}
 
 		return json;
 	}
@@ -175,12 +266,6 @@ public class ProductController {
 
 	@RequestMapping("/insertToShoppingbag")
 	public String insertToShoppingbag(ShoppingBag shoppingBag, HttpSession session) {
-
-		// 만약 세션에 로그인된 유저가 없으면
-		if (session.getAttribute("mno") == null) {
-			// 로그인 폼으로 보내주는데, 이 부분은 추후에 시큐리티 기능을 이용하는 것으로 바꿀 예정
-			return "redirect:/member/loginForm";
-		}
 
 		shoppingBag.setMno(Integer.parseInt(session.getAttribute("mno").toString()));
 
@@ -199,15 +284,9 @@ public class ProductController {
 
 		return "redirect:/member/shoppingbag";
 	}
-	
+
 	@RequestMapping("/insertToShoppingbagForDirectOrder")
 	public String insertToShoppingbagForDirectOrder(ShoppingBag shoppingBag, HttpSession session) {
-
-		// 만약 세션에 로그인된 유저가 없으면
-		if (session.getAttribute("mno") == null) {
-			// 로그인 폼으로 보내주는데, 이 부분은 추후에 시큐리티 기능을 이용하는 것으로 바꿀 예정
-			return "redirect:/member/loginForm";
-		}
 
 		shoppingBag.setMno(Integer.parseInt(session.getAttribute("mno").toString()));
 		shoppingbagService.insertShoppingbag(shoppingBag);

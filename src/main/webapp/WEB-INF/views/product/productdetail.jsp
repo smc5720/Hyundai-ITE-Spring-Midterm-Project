@@ -92,8 +92,8 @@ a:hover {
 						<p>
 							<small class="detail-title">수량</small> <input
 								id="product-amount-input" class="mb-2 text-center" type="number"
-								size="1" style="width: 50px;" value="1"
-								onchange="changeAmount(this, ${product.pprice})" max="1" min="0" />
+								size="1" style="width: 50px;" value="0"
+								onchange="changeAmount(this, ${product.pprice})" max="0" min="0" />
 						</p>
 						<p id="product-stock-amount"></p> <script>
 							const url = new URL(window.location.href);
@@ -148,19 +148,27 @@ a:hover {
 								class="btn btn-secondary btn-lg col-5">바로주문</button>
 						</div> <script>
 									function addShoppingBag() {
-										location.href = "insertToShoppingbag?sbproductcolor="
+										if ($("#product-amount-input").val() > 0) {
+											location.href = "insertToShoppingbag?sbproductcolor="
+													+ urlParams.get("cproductcolor")
+													+ "&sbproductsize=" + current_size
+													+ "&sbproductamount=" + $("#product-amount-input").val()
+													+ "&pcode=" + urlParams.get("pcode");
+										} else {
+											alert("상품의 수량을 확인해주세요.");
+										}
+									}
+									
+									function addShoppingBagForDirectOrder() {
+										if ($("#product-amount-input").val() > 0) {
+											location.href = "insertToShoppingbagForDirectOrder?sbproductcolor="
 												+ urlParams.get("cproductcolor")
 												+ "&sbproductsize=" + current_size
 												+ "&sbproductamount=" + $("#product-amount-input").val()
 												+ "&pcode=" + urlParams.get("pcode");
-									}
-									
-									function addShoppingBagForDirectOrder() {
-										location.href = "insertToShoppingbagForDirectOrder?sbproductcolor="
-											+ urlParams.get("cproductcolor")
-											+ "&sbproductsize=" + current_size
-											+ "&sbproductamount=" + $("#product-amount-input").val()
-											+ "&pcode=" + urlParams.get("pcode");
+										} else {
+											alert("상품의 수량을 확인해주세요.");
+										}
 									}
 						</script>
 					</td>

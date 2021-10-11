@@ -34,6 +34,12 @@ public class HomeController {
 		return "home";
 	}
 
+	@RequestMapping("/loginForm")
+	public String loginForm() {
+		logger.info("실행");
+		return "member/loginForm";
+	}
+
 	@Resource
 	BrandService brandService;
 
@@ -73,7 +79,7 @@ public class HomeController {
 			Category tmp = new Category();
 			// tmp는 대분류 값만 가지고 있는 상태
 			tmp.setcLarge(cLarge);
-			
+
 			// tmp를 이용해서 중분류 리스트를 가져온다.
 			List<Category> categoryMedium = categoryService.getCategoryMedium(tmp);
 
@@ -82,9 +88,9 @@ public class HomeController {
 			for (Category m : categoryMedium) {
 				// m은 대분류와 중분류 값을 가지고 있는 상태
 				m.setcLarge(tmp.getcLarge());
-				
+
 				JSONObject tmpObject = new JSONObject();
-				
+
 				// m을 이용해서 소분류 리스트를 가져온다.
 				List<Category> categorySmall = categoryService.getCategorySmall(m);
 
@@ -99,7 +105,7 @@ public class HomeController {
 				tmpObject.put(m.getcMedium(), tmpArray);
 				jsonArray.put(tmpObject);
 			}
-			
+
 			jsonObject.put("result", "success");
 			// DB에서 값을 받아온 뒤 세션에 넣어준다.
 			session.setAttribute(cLarge, jsonArray);
@@ -109,12 +115,6 @@ public class HomeController {
 		String json = jsonObject.toString();
 
 		return json;
-	}
-
-	@RequestMapping("/loginForm")
-	public String login() {
-		logger.info("실행");
-		return "redirect:/member/loginForm";
 	}
 
 	@RequestMapping("/error/403")

@@ -38,37 +38,25 @@ public class MemberController {
 	ProductService productService;
 	@Resource
 	EventService eventService;
-
-	@RequestMapping("/loginForm")
-	public String loginForm() {
-		logger.info("실행");
-		return "member/loginForm";
-	}
-
 	@Resource
 	MyOrderService myOrderService;
 
 	@RequestMapping("/myorders")
-	public String myOrdersList(HttpSession session, Model model
-				, @RequestParam(defaultValue = "1") int pageNo
-				, HttpServletRequest httpServletRequest
-				){ //회원의 주문한 상품 리스트
+	public String myOrdersList(HttpSession session, Model model, @RequestParam(defaultValue = "1") int pageNo,
+			@RequestParam(defaultValue = "pcode") String type, @RequestParam(defaultValue = "") String keyword,
+			HttpServletRequest httpServletRequest) { // 회원의 주문한 상품 리스트
 
 		int mno = Integer.parseInt(session.getAttribute("mno").toString());// 어떤 회원 인지
 		// 페이징 처리
-		int totalRows = myOrderService.getProductOrderCount(mno);
+		int totalRows = myOrderService.getProductOrderCount(mno, type, keyword);
 		session.setAttribute("totalRows", totalRows);
 
 		Pager pager = new Pager(5, 5, totalRows, pageNo);
 		model.addAttribute("pager", pager);
-		
-		//검색 필터
-		String type = httpServletRequest.getParameter("type");
-		String keyword = httpServletRequest.getParameter("keyword");
-		
+
 		// 주문 테이블에서 mno에 해당하는 모든 정보를 가지고 옴
 		List<ProductOrder> productOrders = myOrderService.getProductOrder(mno, pager, type, keyword);
-		
+
 		for (ProductOrder po : productOrders) {
 			Product p = productService.getProduct(po.getPcode());
 			po.setBname(p.getBname());
@@ -86,27 +74,17 @@ public class MemberController {
 			po.setType(type);
 			po.setKeyword(keyword);
 		}
-		
-		logger.info("type:" +type);
-		logger.info("keyword:" +keyword);
-		
+
 		model.addAttribute("type", type);
 		model.addAttribute("keyword", keyword);
-		logger.info("model:" +model);
-		
 		model.addAttribute("productOrders", productOrders);
-		logger.info("model:" +model);
-		
+
 		return "member/myorders";
-	} 
+	}
 
 	@RequestMapping("/mycoupons")
 	public String myCoupons(HttpSession session, Model model) {
 		logger.info("실행");
-
-		if (session.getAttribute("mno") == null) {
-			return "member/mycoupons";
-		}
 
 		// 내가 참여 하고 있는 이벤트들을 찾기 위해 세션에서 mno를 꺼내온다.
 		int mno = Integer.parseInt(session.getAttribute("mno").toString());
@@ -133,11 +111,6 @@ public class MemberController {
 	@RequestMapping("/shoppingbag")
 	public String shoppingBag(HttpSession session, Model model) {
 		logger.info("실행");
-
-		// 로그인 여부 체크
-		if (session.getAttribute("mno") == null) {
-			return "redirect:/member/loginForm";
-		}
 
 		int mno = Integer.parseInt(session.getAttribute("mno").toString());
 
@@ -173,11 +146,6 @@ public class MemberController {
 	@RequestMapping("/shoppingbagForDirectOrder")
 	public String shoppingbagForDirectOrder(HttpSession session, Model model) {
 		logger.info("실행");
-
-		// 로그인 여부 체크
-		if (session.getAttribute("mno") == null) {
-			return "redirect:/member/loginForm";
-		}
 
 		int mno = Integer.parseInt(session.getAttribute("mno").toString());
 

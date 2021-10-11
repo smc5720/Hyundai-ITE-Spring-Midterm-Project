@@ -28,7 +28,11 @@ public class MyOrderService {
 		hm.put("keyword", keyword);
 		return myOrderDao.selectProductOrders(hm);
 	}
-	public int getProductOrderCount(int mno) {
-		return myOrderDao.selectProductOrderCount(mno);
+	public int getProductOrderCount(int mno, String type, String keyword) {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("mno", mno);
+		map.put("type", type);
+		map.put("keyword", keyword);
+		return myOrderDao.selectProductOrderCount(map);
 	}
 }

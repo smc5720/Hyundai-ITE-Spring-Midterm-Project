@@ -23,4 +23,7 @@ public interface ProductDao {
 	public int count(Category category);
 	public int countNoMedium(Category category);
 	public int countNoSmall(Category category);
+	public int countNoLarge(Category category);
+	public int countNoLargeIncludeBrand(HashMap<String, Object> categoryPager);
+	public List<Product> selectProductsBrand(HashMap<String,Object> categoryPager);
 }

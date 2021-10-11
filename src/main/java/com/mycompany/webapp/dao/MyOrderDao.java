@@ -10,5 +10,5 @@ import com.mycompany.webapp.dto.ProductOrder;
 @Mapper
 public interface MyOrderDao {
 	public List<ProductOrder> selectProductOrders(HashMap<String, Object> mnoPager);
-	public int selectProductOrderCount(int mno);
+	public int selectProductOrderCount(HashMap<String, Object> map);
 }

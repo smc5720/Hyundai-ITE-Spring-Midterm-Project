@@ -4,38 +4,40 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.mycompany.webapp.dao.MyOrderDao">
-	<select id="selectProductOrders" parameterType="HashMap" resultType="productorder">
-		SELECT rnum, mno, ono, ostate, oamount, pcode, pcolor, psize, pname
-			FROM
-            (
-            SELECT ROWNUM as rnum, A.mno, A.ono, A.ostate, A.oamount, A.pcode, A.pcolor, A.psize, B.pname
-					FROM product B,
-                    (
-						SELECT p.mno as mno, p.ono as ono, p.ostate as ostate, i.oamount as oamount,
-					        SUBSTR(scode, 1, INSTR(scode,'_')-1) as pcode,
-					        SUBSTR(scode,INSTR(scode,'_')+1, 2) as pcolor,
-					        SUBSTR(scode, INSTR(scode,'_', -1)+1) as psize
-						FROM productorder p, productorderitem i
-						WHERE p.ono = i.ono
-						AND p.mno = #{mno}
-                        ORDER BY p.ono DESC) A
-                        WHERE A.pcode = B.pcode)
-                        WHERE rownum &lt;= #{pager.endRowNo}
-                        <choose>
-							<when test="type != null and type.equals('pcode')">
-								AND pcode LIKE '%'||#{keyword}||'%'
-							</when>
-							<when test="type != null and type.equals('pname')">
-								AND pname LIKE '%'||#{keyword}||'%'
-							</when>
-						</choose>
-                        AND  rnum &gt;= #{pager.startRowNo}
+	<select id="selectProductOrders" parameterType="HashMap"
+		resultType="productorder">
+		<![CDATA[
+	      SELECT rnum, ono, pcode, pcolor, psize,
+	               oamount, pname, bname
+	      FROM (
+	              SELECT ROWNUM as rnum, ono, pcode, pcolor, psize,
+	               oamount, pname, bname
+	              FROM (
+	                  select i.ono as ono, substr(i.scode, 1, instr(i.scode,'_')-1) as pcode, 
+	                   substr(i.scode, instr(i.scode,'_')+1, 2) as pcolor,
+	                   substr(i.scode, instr(i.scode,'_',-1)+1) as psize, i.oamount as oamount,
+	                   p.pname as pname, b.bname as bname
+	                       from productorderitem i, product p, brand b
+	                       where ono in (select ono from productorder where mno = #{mno})
+	                       and p.pcode = substr(i.scode, 1, instr(i.scode,'_')-1)
+	                       and p.bno = b.bno
+	                       and DECODE(#{type}, 'pcode', p.pcode, 'pname', p.pname) LIKE '%'||#{keyword}||'%'
+	                       ORDER BY ono DESC
+	              )
+	              WHERE ROWNUM <= #{pager.endRowNo}
+	      )
+	      WHERE rnum >= #{pager.startRowNo}
+      ]]>
 	</select>
-	
-	<select id="selectProductOrderCount" resultType="int" parameterType="productorder">
-		SELECT COUNT(ono)
-			FROM productorder
-			WHERE mno = #{mno}
+
+	<select id="selectProductOrderCount" resultType="int"
+		parameterType="HashMap">
+		select count(*)
+        from productorderitem i, product p, brand b
+        where ono in (select ono from productorder where mno = #{mno})
+        and p.pcode = substr(i.scode, 1, instr(i.scode,'_')-1)
+        and p.bno = b.bno
+        and DECODE(#{type}, 'pcode', p.pcode, 'pname', p.pname) LIKE '%'||#{keyword}||'%'
 	</select>
-	
+
 </mapper>

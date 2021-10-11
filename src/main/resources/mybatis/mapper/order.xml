@@ -25,4 +25,11 @@
 		productorderitem(ONO, SCODE, OAMOUNT)
 		VALUES(ONO_SEQ.currval, #{scode}, #{oamount})
 	</insert>
+	
+	<update id="decreaseStockAmount" parameterType="HashMap">
+		UPDATE stock
+		SET
+		sproductamount = sproductamount - #{amount}
+		WHERE scode = #{scode}
+	</update>
 </mapper>

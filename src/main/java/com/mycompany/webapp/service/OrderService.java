@@ -1,5 +1,6 @@
 package com.mycompany.webapp.service;
 
+import java.util.HashMap;
 import java.util.StringTokenizer;
 
 import javax.annotation.Resource;
@@ -41,6 +42,14 @@ public class OrderService {
 		return orderDao.insertItemToProductOrderItem(productOrderItem);
 	}
 
+	public int decreaseStockAmount(String scode, int amount) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("scode", scode);
+		map.put("amount", amount);
+
+		return orderDao.decreaseStockAmount(map);
+	}
+
 	// 결제하기 버튼을 누르고 일어나는 트랜잭션
 	@Transactional
 	public void paymentOrder(ProductOrder productOrder, Address address, String checkedItems, int itemsLength) {
@@ -54,7 +63,7 @@ public class OrderService {
 			insertOrder(productOrder, address.getAno());
 
 			StringTokenizer st = new StringTokenizer(checkedItems, ",");
-			
+
 			// 주문 아이템들을 테이블에 추가한다.
 			for (int i = 0; i < itemsLength; i++) {
 				int sbno = Integer.parseInt(st.nextToken());
@@ -64,6 +73,9 @@ public class OrderService {
 				poi.setScode(scode);
 				poi.setOamount(sb.getSbproductamount());
 				insertItemToProductOrderItem(poi);
+
+				// 주문된 상품의 재고를 감소시킨다.
+				decreaseStockAmount(scode, poi.getOamount());
 
 				// 주문된 상품을 쇼핑백에서 제거한다.
 				shoppingbagService.deleteShoppingbag(sbno);

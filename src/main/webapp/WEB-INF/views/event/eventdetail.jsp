@@ -11,17 +11,24 @@
 			<h5 class="card-title">${event.ename}</h5>
 			<p class="card-text">${event.econtent}</p>
 			<p class="card-text">
-				<small class="text-muted">이벤트 기간: ${event.estartdate} ~ ${event.eenddate}</small>
+				<small class="text-muted">이벤트 기간: ${event.estartdate} ~
+					${event.eenddate}</small>
 			</p>
 			<p class="card-text">
 				<small class="text-muted">남은 쿠폰 개수: ${event.ecouponremain} /
 					${event.ecouponamount}</small>
 			</p>
 			<p class="card-text">
-				<a href="javascript:joinEvent()" type="button" class="btn btn-primary btn-lg btn-block">참여하기</a>
+				<a href="javascript:joinEvent()" type="button"
+					class="btn btn-primary btn-lg btn-block">참여하기</a>
 			</p>
 			<script>
 				function joinEvent() {
+					if ("${mno}" === "") {
+						location.href = "/loginForm";
+					}
+					
+					else {
 					for(let i=0; i<1000; i++) {
 						$.ajax({
 							url: "/event/joinEvent",
@@ -39,7 +46,9 @@
 							
 							// window.location.href = "eventdetail?eno=${event.eno}";
 						});
-				}}
+					}
+				}
+			}
 			</script>
 		</div>
 	</div>

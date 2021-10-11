@@ -36,7 +36,7 @@ a:hover {
 				<dl>
 					<dt>주문조회</dt>
 					<dd>
-						<a class="text-secondary ml-2" href="">주문/배송</a>
+						<a class="text-secondary ml-2" href="myorders">주문/배송</a>
 					</dd>
 				</dl>
 				<dl>
@@ -45,36 +45,34 @@ a:hover {
 						<a class="text-secondary ml-2" href="shoppingbag">쇼핑백</a>
 					</dd>
 				</dl>
+				<dl>
+					<dt>쿠폰</dt>
+					<dd>
+						<a class="text-secondary ml-2" href="mycoupons">내 쿠폰</a>
+					</dd>
+				</dl>
 			</div>
 		</nav>
 
 		<article class="col-10 p-3">
-			<form>
-				<div class="container-fluid row bg-light border pt-4">
-					<ul>
-						<li>
-							<p class="d-inline col-2">조회기간</p>
-							<div class="d-inline">
-								<input type="date" class="d-inline form-control col-3 mr-2">
-								~ <input type="date"
-									class="d-inline form-control col-3 ml-2 mr-2">
-								<button type="button" class="btn btn-light btn-sm border">1주일</button>
-								<button type="button" class="btn btn-light btn-sm border">1개월</button>
-								<button type="button" class="btn btn-light btn-sm border">3개월</button>
-							</div>
-						</li>
-						<li>
-							<p class="d-inline col-2">검색구분</p>
-							<div class="d-inline">
-								<select class="custom-select col-3" name="type" id="type">
-									<option selected value="pcode">상품코드</option>
-									<option value="pname">상품이름</option>
-								</select>
-								<input type="text" class="d-inline form-control col-7" name="keyword" id="keyword" value=""/>
-							</div>
-						</li>
-					</ul>
-					<button class="btn btn-sm btn-secondary ml-3 mb-2">조회하기</button>
+			<form method="get" action="myorders">
+				<div class="container-fluid bg-light border p-4">
+					<div class="d-flex align-items-center">
+						<div class="ml-2 mr-auto">검색구분</div>
+						<div class="mr-2">
+							<select class="custom-select" name="type" id="type">
+								<option <c:if test="${type eq 'pcode'}">selected</c:if> value="pcode">상품코드</option>
+								<option <c:if test="${type eq 'pname'}">selected</c:if> value="pname">상품이름</option>
+							</select>
+						</div>
+						<div class="mr-2">
+							<input type="text" class="form-control" name="keyword"
+								id="keyword" size="65" value="${keyword}" />
+						</div>
+						<div class="mr-2 ml-auto">
+							<button class="btn btn-sm btn-secondary">조회하기</button>
+						</div>
+					</div>
 				</div>
 			</form>
 			<div>
@@ -103,9 +101,13 @@ a:hover {
 										</div>
 										<div class="col-md-8">
 											<div class="card-body p-1 ml-2">
-												<p class="card-text"><small>${orders.pcode}</small></p>
+												<p class="card-text">
+													<small>${orders.pcode}</small>
+												</p>
 												<p class="card-text">${orders.bname}</p>
-												<p class="card-title font-weight-bolder">${orders.pname}</p>
+												<a
+													href="${pageContext.request.contextPath}/product/productdetail?pcode=${orders.pcode}&cproductcolor=${orders.pcolor}"><p
+														class="card-title font-weight-bolder">${orders.pname}</p></a>
 												<p class="card-text">
 													<small class="text-muted">color : ${orders.pcolor}
 														/ size : ${orders.psize}</small>
@@ -131,39 +133,34 @@ a:hover {
 
 					<tr class="row">
 						<td class="col text-center">
-<!-- 							<a class="text-secondary" href="">≪</a>
-							<a class="text-secondary" href="">＜</a>
-							<a class="text-secondary" href="">1</a>
-							<a class="text-secondary" href="">＞</a>
-							<a class="text-secondary" href="">≫</a> -->
-						
-						<div id="pager-container" class="container text-center">
-							<a href="myorders?pageNo=1">처음</a>
-							<c:if test="${pager.groupNo > 1}">
-								<a class="btn btn-light btn-sm"
-									href="myorders?pageNo=${pager.startPageNo-1}">이전</a>
-							</c:if>
-							<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
-								<c:if test="${pager.pageNo != i}">
+							<div id="pager-container" class="container text-center">
+								<a href="myorders?type=${type}&keyword=${keyword}&pageNo=1">처음</a>
+								<c:if test="${pager.groupNo > 1}">
 									<a class="btn btn-light btn-sm"
-										href="myorders?pageNo=${i}">${i}</a>
+										href="myorders?type=${type}&keyword=${keyword}&pageNo=${pager.startPageNo-1}">이전</a>
 								</c:if>
-								<c:if test="${pager.pageNo == i}">
-									<a class="btn btn-outline-dark btn-sm"
-										href="myorders?pageNo=${i}">${i}</a>
+								<c:forEach var="i" begin="${pager.startPageNo}"
+									end="${pager.endPageNo}">
+									<c:if test="${pager.pageNo != i}">
+										<a class="btn btn-light btn-sm"
+											href="myorders?type=${type}&keyword=${keyword}&pageNo=${i}">${i}</a>
+									</c:if>
+									<c:if test="${pager.pageNo == i}">
+										<a class="btn btn-outline-dark btn-sm"
+											href="myorders?type=${type}&keyword=${keyword}&pageNo=${i}">${i}</a>
+									</c:if>
+								</c:forEach>
+								<c:if test="${pager.groupNo < pager.totalGroupNo}">
+									<a
+										href="myorders?type=${type}&keyword=${keyword}&pageNo=${pager.endPageNo+1}">다음</a>
 								</c:if>
-							</c:forEach>
-							<c:if test="${pager.groupNo < pager.totalGroupNo}">
-								<a href="myorders?pageNo=${pager.endPageNo+1}">다음</a>
-							</c:if>
-							<a href="myorders?pageNo=${pager.totalPageNo}">끝</a>
-						</div>
+								<a
+									href="myorders?type=${type}&keyword=${keyword}&pageNo=${pager.totalPageNo}">끝</a>
+							</div>
 						</td>
 					</tr>
 				</tbody>
 			</table>
-
-			
 		</article>
 	</div>
 </section>
