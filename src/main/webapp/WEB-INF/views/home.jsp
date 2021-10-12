@@ -53,17 +53,13 @@ li {
 .eventMidBanner .banner .img img {
 	float: right;
 }
-
 </style>
 <hr />
 <div>
 	<section id="contents">
 		<h2 class="pageTitle">이벤트</h2>
 		<div class="contWrap">
-			<div class="eventMidBanner" id="eventMidBanner">				
-						
-					
-			</div>
+			<div class="eventMidBanner" id="eventMidBanner"></div>
 		</div>
 		<script>
 			$(window).ready(function () {
@@ -97,8 +93,44 @@ li {
 		</script>
 	</section>
 	<section id="contents">
-		<h2 class="pageTitle">New Brand Launching : About Team 5</h2>
-
+		<h2 class="pageTitle">About Team 5</h2>
+		<div style="text-align: center;">
+			<div style="display: inline-block; padding: 16px;">
+				<img
+					src="${pageContext.request.contextPath}/resources/images/img1.jpg"
+					style="width: 606.5px" />
+			</div>
+			<div style="display: inline-block; padding: 16px;">
+				<img
+					src="${pageContext.request.contextPath}/resources/images/img2.jpg"
+					style="width: 606.5px" />
+			</div>
+		</div>
+		<div style="text-align: center;">
+			<div style="display: inline-block; padding: 16px;">
+				<img
+					src="${pageContext.request.contextPath}/resources/images/img3.jpg"
+					style="width: 606.5px" />
+			</div>
+			<div style="display: inline-block; padding: 16px;">
+				<img
+					src="${pageContext.request.contextPath}/resources/images/img4.jpg"
+					style="width: 606.5px" />
+			</div>
+		</div>
+		<div style="text-align: center;">
+			<div style="display: inline-block; padding: 16px;">
+				<img
+					src="${pageContext.request.contextPath}/resources/images/img5.jpg"
+					style="width: 606.5px" />
+			</div>
+			<div style="display: inline-block; padding: 16px;">
+				<img
+					src="${pageContext.request.contextPath}/resources/images/img6.jpg"
+					style="width: 606.5px" />
+			</div>
+		</div>
+		<div style="margin-top: 30px"></div>
 	</section>
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

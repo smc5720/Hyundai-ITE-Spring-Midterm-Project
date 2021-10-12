@@ -29,7 +29,7 @@
 					}
 					
 					else {
-					for(let i=0; i<1000; i++) {
+					for(let i = 0; i < 300; i++) {
 						$.ajax({
 							url: "/event/joinEvent",
 							data: {

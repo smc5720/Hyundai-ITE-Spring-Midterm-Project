@@ -76,9 +76,7 @@ public class ProductController {
 		String cMedium = "none";
 		String cSmall = "none";
 		Category category = new Category(cLarge, cMedium, cSmall);
-		logger.info(bName);
 		Brand brand = new Brand(bName);
-		logger.info(brand.getBname());
 		model.addAttribute("category", category);
 		model.addAttribute("brand", brand);
 
