@@ -31,18 +31,26 @@ public class EventController {
 	EventService eventService;
 
 	private ExecutorService executorService = Executors.newFixedThreadPool(1);
+	
+	public static JSONObject brandListJson = new JSONObject();
+	public static JSONObject eventListJson = new JSONObject();
+
+	public EventController() {
+		eventListJson.put("result", "fail");
+	}
 
 	@GetMapping(value = "/getEventList", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String getEventList() {
-		logger.info("실행");
 
-		List<Event> events = eventService.getEvents();
+		if (!eventListJson.get("result").equals("success")) {
+			List<Event> events = eventService.getEvents();
 
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("result", "success");
-		jsonObject.put("events", events);
-		String json = jsonObject.toString();
+			eventListJson.put("result", "success");
+			eventListJson.put("events", events);
+		}
+		
+		String json = eventListJson.toString();
 
 		return json;
 	}

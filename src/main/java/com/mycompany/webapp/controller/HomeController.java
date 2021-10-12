@@ -43,24 +43,30 @@ public class HomeController {
 	@Resource
 	BrandService brandService;
 
+	public static JSONObject brandListJson = new JSONObject();
+	public static JSONObject categoryListJson = new JSONObject();
+
+	public HomeController() {
+		brandListJson.put("result", "fail");
+		categoryListJson.put("result", "fail");
+	}
+
 	@GetMapping(value = "/getBrandList", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String getBrandList(HttpSession session) {
-		JSONObject jsonObject = new JSONObject();
 
 		// 처음 접속(세션에 아무런 값이 없을 때)했을 때
-		if (session.getAttribute("brands") == null) {
+		if (!brandListJson.get("result").equals("success")) {
 			// Brand 테이블에 접근해서 DB에 저장된 모든 브랜드 리스트를 가져온다.
 			List<Brand> brands = brandService.getBrandList();
 			// 가져온 브랜드 리스트를 세션에 저장한다.
 			// 브라우저를 끄기 전까지 더 이상 브랜드 테이블에 접근하지 않아도 된다.
 			// 왜냐하면 세션에서 꺼내쓰면 되기 때문이다.
-			session.setAttribute("brands", brands);
+			brandListJson.put("brands", brands);
+			brandListJson.put("result", "success");
 		}
-
-		jsonObject.put("brands", session.getAttribute("brands"));
-		jsonObject.put("result", "success");
-		String json = jsonObject.toString();
+		
+		String json = brandListJson.toString();
 
 		return json;
 	}
@@ -71,11 +77,10 @@ public class HomeController {
 	@GetMapping(value = "/getCategoryList", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String getCategoryList(String cLarge, HttpSession session) {
-		JSONObject jsonObject = new JSONObject();
 
 		// 대분류 값 cLarge만 가지고 있는 상태
 		// 처음 접속(세션에 아무런 값이 없을 때)했을 때
-		if (session.getAttribute(cLarge) == null) {
+		if (!categoryListJson.get("result").equals("success")) {
 			Category tmp = new Category();
 			// tmp는 대분류 값만 가지고 있는 상태
 			tmp.setcLarge(cLarge);
@@ -105,14 +110,16 @@ public class HomeController {
 				tmpObject.put(m.getcMedium(), tmpArray);
 				jsonArray.put(tmpObject);
 			}
+			
 
-			jsonObject.put("result", "success");
+			categoryListJson.put("result", "success");
 			// DB에서 값을 받아온 뒤 세션에 넣어준다.
-			session.setAttribute(cLarge, jsonArray);
+			//session.setAttribute(cLarge, jsonArray);
+			categoryListJson.put(cLarge, jsonArray);
+			
 		}
-
-		jsonObject.put(cLarge, session.getAttribute(cLarge));
-		String json = jsonObject.toString();
+//		jsonObject.put(cLarge, session.getAttribute(cLarge));
+		String json = categoryListJson.toString();
 
 		return json;
 	}
