@@ -30,7 +30,7 @@ public class EventController {
 	@Resource
 	EventService eventService;
 
-	private ExecutorService executorService = Executors.newFixedThreadPool(1);
+	
 	
 	public static JSONObject brandListJson = new JSONObject();
 	public static JSONObject eventListJson = new JSONObject();
@@ -65,6 +65,8 @@ public class EventController {
 		return "event/eventdetail";
 	}
 
+	private ExecutorService executorService = Executors.newFixedThreadPool(1);
+	
 	@RequestMapping(value = "/joinEvent", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String joinEvent(int eno, HttpSession session) throws Exception {

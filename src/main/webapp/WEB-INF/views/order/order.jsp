@@ -506,7 +506,7 @@ input[type="text"], input[type="password"], input[type="email"] {
 								let field = document.createElement('input');
 								field.setAttribute('type', 'hidden');
 								field.setAttribute('name', key);
-								if (params[key] === "") {
+								if (params[key] === "" && key !== "ocomment") {
 									alert("필수 양식을 전부 기입해주세요.");
 									return;
 								}

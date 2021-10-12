@@ -49,10 +49,12 @@ public class MemberController {
 		int mno = Integer.parseInt(session.getAttribute("mno").toString());// 어떤 회원 인지
 		// 페이징 처리
 		int totalRows = myOrderService.getProductOrderCount(mno, type, keyword);
+		
 		session.setAttribute("totalRows", totalRows);
 
 		Pager pager = new Pager(5, 5, totalRows, pageNo);
 		model.addAttribute("pager", pager);
+		
 
 		// 주문 테이블에서 mno에 해당하는 모든 정보를 가지고 옴
 		List<ProductOrder> productOrders = myOrderService.getProductOrder(mno, pager, type, keyword);

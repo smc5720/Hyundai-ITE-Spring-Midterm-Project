@@ -67,7 +67,7 @@ public class EventService {
 			updateRemainCoupons(eno, remainCoupons - 1);
 			updateCouponState(1, eno, couponMember.getCno());
 		} catch (Exception e) {
-			logger.info("우린 실패했어");
+			logger.info("쿠폰 발급 실패 - RollBack");
 		}
 	}
 }

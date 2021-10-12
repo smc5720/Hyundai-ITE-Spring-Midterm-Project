@@ -25,6 +25,9 @@
 					<tr class="row">
 						<td class="col-1 text-center"><input type="checkbox"
 							name="sbno-checkbox" id="${sb_product.sbno}"
+							<c:if test="${sb_product.sbproductamount == 0}">
+								disabled
+							</c:if>
 							onchange="handleSbnoCheckbox(this)"></td>
 						<td class="col">
 							<div class="card border-white" style="max-width: 540px;">
@@ -74,7 +77,16 @@
 											</c:if>
 											<p class="card-text">
 												<small class="text-muted text-right">
-													<button class="btn btn-light btn-sm">옵션변경</button>
+													<button id="changeOptionBtn" class="btn btn-light btn-sm">옵션변경</button>
+													<script>
+														$("#changeOptionBtn").click(function (event){
+															event.preventDefault();
+															if(){
+																
+															}
+														}) //기본 서브밋 속성 제거..
+														
+													</script>
 												</small>
 											</p>
 										</div>
@@ -85,7 +97,7 @@
 						<td class="col-1 text-center align-middle border-left"><input
 							class="mb-2 text-center" type="number" size="1"
 							style="width: inherit;" name="amountSelected"
-							value="${sb_product.sbproductamount}" min="0" />
+							value="${sb_product.sbproductamount}" min="0"/>
 							<button class="btn btn-outline-secondary btn-sm"
 								style="width: inherit;">변경</button></td>
 						<td class="col-1 text-center align-middle border-left"
@@ -103,7 +115,8 @@
 
 				$("#allchecked").click(function() {
 					if ($("input:checkbox[id='allchecked']").prop("checked")) {
-						$("input[type=checkbox]").prop("checked", true);
+							$("input[type=checkbox]:not(:disabled)").prop("checked", true);
+						
 					} else {
 						$("input[type=checkbox]").prop("checked", false);
 					}

@@ -133,6 +133,7 @@ a:hover {
 
 					<tr class="row">
 						<td class="col text-center">
+						<c:if test="${totalRows > 0}">
 							<div id="pager-container" class="container text-center">
 								<a href="myorders?type=${type}&keyword=${keyword}&pageNo=1">처음</a>
 								<c:if test="${pager.groupNo > 1}">
@@ -157,6 +158,7 @@ a:hover {
 								<a
 									href="myorders?type=${type}&keyword=${keyword}&pageNo=${pager.totalPageNo}">끝</a>
 							</div>
+							</c:if>
 						</td>
 					</tr>
 				</tbody>
