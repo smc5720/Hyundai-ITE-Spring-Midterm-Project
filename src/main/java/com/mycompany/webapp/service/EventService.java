@@ -70,4 +70,24 @@ public class EventService {
 			logger.info("쿠폰 발급 실패 - RollBack");
 		}
 	}
+	
+	@Transactional
+	public void resetEvent(int eno) {
+		try {
+			eventDao.deleteCouponMember(eno);
+			
+			HashMap<String, Integer> stateEno = new HashMap<String, Integer>();
+			stateEno.put("eno", eno);
+			stateEno.put("state", 0);
+			eventDao.updateAllCouponState(stateEno);
+			
+			HashMap<String, Integer> enoRemainCoupons = new HashMap<String, Integer>();
+			enoRemainCoupons.put("eno", eno);
+			enoRemainCoupons.put("remainCoupons", eventDao.selectEventByEno(eno).getEcouponamount());
+			eventDao.updateRemainCoupons(enoRemainCoupons);
+			
+		} catch (Exception e) {
+			logger.info("쿠폰리셋 실패");
+		}
+	}
 }

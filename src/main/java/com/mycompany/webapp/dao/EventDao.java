@@ -18,4 +18,6 @@ public interface EventDao {
 	public int updateRemainCoupons(HashMap<String, Integer> enoRemainCoupons);
 	public int insertCouponMember(CouponMember couponMember);
 	public int updateCouponState(HashMap<String, Integer> stateEnoCno);
+	public int deleteCouponMember(int eno);
+	public int updateAllCouponState(HashMap<String, Integer> stateEno);
 }

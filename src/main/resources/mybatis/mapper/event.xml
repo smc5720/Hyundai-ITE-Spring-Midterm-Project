@@ -5,8 +5,7 @@
 
 <mapper namespace="com.mycompany.webapp.dao.EventDao">
 	<select id="selectEvents" resultType="event">
-		SELECT eno, ename,
-		TO_CHAR(estartdate,'YYYY-MM-DD HH24:MI') as estartdate, TO_CHAR(eenddate,'YYYY-MM-DD HH24:MI') as eenddate, econtent, eimage, eimage, ecouponamount, estate,
+		SELECT eno, ename, estartdate, eenddate, econtent, eimage, eimage, ecouponamount, estate,
 		ecouponremain
 		FROM EVENT
 	</select>
@@ -26,7 +25,7 @@
 
 	<select id="selectEventByEno" resultType="event"
 		parameterType="int">
-		SELECT eno, ename, TO_CHAR(estartdate,'YYYY-MM-DD HH24:MI') as estartdate, TO_CHAR(eenddate,'YYYY-MM-DD HH24:MI') as eenddate, econtent,
+		SELECT eno, ename, estartdate, eenddate, econtent,
 		eimage, eimage, ecouponamount, estate, ecouponremain
 		FROM EVENT
 		WHERE
@@ -52,4 +51,17 @@
 		WHERE eno = #{eno}
 		AND cno = #{cno}
 	</update>
+	
+	<delete id="deleteCouponMember" parameterType="int">
+		DELETE FROM couponmember
+		WHERE eno=#{eno}
+	</delete>
+	
+	<update id="updateAllCouponState" parameterType="HashMap">
+		UPDATE
+		eventcoupon
+		SET cstate = #{state}
+		WHERE eno = #{eno}
+	</update>
+	
 </mapper>

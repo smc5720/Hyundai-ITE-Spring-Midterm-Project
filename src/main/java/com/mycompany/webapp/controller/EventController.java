@@ -28,9 +28,7 @@ public class EventController {
 	private static final Logger logger = LoggerFactory.getLogger(EventController.class);
 
 	@Resource
-	EventService eventService;
-
-	
+	EventService eventService;	
 	
 	public static JSONObject brandListJson = new JSONObject();
 	public static JSONObject eventListJson = new JSONObject();
@@ -109,5 +107,12 @@ public class EventController {
 		}
 
 		return jsonObject.toString();
+	}
+	
+	@RequestMapping("/resetEvent")
+	public String resetEvent(int eno) {
+
+		eventService.resetEvent(eno);
+		return "redirect:/";
 	}
 }
